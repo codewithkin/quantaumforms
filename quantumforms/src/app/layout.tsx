@@ -66,15 +66,13 @@ export default function RootLayout({
       <body
         className={`${poppins.className} antialiased bg-slate-200 flex md:flex-row flex-col-reverse min-h-screen`}
       >
-        <QueryProvider>
-          <SessionProvider>
-            <HeroUIProvider>
-              <Sidebar />
-              <MobileBottomBar />
-              {children}
-            </HeroUIProvider>
-          </SessionProvider>
-        </QueryProvider>
+          <QueryProvider>
+            <SessionProvider>
+                <Sidebar />
+                <MobileBottomBar />
+                {children}
+            </SessionProvider>
+          </QueryProvider>
       </body>
     </html>
   );
