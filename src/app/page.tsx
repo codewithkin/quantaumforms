@@ -25,7 +25,7 @@ export default function Home() {
       {/* Add top padding to account for fixed navbar */}
       <div className="pt-16">
       {/* Hero Section */}
-      <header className="py-20 md:py-40 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+      <header className="py-20 md:py-60 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
           Stop Wasting Time on Forms—<br className="hidden sm:block" />
           <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">Let AI Build Them for You!</span>
@@ -35,11 +35,11 @@ export default function Home() {
           Our AI automatically generates your form structure—you just tweak and publish.
         </p>
         <div className="max-w-md mx-auto">
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3">
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-6 py-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-6 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -49,7 +49,7 @@ export default function Home() {
               disabled={isSubmitting}
               className="px-8 py-4 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
             >
-              {isSubmitting ? 'Joining...' : '✨ Join Waitlist'}
+              {isSubmitting ? 'Joining...' : 'Join Waitlist'}
             </button>
           </form>
           {submitted && (
