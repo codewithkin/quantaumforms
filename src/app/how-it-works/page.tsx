@@ -86,7 +86,7 @@ export default function HowItWorksPage() {
               className="relative"
             >
               {/* Step number */}
-              <div className="absolute -left-4 sm:-left-8 top-0 w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-xl font-oswald">
+              <div className="absolute -left-4 sm:-left-8 top-0 w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-xl">
                 {index + 1}
               </div>
 
@@ -114,7 +114,7 @@ export default function HowItWorksPage() {
                   {/* Icon */}
                   <div className="md:w-1/3 flex justify-center">
                     <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-purple-500/10 to-orange-500/10 flex items-center justify-center">
-                      <step.icon className="w-16 h-16 text-purple-600" />
+                      <step.icon strokeWidth={1.3} className="w-16 h-16 text-purple-600" />
                     </div>
                   </div>
                 </div>

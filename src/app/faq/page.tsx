@@ -133,7 +133,7 @@ export default function FAQPage() {
                 onClick={() => toggleFaq(index)}
                 className="w-full text-left px-6 py-4 flex items-center justify-between"
               >
-                <h3 className="text-lg font-semibold pr-8 font-oswald">{faq.q}</h3>
+                <h3 className="text-lg font-semibold pr-8">{faq.q}</h3>
                 {openFaqs.includes(index) ? (
                   <MinusCircle className="w-6 h-6 text-gray-400 flex-shrink-0" />
                 ) : (
