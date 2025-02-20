@@ -106,7 +106,7 @@ function Sidebar() {
                         />
                     </TooltipTrigger>
 
-                    <TooltipContent side="right">{user?.name || ""}</TooltipContent>
+                    <TooltipContent color="primary" side="right">{user?.name || ""}</TooltipContent>
                 </Tooltip>
             </TooltipProvider>
         </article>
