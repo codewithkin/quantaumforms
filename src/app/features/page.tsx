@@ -14,7 +14,7 @@ const features = [
   },
   {
     title: 'Smart Field Suggestions',
-    description: 'Our AI suggests relevant fields and validation rules based on your form's purpose.',
+    description: 'Our AI suggests relevant fields and validation rules based on your form\'s purpose.',
     icon: Magic,
     category: 'AI & Automation'
   },
