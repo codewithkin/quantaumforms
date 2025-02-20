@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/shared/Sidebar";
 import QueryProvider from "@/context/QueryProvider";
 import { SessionProvider } from "next-auth/react";
+import MobileBottomBar from "@/components/shared/MobileBottomBar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -67,6 +68,7 @@ export default function RootLayout({
         <QueryProvider>
           <SessionProvider>
             <Sidebar />
+            <MobileBottomBar />
             {children}
           </SessionProvider>
         </QueryProvider>

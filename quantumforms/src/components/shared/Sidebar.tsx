@@ -27,7 +27,7 @@ function Sidebar() {
 
   return (
     <aside className="md:min-h-screen p-4 bg-white flex flex-col justify-between">
-      <article className="flex flex-col gap-16">
+      <article className="hidden md:flex md:flex-col gap-16">
         {/* App Icon */}
         <article className="bg-orange-500 p-2 rounded-lg flex flex-col justify-center items-center">
           <Scale3D size={30} strokeWidth={1.5} className="text-white" />

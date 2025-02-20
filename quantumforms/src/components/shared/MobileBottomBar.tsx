@@ -23,7 +23,7 @@ function MobileBottomBar() {
 
   return (
     <>
-      <article className="flex flex-col gap-4 items-center">
+      <article className="flex flex-col md:hidden gap-4 items-center">
         <TooltipProvider delayDuration={0.5}>
           <Tooltip>
             <TooltipTrigger>
