@@ -24,7 +24,7 @@ function Sidebar() {
                 <TooltipProvider delayDuration={0.5}>
                     <Tooltip>
                         <TooltipTrigger>
-                            <Button variant={path === '/dashboard' ? 'default' : 'ghost'} asChild>
+                            <Button size="icon" variant={path === '/dashboard' ? 'default' : 'outline'} asChild>
                                 <Link href="/dashboard">
                                     <ChartBar fill={path === '/dashboard' ? 'currentColor' : 'none'} size={20} strokeWidth={1.5} />
                                 </Link>
@@ -36,7 +36,7 @@ function Sidebar() {
 
                     <Tooltip>
                         <TooltipTrigger>
-                            <Button variant={path === '/forms' ? 'default' : 'ghost'} asChild>
+                            <Button size="icon" variant={path === '/forms' ? 'default' : 'outline'} asChild>
                                 <Link href="/forms">
                                     <NotebookText fill={path === '/forms' ? 'currentColor' : 'none'} size={20} strokeWidth={1.5} />
                                 </Link>
@@ -48,7 +48,7 @@ function Sidebar() {
 
                     <Tooltip>
                         <TooltipTrigger>
-                            <Button variant={path === '/analytics' ? 'default' : 'ghost'} asChild>
+                            <Button size="icon" variant={path === '/analytics' ? 'default' : 'outline'} asChild>
                                 <Link href="/analytics">
                                     <ChartPie fill={path === '/analytics' ? 'currentColor' : 'none'} size={20} strokeWidth={1.5} />
                                 </Link>
@@ -60,7 +60,7 @@ function Sidebar() {
 
                     <Tooltip>
                         <TooltipTrigger>
-                            <Button variant={path === '/ai' ? 'default' : 'ghost'} asChild>
+                            <Button size="icon" variant={path === '/ai' ? 'default' : 'outline'} asChild>
                                 <Link href="/ai">
                                     <BotMessageSquare fill={path === '/ai' ? 'currentColor' : 'none'} size={20} strokeWidth={1.5} />
                                 </Link>
