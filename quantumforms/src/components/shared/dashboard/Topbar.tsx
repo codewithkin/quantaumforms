@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Avatar } from '@heroui/avatar'
 import { DropdownMenuGroup, DropdownMenuLabel, DropdownMenuItem, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { Input } from "@heroui/input";
 
 function Topbar() {
   return (
@@ -55,7 +55,7 @@ function Topbar() {
             <Input
                 placeholder="Search for a form..."
                 color="primary"
-                className="w-full max-w-[400px] bg-white"
+                className="w-full max-w-[400px] md:min-w-[400px] bg-white"
             />
         </article>
 
