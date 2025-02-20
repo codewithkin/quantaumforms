@@ -1,12 +1,16 @@
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation';
 import React from 'react'
 
-function page() {
+async function page() {
   // Get the user's session
-  const session = await auth
+  const session = await auth();
 
-  return (
-    
-  )
+  if(!session || !session?.user) {
+    return redirect("/auth/signin")
+  }
+
+  return redirect("/dashboard");
 }
 
 export default page
