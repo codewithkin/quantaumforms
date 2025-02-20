@@ -7,6 +7,7 @@ import { Github, Loader2 } from 'lucide-react'
 import { motion } from "framer-motion";
 import { useState } from 'react'
 import Image from 'next/image'
+import LogoPlusHeading from '@/components/branding/LogoPlusHeading'
 
 export default function SignIn() {
   // Track loading state
@@ -50,7 +51,9 @@ export default function SignIn() {
         transition={{
           duration: 0.5
         }}
-        className="absolute top-0 left-0 w-full h-16 bg-orange-500 shadow-md" />
+        className="absolute top-0 left-0 w-full h-16 bg-orange-500 shadow-md">
+          <LogoPlusHeading />
+        </motion.div>
       <Card className="max-w-[400px] shadow-lg p-8">
         <CardHeader className="space-y-2 text-center">
           <CardTitle className="text-2xl font-bold">
