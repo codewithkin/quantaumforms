@@ -23,7 +23,7 @@ function Sidebar() {
 
     const user = session?.user;
 
-    console.log("USER DATA: ", user);
+    console.log("USER DATA: ", session);
 
   return (
     <aside className='md:min-h-screen p-4 bg-white flex flex-col justify-between'>
@@ -103,12 +103,15 @@ function Sidebar() {
             </TooltipProvider>
 
             {/* User profile picture */}
-            <Avatar
-                name={user?.name || ""}
-                src={user?.image || ""}
-                isBordered
-                size="sm"
-            />
+            <TooltipProvider delayDuration={0.5}>
+                <Tooltip>
+                    <TooltipTrigger>
+                        <Avatar image={user?.image || ""} name={user?.name || ""} />
+                    </TooltipTrigger>
+
+                    <TooltipContent side="right">{user?.name || ""}</TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
         </article>
     </aside>
   )
