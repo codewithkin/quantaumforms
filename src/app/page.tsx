@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Input } from '@/components/ui/input';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -30,16 +31,16 @@ export default function Home() {
           Stop Wasting Time on Forms—<br className="hidden sm:block" />
           <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">Let AI Build Them for You!</span>
         </h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-800 mb-8 max-w-3xl mx-auto">
           Create, Customize & Share Forms in Seconds. Say goodbye to boring, manual form-building.
           Our AI automatically generates your form structure—you just tweak and publish.
         </p>
         <div className="max-w-md mx-auto">
           <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3">
-            <input
+            <Input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-6 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 h-12 px-6 text-base rounded-full"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -82,7 +83,7 @@ export default function Home() {
             <div key={index} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <div className="text-4xl mb-4">{step.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-              <p className="text-gray-600">{step.description}</p>
+              <p className="text-gray-800">{step.description}</p>
             </div>
           ))}
         </div>
@@ -132,7 +133,7 @@ export default function Home() {
           ].map((faq, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="font-semibold text-lg mb-2">{faq.q}</h3>
-              <p className="text-gray-600">{faq.a}</p>
+              <p className="text-gray-800">{faq.a}</p>
             </div>
           ))}
         </div>
@@ -145,10 +146,10 @@ export default function Home() {
           Join our waitlist today and get priority access, special discounts, and help shape the future of form building.
         </p>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-          <input
+          <Input
             type="email"
             placeholder="Enter your email"
-            className="flex-1 px-6 py-4 rounded-full border border-white/20 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
+            className="flex-1 h-12 px-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder-white/70 focus-visible:ring-white/50"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
