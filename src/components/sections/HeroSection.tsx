@@ -20,11 +20,11 @@ export function HeroSection() {
 
   return (
     <header className="py-20 md:py-60 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 font-oswald">
         Stop Wasting Time on Forms—<br className="hidden sm:block" />
         <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">Let AI Build Them for You!</span>
       </h1>
-      <p className="text-xl text-gray-800 mb-8 max-w-3xl mx-auto">
+      <p className="text-xl text-gray-800 mb-8 max-w-3xl mx-auto font-inter">
         Create, Customize & Share Forms in Seconds. Say goodbye to boring, manual form-building.
         Our AI automatically generates your form structure—you just tweak and publish.
       </p>

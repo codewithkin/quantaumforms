@@ -19,8 +19,8 @@ export function CTASection() {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-2xl my-16 mx-4 shadow-xl">
       <FadeInSection>
-        <h2 className="text-3xl font-bold mb-6">Be First in Line!</h2>
-        <p className="text-xl mb-8 max-w-2xl mx-auto">
+        <h2 className="text-3xl font-bold mb-6 font-oswald">Be First in Line!</h2>
+        <p className="text-xl mb-8 max-w-2xl mx-auto font-inter">
           Join our waitlist today and get priority access, special discounts, and help shape the future of form building.
         </p>
       </FadeInSection>

@@ -25,7 +25,7 @@ export function FAQSection() {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <FadeInSection>
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent font-oswald">
           Frequently Asked Questions
         </h2>
       </FadeInSection>
@@ -35,8 +35,8 @@ export function FAQSection() {
             key={index}
             className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
           >
-            <h3 className="font-semibold text-lg mb-2">{faq.q}</h3>
-            <p className="text-gray-800">{faq.a}</p>
+            <h3 className="font-semibold text-lg mb-2 font-oswald">{faq.q}</h3>
+            <p className="text-gray-800 font-inter">{faq.a}</p>
           </FadeInSection>
         ))}
       </div>
