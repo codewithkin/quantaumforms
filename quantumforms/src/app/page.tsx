@@ -1,16 +1,16 @@
-import { auth } from '@/auth'
-import { redirect } from 'next/navigation';
-import React from 'react'
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import React from "react";
 
 async function page() {
   // Get the user's session
   const session = await auth();
 
-  if(!session || !session?.user) {
-    return redirect("/auth/signin")
+  if (!session || !session?.user) {
+    return redirect("/auth/signin");
   }
 
   return redirect("/dashboard");
 }
 
-export default page
+export default page;

@@ -1,8 +1,14 @@
-'use client'
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { XCircle } from 'lucide-react'
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { XCircle } from "lucide-react";
 
 export default function AuthError() {
   return (
@@ -15,18 +21,19 @@ export default function AuthError() {
             Authentication Failed
           </CardTitle>
           <CardDescription className="text-slate-600">
-            We couldn't authenticate your request. This could be due to expired credentials or invalid permissions.
+            We couldn't authenticate your request. This could be due to expired
+            credentials or invalid permissions.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Button 
+          <Button
             className="w-full h-11 bg-purple-700 hover:bg-purple-800"
-            onClick={() => window.location.href = '/auth/signin'}
+            onClick={() => (window.location.href = "/auth/signin")}
           >
             Try Again
           </Button>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

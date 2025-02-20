@@ -1,8 +1,14 @@
-'use client'
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { CheckCircle } from 'lucide-react'
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { CheckCircle } from "lucide-react";
 
 export default function VerifyRequest() {
   return (
@@ -15,19 +21,20 @@ export default function VerifyRequest() {
             Check your email
           </CardTitle>
           <CardDescription className="text-slate-600">
-            A sign in link has been sent to your email address. Please click the link to complete your sign in.
+            A sign in link has been sent to your email address. Please click the
+            link to complete your sign in.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Button 
+          <Button
             variant="outline"
             className="w-full h-11"
-            onClick={() => window.location.href = '/auth/signin'}
+            onClick={() => (window.location.href = "/auth/signin")}
           >
             Back to Sign In
           </Button>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
