@@ -8,7 +8,7 @@ import { Input } from "@heroui/input";
 
 function Topbar() {
   return (
-    <article className="p-4 flex md:flex-row flex-col w-full justify-between items-center bg-white">
+    <article className="p-4 flex md:flex-row flex-col w-full gap-4 justify-between md:items-center bg-white">
         {/* Avatar and Search Input */}
         <article className="flex gap-4 items-center">
             <DropdownMenu>
@@ -61,7 +61,7 @@ function Topbar() {
 
         {/* Create new form btn */}
         <article>
-            <Button variant="default" color="primary" className="">Create New Form</Button>
+            <Button variant="default" color="primary" className="w-full md:w-fit">Create New Form</Button>
         </article>
     </article>
   )
