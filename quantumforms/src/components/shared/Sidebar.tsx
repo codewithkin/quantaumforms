@@ -98,7 +98,12 @@ function Sidebar() {
             <TooltipProvider delayDuration={0.5}>
                 <Tooltip>
                     <TooltipTrigger>
-                        <Avatar image={user?.image || ""} name={user?.name || ""} />
+                        <Avatar 
+                            image={user?.image} 
+                            name={user?.name || ""} 
+                            isBordered
+                            color="secondary"
+                        />
                     </TooltipTrigger>
 
                     <TooltipContent side="right">{user?.name || ""}</TooltipContent>
