@@ -1,7 +1,9 @@
 import React from 'react'
 import { Button } from '../ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import { Badge } from '../ui/badge'
+import { Accordion, AccordionContent } from '../ui/accordion'
+import { AccordionItem, AccordionTrigger } from '@radix-ui/react-accordion'
 
 export type Field = {
     id: string,
@@ -206,7 +208,31 @@ const FormCard = ({ title, createdAt, description, id, updatedAt, userId, fields
             </CardHeader>
 
             <CardContent>
+                <CardDescription className='text-slate-600'>{description}</CardDescription>
             </CardContent>
+
+            <CardFooter>
+                <h2 className="text-md font-semibold">Fields:</h2>
+
+                {
+                    fields.length > 0 && fields.map((field: Field) => {
+                        const { id, type, label } = field;
+
+                        return (
+                            <Accordion type="multiple" className='w-full'>
+                                <AccordionItem value={id}>
+                                    <AccordionTrigger>
+                                        {label}
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        <p>{type}</p>
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+                        )
+                    })
+                }
+            </CardFooter>
         </Card>
     )
 }
