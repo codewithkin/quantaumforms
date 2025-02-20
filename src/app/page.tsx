@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { Input } from '@/components/ui/input';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useWaitlist } from '@/context/WaitlistContext';
 
 function FadeInSection({ children, className }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
@@ -39,16 +40,26 @@ function FadeInSection({ children, className }: { children: React.ReactNode; cla
 export default function Home() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const { isJoined, isError, errorMessage, joinWaitlist, clearError } = useWaitlist();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // TODO: Implement actual waitlist signup
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setSubmitted(true);
-    setIsSubmitting(false);
+    try {
+      setIsSubmitting(true);
+      await joinWaitlist(email);
+      setEmail('');
+    } catch (error) {
+      // Error is handled by context
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-orange-50">
@@ -65,25 +76,35 @@ export default function Home() {
           Our AI automatically generates your form structure—you just tweak and publish.
         </p>
         <div className="max-w-md mx-auto">
-          <form onSubmit={handleSubmit} className="flex w-full flex-col md:flex-row gap-3">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 py-4 md:py-2 h-12 px-6 text-base rounded-full"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="px-8 py-4 md:py-2 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
-            >
-              {isSubmitting ? 'Joining...' : 'Join Waitlist'}
-            </button>
-          </form>
-          {submitted && (
-            <p className="mt-4 text-green-600">Thanks for joining! We'll be in touch soon.</p>
+          {isJoined ? (
+            <div className="animate-fade-in text-2xl font-oswald text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-500">
+              You're in! 🎉 We'll see you on launch day!
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3">
+              {isError && (
+                <div className="text-red-500 text-sm text-center">
+                  {errorMessage}
+                </div>
+              )}
+              <div className="flex flex-col md:flex-row gap-3">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 py-4 md:py-2 h-12 px-6 text-base rounded-full"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-8 py-4 md:py-2 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
+                >
+                  {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                </button>
+              </div>
+            </form>
           )}
         </div>
       </header>
