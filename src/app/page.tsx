@@ -20,15 +20,15 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-orange-50">
       <Navbar />
       {/* Add top padding to account for fixed navbar */}
       <div className="pt-16">
       {/* Hero Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+      <header className="py-20 md:py-40 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
           Stop Wasting Time on Forms—<br className="hidden sm:block" />
-          <span className="text-blue-600">Let AI Build Them for You!</span>
+          <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">Let AI Build Them for You!</span>
         </h1>
         <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
           Create, Customize & Share Forms in Seconds. Say goodbye to boring, manual form-building.
@@ -47,7 +47,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-8 py-4 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
+              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
             >
               {isSubmitting ? 'Joining...' : '✨ Join Waitlist'}
             </button>
@@ -56,11 +56,11 @@ export default function Home() {
             <p className="mt-4 text-green-600">Thanks for joining! We'll be in touch soon.</p>
           )}
         </div>
-      </section>
+      </header>
 
       {/* How It Works */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">3 Simple Steps to Form Perfection</h2>
+        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">3 Simple Steps to Form Perfection</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {[
             {
@@ -89,8 +89,8 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-blue-50">
-        <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us Over Google Forms?</h2>
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-purple-100 to-orange-50">
+        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Why Choose Us Over Google Forms?</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
             { title: 'AI-Powered Creation', icon: '🤖' },
@@ -110,7 +110,7 @@ export default function Home() {
 
       {/* FAQ */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Frequently Asked Questions</h2>
         <div className="max-w-3xl mx-auto space-y-6">
           {[
             {
@@ -139,7 +139,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl my-16 mx-4">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-2xl my-16 mx-4 shadow-xl">
         <h2 className="text-3xl font-bold mb-6">Be First in Line!</h2>
         <p className="text-xl mb-8 max-w-2xl mx-auto">
           Join our waitlist today and get priority access, special discounts, and help shape the future of form building.
@@ -156,7 +156,7 @@ export default function Home() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-8 py-4 bg-white text-blue-600 rounded-full font-semibold hover:bg-gray-100 transition-colors disabled:opacity-50"
+            className="px-8 py-4 bg-white text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-600 rounded-full font-semibold hover:bg-gray-50 transition-all disabled:opacity-50 border-2 border-white hover:border-opacity-50"
           >
             {isSubmitting ? 'Joining...' : '🚀 Join Now'}
           </button>

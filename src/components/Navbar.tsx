@@ -7,12 +7,12 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
+    <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-xl font-bold text-blue-600">
+            <Link href="/" className="text-xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
               QuantumForms
             </Link>
           </div>
@@ -28,7 +28,7 @@ export default function Navbar() {
             <Link href="#faq" className="text-gray-600 hover:text-blue-600">
               FAQ
             </Link>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors">
+            <button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white px-6 py-2 rounded-full hover:from-purple-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg">
               Join Waitlist
             </button>
           </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
           >
             FAQ
           </Link>
-          <button className="w-full mt-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors">
+          <button className="w-full mt-2 bg-gradient-to-r from-purple-500 to-orange-500 text-white px-4 py-2 rounded-full hover:from-purple-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg">
             Join Waitlist
           </button>
         </div>

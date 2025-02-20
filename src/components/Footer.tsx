@@ -2,12 +2,12 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 border-t border-gray-200">
+    <footer className="bg-gradient-to-br from-purple-50 to-orange-50 border-t border-gray-200">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="text-xl font-bold text-blue-600">
+            <Link href="/" className="text-xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
               QuantumForms
             </Link>
             <p className="mt-4 text-gray-600 max-w-md">
@@ -17,10 +17,10 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Quick Links</h3>
+            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase">Quick Links</h3>
             <ul className="mt-4 space-y-4">
               <li>
-                <Link href="#features" className="text-gray-600 hover:text-blue-600">
+                <Link href="#features" className="text-gray-600 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-orange-500 hover:bg-clip-text transition-all">
                   Features
                 </Link>
               </li>
@@ -39,10 +39,10 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Contact</h3>
+            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase">Contact</h3>
             <ul className="mt-4 space-y-4">
               <li>
-                <a href="mailto:hello@quantumforms.ai" className="text-gray-600 hover:text-blue-600">
+                <a href="mailto:hello@quantumforms.ai" className="text-gray-600 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-orange-500 hover:bg-clip-text transition-all">
                   hello@quantumforms.ai
                 </a>
               </li>
