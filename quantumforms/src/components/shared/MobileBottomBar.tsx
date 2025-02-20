@@ -8,7 +8,14 @@ import {
 } from "../ui/tooltip";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { DoorOpen } from "lucide-react";
+import {
+  BotMessageSquare,
+  ChartBar,
+  ChartPie,
+  DoorOpen,
+  NotebookText,
+  Zap,
+} from "lucide-react";
 import { Avatar } from "@heroui/avatar";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -23,38 +30,65 @@ function MobileBottomBar() {
 
   return (
     <>
-      <article className="flex flex-col md:hidden gap-4 items-center">
-        <TooltipProvider delayDuration={0.5}>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button size="icon" variant="outline" asChild>
-                <Link href="/auth/signout">
-                  <DoorOpen size={20} strokeWidth={1.5} />
-                </Link>
-              </Button>
-            </TooltipTrigger>
-
-            <TooltipContent side="right">Sign Out</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        {/* User profile picture */}
-        <TooltipProvider delayDuration={0.5}>
-          <Tooltip>
-            <TooltipTrigger>
-              <Avatar
-                image={user?.image}
-                name={user?.name || ""}
-                isBordered
-                color="secondary"
+      <article className="flex w-full justify-center bg-white shadow-md p-4 md:hidden gap-4 items-center">
+        {/* Primary Links */}
+        <article className="flex gap-16">
+          <Button
+            size="icon"
+            variant={path === "/dashboard" ? "default" : "outline"}
+            asChild
+          >
+            <Link href="/dashboard">
+              <ChartBar
+                fill={path === "/dashboard" ? "currentColor" : "none"}
+                size={20}
+                strokeWidth={1.5}
               />
-            </TooltipTrigger>
+            </Link>
+          </Button>
 
-            <TooltipContent color="primary" side="right">
-              {user?.name || ""}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+          <Button
+            size="icon"
+            variant={path === "/forms" ? "default" : "outline"}
+            asChild
+          >
+            <Link href="/forms">
+              <NotebookText
+                fill={path === "/forms" ? "currentColor" : "none"}
+                size={20}
+                strokeWidth={1.5}
+              />
+            </Link>
+          </Button>
+
+          <Button
+            size="icon"
+            variant={path === "/analytics" ? "default" : "outline"}
+            asChild
+          >
+            <Link href="/analytics">
+              <ChartPie
+                fill={path === "/analytics" ? "currentColor" : "none"}
+                size={20}
+                strokeWidth={1.5}
+              />
+            </Link>
+          </Button>
+
+          <Button
+            size="icon"
+            variant={path === "/ai" ? "default" : "outline"}
+            asChild
+          >
+            <Link href="/ai">
+              <BotMessageSquare
+                fill={path === "/ai" ? "currentColor" : "none"}
+                size={20}
+                strokeWidth={1.5}
+              />
+            </Link>
+          </Button>
+        </article>
       </article>
     </>
   );

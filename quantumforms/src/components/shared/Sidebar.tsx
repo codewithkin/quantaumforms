@@ -26,7 +26,7 @@ function Sidebar() {
   const user = obj?.data?.user;
 
   return (
-    <aside className="md:min-h-screen p-4 bg-white flex flex-col justify-between">
+    <aside className="md:min-h-screen p-4 bg-white w-fit hidden md:flex md:flex-col justify-between">
       <article className="hidden md:flex md:flex-col gap-16">
         {/* App Icon */}
         <article className="bg-orange-500 p-2 rounded-lg flex flex-col justify-center items-center">
