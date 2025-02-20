@@ -1,14 +1,15 @@
 'use client';
 
 import { FadeInSection } from '@/components/FadeInSection';
+import { Bot, Sparkles, BarChart3, Palette, DragDropHorizontal, Zap } from 'lucide-react';
 
 const features = [
-  { title: 'AI-Powered Creation', icon: '🤖' },
-  { title: 'Beautiful Design', icon: '✨' },
-  { title: 'Smart Analytics', icon: '📊' },
-  { title: 'Custom Branding', icon: '🎨' },
-  { title: 'Drag & Drop Editor', icon: '🎯' },
-  { title: 'Real-time Responses', icon: '⚡' }
+  { title: 'AI-Powered Creation', icon: Bot },
+  { title: 'Beautiful Design', icon: Sparkles },
+  { title: 'Smart Analytics', icon: BarChart3 },
+  { title: 'Custom Branding', icon: Palette },
+  { title: 'Drag & Drop Editor', icon: DragDropHorizontal },
+  { title: 'Real-time Responses', icon: Zap }
 ];
 
 export function FeaturesSection() {
@@ -25,7 +26,7 @@ export function FeaturesSection() {
             key={index}
             className="flex items-center space-x-4 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
           >
-            <span className="text-2xl">{feature.icon}</span>
+            <feature.icon size={24} className="text-purple-600" />
             <h3 className="font-semibold font-oswald">{feature.title}</h3>
           </FadeInSection>
         ))}

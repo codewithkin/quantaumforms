@@ -3,16 +3,18 @@
 import { FadeInSection } from '@/components/FadeInSection';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
+import { useWaitlist } from '@/context/WaitlistContext';
 
 export function CTASection() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { isJoined, joinWaitlist } = useWaitlist();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // TODO: Implement actual waitlist signup
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await joinWaitlist(email);
     setIsSubmitting(false);
   };
 
@@ -24,23 +26,29 @@ export function CTASection() {
           Join our waitlist today and get priority access, special discounts, and help shape the future of form building.
         </p>
       </FadeInSection>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 mt-8">
-        <Input
-          type="email"
-          placeholder="Enter your email"
-          className="flex-1 h-12 px-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder-white/70 focus-visible:ring-white/50"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="px-8 h-12 bg-white text-orange-600 rounded-full font-semibold hover:bg-slate-200 transition-all disabled:opacity-50 border-2 border-white hover:border-opacity-50"
-        >
-          {isSubmitting ? 'Joining...' : '🚀 Join Now'}
-        </button>
-      </form>
+      {isJoined ? (
+        <div className="animate-fade-in text-2xl font-oswald mt-8">
+          You're in! 🎉 We'll see you on launch day!
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 mt-8">
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            className="flex-1 h-12 px-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder-white/70 focus-visible:ring-white/50"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="px-8 h-12 bg-white text-orange-600 rounded-full font-semibold hover:bg-slate-200 transition-all disabled:opacity-50 border-2 border-white hover:border-opacity-50"
+          >
+            {isSubmitting ? 'Joining...' : '🚀 Join Now'}
+          </button>
+        </form>
+      )}
     </section>
   );
 }
