@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { NavbarWaitlistForm } from './NavbarWaitlistForm';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,9 +29,7 @@ export default function Navbar() {
             <Link href="#faq" className="text-gray-600 hover:text-blue-600">
               FAQ
             </Link>
-            <button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white px-6 py-2 rounded-full hover:from-purple-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg">
-              Join Waitlist
-            </button>
+            <NavbarWaitlistForm />
           </div>
 
           {/* Mobile menu button */}
@@ -77,9 +76,9 @@ export default function Navbar() {
           >
             FAQ
           </Link>
-          <button className="w-full mt-2 bg-gradient-to-r from-purple-500 to-orange-500 text-white px-4 py-2 rounded-full hover:from-purple-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg">
-            Join Waitlist
-          </button>
+          <div className="px-3 py-2">
+            <NavbarWaitlistForm />
+          </div>
         </div>
       </div>
     </nav>
