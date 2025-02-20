@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '../ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { Badge } from '../ui/badge'
 
 export type Field = {
@@ -202,14 +202,10 @@ const FormCard = ({ title, createdAt, description, id, updatedAt, userId, fields
         <Card>
             <CardHeader>
                 <CardTitle className="text-xl font-semibold">{title}</CardTitle>
-                {
-                    fields.length > 0 && fields.map((field: Field) => (
-                        <Badge color="primary" key={field.id}>{field.label}</Badge>
-                    ))
-                }
+                <Badge className='w-fit'>{createdAt}</Badge>
             </CardHeader>
-            <CardContent>
 
+            <CardContent>
             </CardContent>
         </Card>
     )
