@@ -8,13 +8,18 @@ import { useWaitlist } from '@/context/WaitlistContext';
 export function HeroSection() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { isJoined, joinWaitlist } = useWaitlist();
+  const { isJoined, isError, errorMessage, joinWaitlist } = useWaitlist();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    await joinWaitlist(email);
-    setIsSubmitting(false);
+    try {
+      setIsSubmitting(true);
+      await joinWaitlist(email);
+    } catch (error) {
+      // Error is handled by context
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -33,7 +38,13 @@ export function HeroSection() {
             You're in! 🎉 We'll see you on launch day!
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            {isError && (
+              <div className="text-red-500 text-sm text-center">
+                {errorMessage}
+              </div>
+            )}
+            <div className="flex flex-col md:flex-row gap-3">
             <Input
               type="email"
               placeholder="Enter your email"
@@ -49,6 +60,7 @@ export function HeroSection() {
             >
               {isSubmitting ? 'Joining...' : 'Join Waitlist'}
             </button>
+            </div>
           </form>
         )}
       </div>

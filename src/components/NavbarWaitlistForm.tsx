@@ -9,13 +9,18 @@ export function NavbarWaitlistForm() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { isJoined, joinWaitlist } = useWaitlist();
+  const { isJoined, isError, errorMessage, joinWaitlist, clearError } = useWaitlist();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    await joinWaitlist(email);
-    setIsSubmitting(false);
+    try {
+      setIsSubmitting(true);
+      await joinWaitlist(email);
+    } catch (error) {
+      // Error is handled by context
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -25,13 +30,18 @@ export function NavbarWaitlistForm() {
           Join Waitlist
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-4" align="end">
+      <PopoverContent className="w-80 p-4" align="end" onInteractOutside={clearError}>
         {isJoined ? (
           <div className="animate-fade-in text-xl font-oswald text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-500 text-center py-2">
             You're in! 🎉 We'll see you on launch day!
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
+            {isError && (
+              <div className="text-red-500 text-sm">
+                {errorMessage}
+              </div>
+            )}
             <div className="font-semibold font-oswald text-lg">Join Our Waitlist</div>
             <Input
               type="email"

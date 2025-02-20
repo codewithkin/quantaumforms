@@ -4,22 +4,56 @@ import { createContext, useContext, useState } from 'react';
 
 interface WaitlistContextType {
   isJoined: boolean;
+  isError: boolean;
+  errorMessage: string | null;
   joinWaitlist: (email: string) => Promise<void>;
+  clearError: () => void;
 }
 
 const WaitlistContext = createContext<WaitlistContextType | undefined>(undefined);
 
 export function WaitlistProvider({ children }: { children: React.ReactNode }) {
   const [isJoined, setIsJoined] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const clearError = () => {
+    setIsError(false);
+    setErrorMessage(null);
+  };
 
   const joinWaitlist = async (email: string) => {
-    // TODO: Implement actual waitlist signup
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsJoined(true);
+    try {
+      clearError();
+      
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to join waitlist');
+      }
+
+      setIsJoined(true);
+    } catch (error) {
+      setIsError(true);
+      setErrorMessage(
+        error instanceof Error 
+          ? error.message 
+          : 'An unexpected error occurred'
+      );
+      throw error; // Re-throw for component-level handling if needed
+    }
   };
 
   return (
-    <WaitlistContext.Provider value={{ isJoined, joinWaitlist }}>
+    <WaitlistContext.Provider value={{ isJoined, isError, errorMessage, joinWaitlist, clearError }}>
       {children}
     </WaitlistContext.Provider>
   );

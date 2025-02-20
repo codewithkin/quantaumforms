@@ -9,13 +9,18 @@ export function CTASection() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { isJoined, joinWaitlist } = useWaitlist();
+  const { isJoined, isError, errorMessage, joinWaitlist } = useWaitlist();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    await joinWaitlist(email);
-    setIsSubmitting(false);
+    try {
+      setIsSubmitting(true);
+      await joinWaitlist(email);
+    } catch (error) {
+      // Error is handled by context
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -31,7 +36,13 @@ export function CTASection() {
           You're in! 🎉 We'll see you on launch day!
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 mt-8">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col gap-3 mt-8">
+          {isError && (
+            <div className="text-white/90 text-sm text-center bg-white/10 py-2 px-4 rounded-lg">
+              {errorMessage}
+            </div>
+          )}
+          <div className="flex flex-col sm:flex-row gap-3">
           <Input
             type="email"
             placeholder="Enter your email"
@@ -47,6 +58,7 @@ export function CTASection() {
           >
             {isSubmitting ? 'Joining...' : '🚀 Join Now'}
           </button>
+          </div>
         </form>
       )}
     </section>
