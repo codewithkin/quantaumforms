@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased bg-slate-200 flex md:flex-col flex-col-reverse min-h-screen`}
+        className={`${poppins.className} antialiased bg-slate-200 flex md:flex-row flex-col-reverse min-h-screen`}
       >
         <QueryProvider>
           <SessionProvider>

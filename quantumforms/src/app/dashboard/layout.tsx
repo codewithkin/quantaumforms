@@ -3,7 +3,10 @@ import React, { ReactNode } from 'react'
 
 function layout({children}: {children: ReactNode}) {
   return (
-    <Topbar />
+    <section className="min-h-full w-full">
+        <Topbar />
+        {children}
+    </section>
   )
 }
 
