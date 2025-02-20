@@ -66,11 +66,11 @@ export default function Home() {
           Our AI automatically generates your form structure—you just tweak and publish.
         </p>
         <div className="max-w-md mx-auto">
-          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3">
+          <form onSubmit={handleSubmit} className="flex w-full flex-col md:flex-row gap-3">
             <Input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 h-12 px-6 text-base rounded-full"
+              className="flex-1 py-4 md:py-2 h-12 px-6 text-base rounded-full"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -78,7 +78,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-8 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
+              className="px-8 py-4 md:py-2 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
             >
               {isSubmitting ? 'Joining...' : 'Join Waitlist'}
             </button>
@@ -116,7 +116,7 @@ export default function Home() {
               <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{step.icon}</div>
               <h3 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">{step.title}</h3>
               <p className="text-gray-800 leading-relaxed">{step.description}</p>
-            </div>
+            </FadeInSection>
           ))}
         </div>
       </section>
@@ -138,14 +138,15 @@ export default function Home() {
             <FadeInSection key={index} className="flex items-center space-x-4 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
               <span className="text-2xl">{feature.icon}</span>
               <h3 className="font-semibold">{feature.title}</h3>
-            </div>
+            </FadeInSection>
           ))}
         </div>
       </section>
 
       {/* FAQ */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Frequently Asked Questions</h2>
+        <FadeInSection>
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Frequently Asked Questions</h2>
         </FadeInSection>
         <div className="max-w-3xl mx-auto space-y-6 mt-8">
           {[
@@ -169,7 +170,7 @@ export default function Home() {
             <FadeInSection key={index} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
               <h3 className="font-semibold text-lg mb-2">{faq.q}</h3>
               <p className="text-gray-800">{faq.a}</p>
-            </div>
+            </FadeInSection>
           ))}
         </div>
       </section>
@@ -186,7 +187,7 @@ export default function Home() {
           <Input
             type="email"
             placeholder="Enter your email"
-            className="flex-1 h-12 px-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder-white/70 focus-visible:ring-white/50"
+            className="flex-1 py-4 md:py-2 h-12 px-6 text-base rounded-full border-white/20 bg-white/10 text-white placeholder-white/70 focus-visible:ring-white/50"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -194,7 +195,7 @@ export default function Home() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-8 bg-white text-orange-600 rounded-full font-semibold hover:bg-slate-200 transition-all disabled:opacity-50 border-2 border-white hover:border-opacity-50"
+            className="px-8 py-4 md:py-2 bg-white text-orange-600 rounded-full font-semibold hover:bg-slate-200 transition-all disabled:opacity-50 border-2 border-white hover:border-opacity-50"
           >
             {isSubmitting ? 'Joining...' : '🚀 Join Now'}
           </button>
