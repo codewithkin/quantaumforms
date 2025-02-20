@@ -104,8 +104,8 @@ function Sidebar() {
 
             {/* User profile picture */}
             <Avatar
-                name={user?.name}
-                src={user?.image}
+                name={user?.name || ""}
+                src={user?.image || ""}
                 isBordered
                 size="sm"
             />
