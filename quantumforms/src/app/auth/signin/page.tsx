@@ -51,7 +51,7 @@ export default function SignIn() {
         transition={{
           duration: 0.5
         }}
-        className="absolute top-0 left-0 w-full h-16 bg-orange-500 shadow-md">
+        className="absolute top-0 left-0 w-full h-16 bg-white shadow-md">
           <LogoPlusHeading />
         </motion.div>
       <Card className="max-w-[400px] shadow-lg p-8">
