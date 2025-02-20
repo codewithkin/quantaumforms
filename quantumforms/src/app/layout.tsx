@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {Poppins} from 'next/font/google'
 import "./globals.css";
 import Sidebar from "@/components/shared/Sidebar";
+import QueryProvider from "@/context/QueryProvider";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -60,8 +61,10 @@ export default function RootLayout({
       <body
         className={`${poppins.className} antialiased bg-slate-200 flex min-h-screen`}
       >
-        <Sidebar />
-        {children}
+        <QueryProvider>
+          <Sidebar />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
