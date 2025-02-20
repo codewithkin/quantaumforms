@@ -17,7 +17,7 @@ function FormsOverview() {
             <Button variant="outline" color="primary">
                 Date
             </Button>
-            <Button variant="outline" color="primary">
+            <Button variant="secondary" color="secondary">
                 AI Created
             </Button>
             <Button variant="outline" color="primary">
