@@ -1,7 +1,9 @@
 'use client';
 
-import { Bot, Sparkles, BarChart3, Palette, DragDropHorizontal, Zap, 
-  Brain, Magic, Brush, Lock, Rocket, Share2, Bell, Smartphone, Gauge } from 'lucide-react';
+import { Bot, Sparkles, BarChart3, Palette, Zap, 
+  Brain, Brush, Lock, Rocket, Share2, Bell, Smartphone, Gauge, 
+  SparkleIcon,
+  Move3D} from 'lucide-react';
 import { FadeInSection } from '@/components/FadeInSection';
 import { CTASection } from '@/components/sections/CTASection';
 
@@ -15,7 +17,7 @@ const features = [
   {
     title: 'Smart Field Suggestions',
     description: 'Our AI suggests relevant fields and validation rules based on your form\'s purpose.',
-    icon: Magic,
+    icon: SparkleIcon,
     category: 'AI & Automation'
   },
   {
@@ -75,7 +77,7 @@ const features = [
   {
     title: 'Drag & Drop Editor',
     description: 'Fine-tune your forms with an intuitive drag-and-drop interface.',
-    icon: DragDropHorizontal,
+    icon: Move3D,
     category: 'Design & Customization'
   }
 ];

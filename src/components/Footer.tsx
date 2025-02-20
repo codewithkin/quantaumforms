@@ -20,17 +20,17 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase">Quick Links</h3>
             <ul className="mt-4 space-y-4">
               <li>
-                <Link href="#features" className="text-gray-600 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-orange-500 hover:bg-clip-text transition-all">
+                <Link href="/features" className="text-gray-600 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-orange-500 hover:bg-clip-text transition-all">
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="#how-it-works" className="text-gray-600 hover:text-blue-600">
+                <Link href="/how-it-works" className="text-gray-600 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-orange-500 hover:bg-clip-text transition-all">
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link href="#faq" className="text-gray-600 hover:text-blue-600">
+                <Link href="/faq" className="text-gray-600 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-orange-500 hover:bg-clip-text transition-all">
                   FAQ
                 </Link>
               </li>

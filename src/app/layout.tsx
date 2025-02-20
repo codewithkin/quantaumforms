@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
 import { WaitlistProvider } from "@/context/WaitlistContext";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,7 +28,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${oswald.variable}`}>
       <body className="font-inter antialiased">
-        <WaitlistProvider>{children}</WaitlistProvider>
+        <WaitlistProvider>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <div className="flex-grow">
+              {children}
+            </div>
+            <Footer />
+          </div>
+        </WaitlistProvider>
       </body>
     </html>
   );
