@@ -20,13 +20,13 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="#features" className="text-gray-600 hover:text-blue-600">
+            <Link href="/features" className="text-gray-600 hover:text-purple-600 transition-colors">
               Features
             </Link>
-            <Link href="#how-it-works" className="text-gray-600 hover:text-blue-600">
+            <Link href="/how-it-works" className="text-gray-600 hover:text-purple-600 transition-colors">
               How It Works
             </Link>
-            <Link href="#faq" className="text-gray-600 hover:text-blue-600">
+            <Link href="/faq" className="text-gray-600 hover:text-purple-600 transition-colors">
               FAQ
             </Link>
             <NavbarWaitlistForm />
@@ -59,20 +59,20 @@ export default function Navbar() {
       <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-b border-gray-200">
           <Link
-            href="#features"
-            className="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+            href="/features"
+            className="block px-3 py-2 rounded-md text-gray-600 hover:text-purple-600 hover:bg-gray-50 transition-colors"
           >
             Features
           </Link>
           <Link
-            href="#how-it-works"
-            className="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+            href="/how-it-works"
+            className="block px-3 py-2 rounded-md text-gray-600 hover:text-purple-600 hover:bg-gray-50 transition-colors"
           >
             How It Works
           </Link>
           <Link
-            href="#faq"
-            className="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+            href="/faq"
+            className="block px-3 py-2 rounded-md text-gray-600 hover:text-purple-600 hover:bg-gray-50 transition-colors"
           >
             FAQ
           </Link>
