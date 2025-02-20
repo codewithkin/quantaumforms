@@ -1,10 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Input } from '@/components/ui/input';
+import { motion, useAnimation, useInView } from 'framer-motion';
+import { useRef } from 'react';
+
+function FadeInSection({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start('visible');
+    }
+  }, [isInView, controls]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={{
+        hidden: { opacity: 0, y: 75 },
+        visible: { opacity: 1, y: 0 }
+      }}
+      transition={{ duration: 0.5, delay: 0.25 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -48,7 +78,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
+              className="px-8 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
             >
               {isSubmitting ? 'Joining...' : 'Join Waitlist'}
             </button>
@@ -61,7 +91,9 @@ export default function Home() {
 
       {/* How It Works */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">3 Simple Steps to Form Perfection</h2>
+        <FadeInSection>
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">3 Simple Steps to Form Perfection</h2>
+        </FadeInSection>
         <div className="grid md:grid-cols-3 gap-8">
           {[
             {
@@ -80,10 +112,10 @@ export default function Home() {
               icon: '📊'
             }
           ].map((step, index) => (
-            <div key={index} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-4xl mb-4">{step.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-              <p className="text-gray-800">{step.description}</p>
+            <FadeInSection key={index} className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:-translate-y-1">
+              <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{step.icon}</div>
+              <h3 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">{step.title}</h3>
+              <p className="text-gray-800 leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>
@@ -91,8 +123,10 @@ export default function Home() {
 
       {/* Features */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-purple-100 to-orange-50">
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Why Choose Us Over Google Forms?</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <FadeInSection>
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Why Choose Us Over Google Forms?</h2>
+        </FadeInSection>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
           {[
             { title: 'AI-Powered Creation', icon: '🤖' },
             { title: 'Beautiful Design', icon: '✨' },
@@ -101,7 +135,7 @@ export default function Home() {
             { title: 'Drag & Drop Editor', icon: '🎯' },
             { title: 'Real-time Responses', icon: '⚡' }
           ].map((feature, index) => (
-            <div key={index} className="flex items-center space-x-4 bg-white p-4 rounded-lg">
+            <FadeInSection key={index} className="flex items-center space-x-4 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
               <span className="text-2xl">{feature.icon}</span>
               <h3 className="font-semibold">{feature.title}</h3>
             </div>
@@ -112,7 +146,8 @@ export default function Home() {
       {/* FAQ */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Frequently Asked Questions</h2>
-        <div className="max-w-3xl mx-auto space-y-6">
+        </FadeInSection>
+        <div className="max-w-3xl mx-auto space-y-6 mt-8">
           {[
             {
               q: 'Is this better than Google Forms?',
@@ -131,7 +166,7 @@ export default function Home() {
               a: 'We\'re in the final stretch of development. Join the waitlist now to get early access before the public launch!'
             }
           ].map((faq, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
+            <FadeInSection key={index} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
               <h3 className="font-semibold text-lg mb-2">{faq.q}</h3>
               <p className="text-gray-800">{faq.a}</p>
             </div>
@@ -141,11 +176,13 @@ export default function Home() {
 
       {/* Final CTA */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-2xl my-16 mx-4 shadow-xl">
-        <h2 className="text-3xl font-bold mb-6">Be First in Line!</h2>
+        <FadeInSection>
+          <h2 className="text-3xl font-bold mb-6">Be First in Line!</h2>
         <p className="text-xl mb-8 max-w-2xl mx-auto">
           Join our waitlist today and get priority access, special discounts, and help shape the future of form building.
         </p>
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+        </FadeInSection>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 mt-8">
           <Input
             type="email"
             placeholder="Enter your email"
@@ -157,7 +194,7 @@ export default function Home() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-8 py-4 bg-white text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-600 rounded-full font-semibold hover:bg-gray-50 transition-all disabled:opacity-50 border-2 border-white hover:border-opacity-50"
+            className="px-8 bg-white text-orange-600 rounded-full font-semibold hover:bg-slate-200 transition-all disabled:opacity-50 border-2 border-white hover:border-opacity-50"
           >
             {isSubmitting ? 'Joining...' : '🚀 Join Now'}
           </button>
