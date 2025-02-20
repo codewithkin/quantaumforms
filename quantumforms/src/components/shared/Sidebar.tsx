@@ -7,23 +7,15 @@ import { usePathname } from 'next/navigation';
 import { TooltipTrigger } from '@radix-ui/react-tooltip';
 import { Tooltip, TooltipContent, TooltipProvider } from '../ui/tooltip';
 import { Avatar } from "@heroui/avatar";
-import { auth } from '@/auth';
-import { useQuery } from "@tanstack/react-query";
+import { useSession } from 'next-auth/react';
 
 function Sidebar() {
     // Get the current path
     const path = usePathname();
 
-    // Get the user's session data
-    const { data: session } = useQuery({
-        initialData: null,
-        queryKey: ["user"],
-        queryFn: async () => await auth()
-    });
+    const obj = useSession();
 
-    const user = session?.user;
-
-    console.log("USER DATA: ", session);
+    const user = obj?.data?.user;
 
   return (
     <aside className='md:min-h-screen p-4 bg-white flex flex-col justify-between'>
