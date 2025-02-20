@@ -8,7 +8,7 @@ import React from 'react'
 
 function Topbar() {
   return (
-    <article className="p-4 border-b border-white flex w-full justify-between items-center">
+    <article className="p-4 border-b border-white flex md:flex-row flex-col w-full justify-between items-center">
         {/* Avatar and Search Input */}
         <article className="flex gap-4 items-center">
             <DropdownMenu>
@@ -55,13 +55,13 @@ function Topbar() {
             <Input
                 placeholder="Search for a form..."
                 color="primary"
-                className="max-w-[400px] bg-white"
+                className="w-full max-w-[400px] bg-white"
             />
         </article>
 
         {/* Create new form btn */}
         <article>
-            <Button variant="ghost" color="primary" className="btn btn-primary">New Form</Button>
+            <Button variant="default" color="primary" className="">Create New Form</Button>
         </article>
     </article>
   )
