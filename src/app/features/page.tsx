@@ -5,7 +5,7 @@ import { Bot, Sparkles, BarChart3, Palette, Zap,
   SparkleIcon,
   Move3D} from 'lucide-react';
 import { FadeInSection } from '@/components/FadeInSection';
-import { CTASection } from '@/components/sections/CTASection';
+import { FinalCTA } from '@/components/sections/FinalCTA';
 
 const features = [
   {
@@ -132,7 +132,7 @@ export default function FeaturesPage() {
       ))}
 
       {/* CTA Section */}
-      <CTASection />
+      <FinalCTA />
     </main>
   );
 }

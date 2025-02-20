@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { PlusCircle, MinusCircle } from 'lucide-react';
 import { FadeInSection } from '@/components/FadeInSection';
-import { CTASection } from '@/components/sections/CTASection';
+import { FinalCTA } from '@/components/sections/FinalCTA';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 
@@ -153,7 +153,7 @@ export default function FAQPage() {
       </section>
 
       {/* CTA Section */}
-      <CTASection />
+      <FinalCTA />
     </main>
   );
 }

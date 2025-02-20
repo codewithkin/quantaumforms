@@ -2,7 +2,7 @@
 
 import { Bot, Sparkles, Wand2, PenTool, Share2, BarChart3 } from 'lucide-react';
 import { FadeInSection } from '@/components/FadeInSection';
-import { CTASection } from '@/components/sections/CTASection';
+import { FinalCTA } from '@/components/sections/FinalCTA';
 
 const steps = [
   {
@@ -130,7 +130,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA Section */}
-      <CTASection />
+      <FinalCTA />
     </main>
   );
 }

@@ -81,27 +81,6 @@ export const WaitlistWelcomeEmail = ({
             <Text>
               We'll keep you posted on updates, launch details, and even some surprises along the way. Stay tuned!
             </Text>
-            <Text>
-              In the meantime, why not share the love? Invite your friends and move up the list! 🚀
-            </Text>
-            
-            <Button
-              href="https://quantumforms.app/invite"
-              style={{
-                display: 'inline-block',
-                backgroundColor: '#7C3AED',
-                background: 'linear-gradient(to right, #7C3AED, #F97316)',
-                color: '#ffffff',
-                padding: '12px 20px',
-                fontSize: '16px',
-                borderRadius: '5px',
-                textDecoration: 'none',
-                marginTop: '20px',
-                textAlign: 'center'
-              }}
-            >
-              Invite Friends
-            </Button>
           </Section>
 
           <Hr style={{ borderTop: '1px solid #ddd', margin: '20px 0' }} />
