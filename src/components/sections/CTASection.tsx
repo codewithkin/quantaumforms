@@ -2,26 +2,32 @@
 
 import { FadeInSection } from '@/components/FadeInSection';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useWaitlist } from '@/context/WaitlistContext';
 
 export function CTASection() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { isJoined, isError, errorMessage, joinWaitlist } = useWaitlist();
+  const { isJoined, isError, errorMessage, joinWaitlist, clearError } = useWaitlist();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
       await joinWaitlist(email);
+      setEmail('');
     } catch (error) {
       // Error is handled by context
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-2xl my-16 mx-4 shadow-xl">

@@ -16,6 +16,7 @@ export function NavbarWaitlistForm() {
     try {
       setIsSubmitting(true);
       await joinWaitlist(email);
+      setEmail('');
     } catch (error) {
       // Error is handled by context
     } finally {
@@ -23,14 +24,22 @@ export function NavbarWaitlistForm() {
     }
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      clearError();
+      setEmail('');
+    }
+  };
+
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <button className="px-6 h-10 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl">
           Join Waitlist
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-4" align="end" onInteractOutside={clearError}>
+      <PopoverContent className="w-80 p-4" align="end" onOpenAutoFocus={(e) => e.preventDefault()}>
         {isJoined ? (
           <div className="animate-fade-in text-xl font-oswald text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-500 text-center py-2">
             You're in! 🎉 We'll see you on launch day!

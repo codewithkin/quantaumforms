@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { Resend } from 'resend';
+import WaitlistWelcomeEmail from '@/emails/WaitlistWelcome';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Input validation schema
 const waitlistSchema = z.object({
@@ -20,14 +24,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // Mock delay to simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Mock success (90% of the time) or failure (10% of the time)
-    const shouldSucceed = Math.random() > 0.1;
-
-    if (!shouldSucceed) {
-      throw new Error('Failed to join waitlist');
+    try {
+      // Send welcome email
+      await resend.emails.send({
+        from: 'QuantumForms <onboarding@aiseogen.com>',
+        to: result.data.email,
+        subject: 'Welcome to QuantumForms Waitlist! 🎉',
+        react: WaitlistWelcomeEmail({ email: result.data.email }),
+      });
+    } catch (error) {
+      console.error('Failed to send welcome email:', error);
+      // Don't throw here - we still want to return success even if email fails
     }
 
     // Return success response

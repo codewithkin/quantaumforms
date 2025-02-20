@@ -2,25 +2,32 @@
 
 import { Input } from '@/components/ui/input';
 import { FadeInSection } from '@/components/FadeInSection';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useWaitlist } from '@/context/WaitlistContext';
 
 export function HeroSection() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { isJoined, isError, errorMessage, joinWaitlist } = useWaitlist();
+  const { isJoined, isError, errorMessage, joinWaitlist, clearError } = useWaitlist();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
       await joinWaitlist(email);
+      setEmail('');
     } catch (error) {
       // Error is handled by context
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
 
   return (
     <header className="py-20 md:py-60 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">

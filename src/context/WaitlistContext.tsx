@@ -8,6 +8,7 @@ interface WaitlistContextType {
   errorMessage: string | null;
   joinWaitlist: (email: string) => Promise<void>;
   clearError: () => void;
+  reset: () => void;
 }
 
 const WaitlistContext = createContext<WaitlistContextType | undefined>(undefined);
@@ -22,9 +23,15 @@ export function WaitlistProvider({ children }: { children: React.ReactNode }) {
     setErrorMessage(null);
   };
 
+  const reset = () => {
+    setIsJoined(false);
+    clearError();
+  };
+
   const joinWaitlist = async (email: string) => {
     try {
       clearError();
+      setIsJoined(false);
       
       const response = await fetch('/api/waitlist', {
         method: 'POST',
@@ -37,7 +44,11 @@ export function WaitlistProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to join waitlist');
+        throw new Error(
+          data.error || 
+          (data.details?.[0]?.message) || 
+          'Failed to join waitlist'
+        );
       }
 
       setIsJoined(true);
@@ -48,12 +59,12 @@ export function WaitlistProvider({ children }: { children: React.ReactNode }) {
           ? error.message 
           : 'An unexpected error occurred'
       );
-      throw error; // Re-throw for component-level handling if needed
+      throw error;
     }
   };
 
   return (
-    <WaitlistContext.Provider value={{ isJoined, isError, errorMessage, joinWaitlist, clearError }}>
+    <WaitlistContext.Provider value={{ isJoined, isError, errorMessage, joinWaitlist, clearError, reset }}>
       {children}
     </WaitlistContext.Provider>
   );
