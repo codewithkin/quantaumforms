@@ -26,7 +26,7 @@ function Sidebar() {
     console.log("USER DATA: ", user);
 
   return (
-    <aside className='md:min-h-screen p-4 bg-white flex flex-col items-between'>
+    <aside className='md:min-h-screen p-4 bg-white flex flex-col justify-between'>
         <article className="flex flex-col gap-16">
             {/* App Icon */}
             <article className="bg-orange-500 p-2 rounded-lg flex flex-col justify-center items-center">
@@ -93,7 +93,7 @@ function Sidebar() {
                     <TooltipTrigger>
                         <Button size="icon" variant="outline" asChild>
                             <Link href="/auth/signout">
-                                <DoorOpen fill="yellow" size={20} strokeWidth={1.5} />
+                                <DoorOpen size={20} strokeWidth={1.5} />
                             </Link>
                         </Button>
                     </TooltipTrigger>
