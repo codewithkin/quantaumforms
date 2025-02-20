@@ -52,7 +52,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-orange-50">
-      <Navbar />
       {/* Add top padding to account for fixed navbar */}
       <div className="pt-16">
       {/* Hero Section */}
@@ -202,7 +201,6 @@ export default function Home() {
         </form>
       </section>
       </div>
-      <Footer />
     </div>
   );
 }
