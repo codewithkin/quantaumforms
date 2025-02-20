@@ -20,6 +20,8 @@ const handler = NextAuth({
   ],
   pages: {
     signIn: '/auth/signin',
+    error: '/auth/error',
+    verifyRequest: '/auth/verify',
   },
 })
 
