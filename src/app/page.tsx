@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -19,6 +21,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <Navbar />
+      {/* Add top padding to account for fixed navbar */}
+      <div className="pt-16">
       {/* Hero Section */}
       <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
@@ -157,6 +162,8 @@ export default function Home() {
           </button>
         </form>
       </section>
+      </div>
+      <Footer />
     </div>
   );
 }
