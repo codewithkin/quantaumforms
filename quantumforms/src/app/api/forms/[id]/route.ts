@@ -19,7 +19,7 @@ export async function GET (req: NextRequest, {params}: {params: {id: string}}) {
             console.log("FORM NOT FOUND")
             return NextResponse.json({
                 message: "No form with that id"
-            }, {status: 404});
+            });
         }
 
         console.log("FORM FOUND: ", form);

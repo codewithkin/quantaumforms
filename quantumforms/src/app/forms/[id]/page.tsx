@@ -8,6 +8,7 @@ import { Loader, PlusCircle, Trash, Settings, List } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Field } from "@/types";
+import Link from "next/link";
 
 export default function FormEditor() {
     const router = useRouter();
@@ -17,7 +18,7 @@ export default function FormEditor() {
     const params = useParams() as {id: string};
 
     // Fetch Form Data using react-query
-    const { data: form, isLoading, isError } = useQuery({
+    const { data: form, isLoading, isError, error } = useQuery({
         queryKey: ["form", params.id],
         queryFn: async () => {
             const res = await axios.get(`/api/forms/${params.id}`);
@@ -32,13 +33,13 @@ export default function FormEditor() {
     if (isLoading) return <Loader className="animate-spin mx-auto mt-10" />;
 
     if(isError) {
-        console.log("An error occured while fetching form: ");
+        console.log("An error occured while fetching form:", error);
     }
 
     return (
-        <article className={`grid  h-screen w-full ${form && "grid-cols-[250px_1fr_300px]"}`}>
+        <article className={`grid  h-screen w-full ${form && !form.message && "grid-cols-[250px_1fr_300px]"}`}>
             {
-                form ?
+                form && !form.message ?
                 <>
                     {/* Sidebar */}
             <aside className="bg-gray-100 p-4 border-r">
@@ -109,8 +110,13 @@ export default function FormEditor() {
                 </Button>
             </aside>
                 </> :
-                <article className="w-full h-full flex flex-col justify-center items-center">
+                <article className="w-full h-full flex flex-col justify-center items-center gap-2">
                     <h2 className="text-xl text-slate-500">An error occured, form not found</h2>
+                    <Button className="bg-orange-500 hoverLbg-orange-700 text-white" asChild>
+                        <Link href="/dashboard">
+                            Take me home
+                        </Link>
+                    </Button>
                 </article>
             }
         </article>
