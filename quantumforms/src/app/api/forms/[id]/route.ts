@@ -119,3 +119,47 @@ export async function PUT(
     );
   }
 }
+
+// DELETE a particular form
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const { id } = await params;
+
+    const form = await prisma.form.findUnique({
+      where: {
+        shareableLink: id,
+      },
+    });
+
+    if (!form) {
+      console.log("FORM NOT FOUND");
+      return NextResponse.json({
+        message: "No form with that id",
+      });
+    }
+
+    const deletedForm = await prisma.form.delete({
+      where: {
+        shareableLink: id,
+      },
+      include: {
+        fields: true,
+        settings: true,
+      },
+    });
+
+    return NextResponse.json(deletedForm, { status: 200 });
+  } catch (e) {
+    console.log("An error occured while deleting a particular form: ", e);
+
+    return NextResponse.json(
+      {
+        message: "An error occured whle deleting form",
+      },
+      { status: 500 },
+    );
+  }
+}
