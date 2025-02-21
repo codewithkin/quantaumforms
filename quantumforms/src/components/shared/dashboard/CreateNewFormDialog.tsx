@@ -4,8 +4,8 @@ import { Dialog, DialogTrigger, DialogHeader, DialogTitle, DialogContent, Dialog
 function CreateNewFormDialog() {
   return (
     <Dialog>
-        <DialogTrigger>
-            <Button variant="default" color="primary" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 w-full md:w-fit">
+        <DialogTrigger asChild>
+            <Button variant="default" color="primary" className="bg-gradient-to-r transition duration-300 from-purple-600 to-orange-500 hover:scale-105 w-full md:w-fit">
             Create New Form
             </Button>
         </DialogTrigger>
