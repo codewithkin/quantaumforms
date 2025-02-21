@@ -75,7 +75,7 @@ function CreateNewFormDialog() {
                     <Button 
                         disabled={ mutation.isPending }
                         variant="default" 
-                        className="bg-gradient-to-r flex gap-4 items-center from-purple-500 to-pink-500 hover:scale-105" 
+                        className="bg-gradient-to-r flex gap-2 items-center from-purple-500 to-pink-500 hover:scale-105" 
                         onClick={() => {
                             mutation.mutate()
                         }}
