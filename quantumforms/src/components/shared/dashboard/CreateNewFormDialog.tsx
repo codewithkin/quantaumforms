@@ -30,7 +30,7 @@ function CreateNewFormDialog() {
       console.log("New form created", data);
 
       // Redirect to the form editor
-      router.push(`/forms/${data?.data?.shareableLink}`); // Redirect to form edit page
+      router.push(`/user/forms/${data?.data?.shareableLink}`); // Redirect to form edit page
     },
 
     onError: () => {

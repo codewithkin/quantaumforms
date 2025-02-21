@@ -23,7 +23,7 @@ export default function SignIn() {
     try {
       setLoading(true);
       setLoading(true);
-      signIn("google", { callbackUrl: "/dashboard" });
+      signIn("google", { callbackUrl: "/user/dashboard" });
     } catch (e: unknown) {
       console.log("An error occured while signing in with google: ", e);
     } finally {
@@ -35,7 +35,7 @@ export default function SignIn() {
     try {
       setLoading(true);
       setLoading(true);
-      signIn("github", { callbackUrl: "/dashboard" });
+      signIn("github", { callbackUrl: "/user/dashboard" });
     } catch (e: unknown) {
       console.log("An error occured while signing in with github: ", e);
     } finally {
