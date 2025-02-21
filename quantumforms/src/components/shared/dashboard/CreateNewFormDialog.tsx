@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@heroui/input"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useMutation } from "@tanstack/react-query";
+import { createForm } from "@/helpers/queries/createForm";
 
 function CreateNewFormDialog() {
     const [title, setTitle] = useState("")
@@ -12,23 +14,15 @@ function CreateNewFormDialog() {
 
     const router = useRouter();
 
-    const handleCreateForm = async () => {
-        if (!title.trim()) return alert("Form title is required!");
-
-        const response = await fetch("/api/forms", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, description })
-        });
-
-        if (response.ok) {
-            const newForm = await response.json();
-            router.push(`/forms/${newForm.id}`); // Redirect to form edit page
-        } else {
-            alert("Failed to create form");
+    const mutation = useMutation({
+        mutationFn: async () => await createForm(router, title, description),
+        onSuccess: () => {
+            console.log("New form created");
+        },
+        onError: () => {
+            console.log("An error occured while creating form");
         }
-    };
-
+    })
 
   return (
     <Dialog>
@@ -69,7 +63,9 @@ function CreateNewFormDialog() {
                     <Button 
                         variant="default" 
                         className="bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105" 
-                        onClick={handleCreateForm}
+                        onClick={() => {
+                            mutation.mutate()
+                        }}
                     >
                         Create Form
                     </Button>
