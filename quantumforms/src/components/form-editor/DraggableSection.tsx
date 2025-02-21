@@ -20,7 +20,7 @@ function DraggableSection({ form }: { form: Form }) {
         </CardHeader>
 
         <CardContent>
-          <form className="w-full flex flex-col justify-start items-start">
+          <form className="w-full flex flex-col justify-start items-start text-start gap-4">
             {form.fields.length > 0 &&
               form.fields.map((field) => {
                 return field.type !== "textarea" ?
