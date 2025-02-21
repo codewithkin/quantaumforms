@@ -39,7 +39,7 @@ export default function FormEditor() {
     // Mutation for adding a new field
     const addFieldMutation = useMutation({
         mutationFn: async () => {
-            return await axios.patch(`/api/forms/${params.id}`, {
+            return await axios.put(`/api/forms/${params.id}`, {
                 formId: params.id,
                 type: fieldData.type,
                 label: fieldData.label,
