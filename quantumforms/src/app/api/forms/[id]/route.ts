@@ -2,20 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma"
 
 // GET a particular form
-export async function GET (req: NextRequest, {params}: {params: {shareableLink: string}}) {
+export async function GET (req: NextRequest, {params}: {params: {id: string}}) {
     try {
-        console.log("PARAMS: ", params.shareableLink);
+        const {id} = await params;
 
-        const shareableLink = params.shareableLink as string | undefined;
+        console.log(id)
+
+        if(!id) throw new Error("Shareable link not provided");
 
         // Get the form with the shareableLink from query params
         const form = await prisma.form.findUnique({
             where: {
-                shareableLink
+                shareableLink: id
             }
         });
-
-        console.log("PARTICULAR FORM: ", form);
 
         if(!form) {
             return NextResponse.json({

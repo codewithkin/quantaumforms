@@ -32,6 +32,8 @@ export default function FormEditor() {
         console.log("An error occured while fetching form: ");
     }
 
+    console.log('FORM: ', form);
+
     return (
         <div className="grid grid-cols-[250px_1fr_300px] h-screen">
             {/* Sidebar */}
