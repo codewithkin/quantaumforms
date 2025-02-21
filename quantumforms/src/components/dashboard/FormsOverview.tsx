@@ -268,11 +268,11 @@ const FormCard = ({
 function FormsOverview() {
   return (
     <article className="flex flex-col gap-4">
-      <article className="w-full flex py-8 justify-between items-center">
+      <article className="w-full flex flex-col gap-2 md:flex-row py-8 justify-between items-center">
         <h2 className="text-2xl font-semibold">My Forms</h2>
 
         {/* Form filters */}
-        <article className="flex gap-4 items-centerjustify-center">
+        <article className="flex gap-4 items-center w-full justify-center overflow-x-scroll md:overflow-hidden">
           <Button variant="default" color="primary">
             Most Reponses
           </Button>
