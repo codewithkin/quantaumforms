@@ -13,6 +13,7 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Input } from "@heroui/input";
+import CreateNewFormDialog from "./CreateNewFormDialog";
 
 function Topbar() {
   return (
@@ -66,9 +67,7 @@ function Topbar() {
       </article>
 
       {/* Create new form btn */}
-      <article>
-        
-      </article>
+        <CreateNewFormDialog />
     </article>
   );
 }
