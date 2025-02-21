@@ -1,16 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma"
 
 // GET a particular form
-export async function GET ({params}: {params: {id: string}}) {
+export async function GET (req: NextRequest, {params}: {params: {shareableLink: string}}) {
     try {
-        // Get the form id
-        const id = params.id;
+        console.log("PARAMS: ", params.shareableLink);
 
-        // Get the form with the id from query params
+        const shareableLink = params.shareableLink as string | undefined;
+
+        // Get the form with the shareableLink from query params
         const form = await prisma.form.findUnique({
             where: {
-                id
+                shareableLink
             }
         });
 

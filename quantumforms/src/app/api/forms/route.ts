@@ -56,8 +56,6 @@ export async function POST(req: Request) {
 // 🟡 GET all forms (GET /api/forms)
 export async function GET({params}: {params: {id: string}}) {
     try {
-        console.log("PARAMS: ", params);
-
         const forms = await prisma.form.findMany({
             orderBy: { createdAt: "desc" }, // Latest forms first
         });
