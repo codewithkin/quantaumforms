@@ -9,6 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Loader, PlusCircle, Trash, List } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Field } from "@/types";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 export default function FormEditor() {
     const queryClient = useQueryClient();
@@ -47,14 +49,20 @@ export default function FormEditor() {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ["form", params.id]}); // Refresh form
+            queryClient.invalidateQueries({ queryKey: ["form", params.id] }); // Refresh form
             setShowDialog(false); // Close dialog
             resetForm(); // Reset form fields
+
+            // Show a success toast
+            toast.success("Field added successfully");
+        },
+        onError: () => {
+            toast.success("An error occurred while adding the field");
         },
     });
 
     // Handle input changes
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFieldData({ ...fieldData, [e.target.name]: e.target.value });
     };
 
@@ -116,7 +124,7 @@ export default function FormEditor() {
                         </DialogHeader>
 
                         {/* Field Type Selection */}
-                        <label className="block text-sm font-medium">Field Type</label>
+                        <Label className="block text-sm font-medium">Field Type</Label>
                         <select
                             className="w-full p-2 border rounded"
                             value={fieldData.type}
@@ -124,12 +132,15 @@ export default function FormEditor() {
                         >
                             <option value="text">Text</option>
                             <option value="number">Number</option>
+                            <option value="email">Email</option>
                             <option value="select">Select</option>
                             <option value="checkbox">Checkbox</option>
+                            <option value="textarea">Textarea</option>
+                            <option value="date">Date</option>
                         </select>
 
                         {/* Label */}
-                        <label className="block text-sm font-medium mt-2">Label</label>
+                        <Label className="block text-sm font-medium mt-2">Label</Label>
                         <Input
                             name="label"
                             placeholder="Enter label"
@@ -138,7 +149,7 @@ export default function FormEditor() {
                         />
 
                         {/* Placeholder */}
-                        <label className="block text-sm font-medium mt-2">Placeholder</label>
+                        <Label className="block text-sm font-medium mt-2">Placeholder</Label>
                         <Input
                             name="placeholder"
                             placeholder="Enter placeholder"
@@ -149,13 +160,13 @@ export default function FormEditor() {
                         {/* Required Checkbox */}
                         <div className="flex items-center gap-2 mt-2">
                             <Checkbox checked={fieldData.required} onCheckedChange={handleCheckboxChange} />
-                            <label className="text-sm">Required</label>
+                            <Label className="text-sm">Required</Label>
                         </div>
 
                         {/* Options for Select Field */}
                         {fieldData.type === "select" && (
                             <div className="mt-4">
-                                <label className="block text-sm font-medium">Options</label>
+                                <Label className="block text-sm font-medium">Options</Label>
                                 <div className="flex gap-2">
                                     <Input
                                         name="newOption"
@@ -178,6 +189,20 @@ export default function FormEditor() {
                             </div>
                         )}
 
+                        {/* Textarea for Textarea Type Field */}
+                        {fieldData.type === "textarea" && (
+                            <div className="mt-4">
+                                <Label className="block text-sm font-medium">Textarea</Label>
+                                <textarea
+                                    name="placeholder"
+                                    placeholder="Enter placeholder"
+                                    value={fieldData.placeholder}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded"
+                                />
+                            </div>
+                        )}
+
                         {/* Submit Button */}
                         <Button
                             onClick={() => addFieldMutation.mutateAsync()}
@@ -191,7 +216,7 @@ export default function FormEditor() {
 
                 {/* Field List */}
                 <ul className="mt-4 space-y-2">
-                    {form.fields.map((field: Field) => (
+                    {form.fields && form.fields.length > 0 && form.fields.map((field: Field) => (
                         <li key={field.id} className="p-2 rounded-md bg-white">
                             <List size={16} className="inline-block mr-2" />
                             {field.label}

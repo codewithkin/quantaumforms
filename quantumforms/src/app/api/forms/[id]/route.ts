@@ -40,7 +40,7 @@ export async function GET(
 }
 
 // UPDATE a particular form
-export async function PATCH(req: NextRequest, {params} : {params: {id: string}}) {
+export async function PUT(req: NextRequest, {params} : {params: {id: string}}) {
   try {
     const {id} = await params;
 
