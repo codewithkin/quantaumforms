@@ -62,10 +62,10 @@ export default function FormEditor() {
 
             {/* Field List */}
             <ul className="mt-4 space-y-2">
-              {form.fields.map((field: Field) => (
+              {form.fields && form.fields.length > 0 && form.fields.map((field: Field) => (
                 <li
                   key={field.id}
-                  className={`p-2 rounded-md cursor-pointer ${
+                  className={`p-2 rounded-md cursor-pointer w-full ${
                     selectedField?.id === field.id ? "bg-blue-200" : "bg-white"
                   }`}
                   onClick={() => setSelectedField(field)}
@@ -78,7 +78,7 @@ export default function FormEditor() {
 
             <Button
               variant="destructive"
-              className="mt-6 flex items-center gap-2"
+              className="mt-6 flex items-center gap-2 w-full"
             >
               <Trash size={16} /> Delete Form
             </Button>
@@ -120,15 +120,15 @@ export default function FormEditor() {
           </main>
 
           {/* Settings Panel */}
-          <aside className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6">
+          <aside className="bg-gray-100 p-6">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <Settings size={16} /> Form Settings
             </h3>
-            <p className="text-sm">
+            <p className="text-sm text-slate-600">
               Adjust form visibility and submission settings.
             </p>
 
-            <Button variant="outline" className="mt-4 w-full">
+            <Button variant="outline" className="mt-8 w-full">
               Save Changes
             </Button>
           </aside>
