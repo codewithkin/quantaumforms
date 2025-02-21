@@ -22,11 +22,7 @@ function DraggableSection({ form }: { form: Form }) {
     const deleteMutation = useMutation({
         mutationFn: async (fieldId: string) => {
             // Make a delete request
-            const res = await axios.delete(`/api/field/${form.id}?fieldId=${form.id}`, {
-                data: {
-                    fieldId
-                }
-            });
+            const res = await axios.delete(`/api/field/${form.id}?fieldId=${fieldId}`);
 
             return res.data;
         },
