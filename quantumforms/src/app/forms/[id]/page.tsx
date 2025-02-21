@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Loader, PlusCircle, Trash, Settings, List } from "lucide-react";
 
-// 🟢 Form Editor Page
 export default function FormEditor({ params }: { params: { id: string } }) {
     const router = useRouter();
     const [form, setForm] = useState(null);

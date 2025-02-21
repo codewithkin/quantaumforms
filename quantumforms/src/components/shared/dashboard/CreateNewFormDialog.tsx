@@ -24,6 +24,7 @@ function CreateNewFormDialog() {
             // const newForm = await response.json();
             // router.push(`/forms/${newForm.id}`); // Redirect to form edit page
         },
+
         onError: () => {
             console.log("An error occured while creating form");
 
@@ -54,11 +55,13 @@ function CreateNewFormDialog() {
                     <Input
                         placeholder="Form Title *"
                         value={title}
+                        disabled={ mutation.isPending }
                         onChange={(e) => setTitle(e.target.value)}
                         className="border rounded-lg p-2 w-full"
                     />
 
                     <Textarea
+                        disabled={mutation.isPending}
                         placeholder="Short Description (Optional)"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -69,6 +72,7 @@ function CreateNewFormDialog() {
                 <DialogFooter className="flex justify-end space-x-2">
                     <Button variant="ghost">Cancel</Button>
                     <Button 
+                        disabled={ mutation.isPending }
                         variant="default" 
                         className="bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105" 
                         onClick={() => {
