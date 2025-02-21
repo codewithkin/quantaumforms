@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { useMutation } from "@tanstack/react-query";
 import { createForm } from "@/helpers/queries/createForm";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 function CreateNewFormDialog() {
     const [title, setTitle] = useState("")
@@ -74,11 +75,14 @@ function CreateNewFormDialog() {
                     <Button 
                         disabled={ mutation.isPending }
                         variant="default" 
-                        className="bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105" 
+                        className="bg-gradient-to-r flex gap-4 items-center from-purple-500 to-pink-500 hover:scale-105" 
                         onClick={() => {
                             mutation.mutate()
                         }}
                     >
+                        { mutation.isPending && 
+                            <Loader2 size={20} className="animate-spin" />
+                        }
                         Create Form
                     </Button>
                 </DialogFooter>
