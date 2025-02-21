@@ -1,6 +1,7 @@
 import {
   CalendarHeart,
   Check,
+  CircleAlert,
   CircleDot,
   List,
   ListOrdered,
@@ -9,12 +10,20 @@ import {
   TextCursorInput,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 function FormField({
   label,
+  required,
   type,
 }: {
   label: string;
+  required?: boolean;
   type: string;
 }) {
   // Track the icon state
@@ -54,9 +63,23 @@ function FormField({
   }, [label]);
 
   return (
-    <li className="p-2 rounded-md bg-white">
-      {icon}
-      {label}
+    <li className="p-2 rounded-md bg-white flex justify-between w-full">
+      <article className="flex gap-2 items-center">
+        {icon}
+        {label}
+      </article>
+
+      {required && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <CircleAlert size={20} />
+            </TooltipTrigger>
+
+            <TooltipContent side="right">This field is required</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
     </li>
   );
 }

@@ -255,7 +255,7 @@ export default function FormEditor() {
           {form.fields &&
             form.fields.length > 0 &&
             form.fields.map((field: Field) => (
-              <FormField key={field.id} type={field.type} label={field.label} />
+              <FormField required={field.required} key={field.id} type={field.type} label={field.label} />
             ))}
         </ul>
       </aside>
