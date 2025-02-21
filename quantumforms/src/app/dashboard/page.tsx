@@ -3,7 +3,7 @@ import React from "react";
 
 function Dashboard() {
   return (
-    <section>
+    <section className="md:px-20 md:py-8 p-4">
       <FormsOverview />
     </section>
   );
