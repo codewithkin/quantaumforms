@@ -254,7 +254,7 @@ const FormCard = ({
                       <ChevronDown size={20} strokeWidth={1} />
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="font-semibold">{type}</p>
+                      <p className="font-semibold text-slate-600">{type}</p>
                     </AccordionContent>
                   </AccordionItem>
                 );
