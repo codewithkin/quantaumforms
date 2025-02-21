@@ -17,6 +17,7 @@ import { useParams } from "next/navigation";
 import { Field } from "@/types";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import FormField from "@/components/form-editor/FormField";
 
 export default function FormEditor() {
   const queryClient = useQueryClient();
@@ -109,6 +110,8 @@ export default function FormEditor() {
       newOption: "",
     });
   };
+
+  console.log("FORM: ", form);
 
   if (isLoading) return <Loader className="animate-spin mx-auto mt-10" />;
 
@@ -252,10 +255,7 @@ export default function FormEditor() {
           {form.fields &&
             form.fields.length > 0 &&
             form.fields.map((field: Field) => (
-              <li key={field.id} className="p-2 rounded-md bg-white">
-                <List size={16} className="inline-block mr-2" />
-                {field.label}
-              </li>
+              <FormField type={field.type} id={field.id} label={field.label} />
             ))}
         </ul>
       </aside>

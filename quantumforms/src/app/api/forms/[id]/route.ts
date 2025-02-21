@@ -16,6 +16,10 @@ export async function GET(
       where: {
         shareableLink: id,
       },
+      include: {
+        fields: true,
+        settings: true,
+      },
     });
 
     if (!form) {
