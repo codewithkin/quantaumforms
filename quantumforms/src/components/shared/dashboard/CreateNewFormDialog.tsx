@@ -3,29 +3,32 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger, DialogHeader, DialogTitle, DialogContent, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@heroui/input"
-import { useState } from "react";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 function CreateNewFormDialog() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
 
+    const router = useRouter();
+
     const handleCreateForm = async () => {
-        if (!title.trim()) return alert("Form title is required!")
-    
+        if (!title.trim()) return alert("Form title is required!");
+
         const response = await fetch("/api/forms", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title, description })
         });
-    
+
         if (response.ok) {
             const newForm = await response.json();
-            console.log("Form Created:", newForm);
-            // Step 2: Update UI & Navigate to Form Page
+            router.push(`/forms/${newForm.id}`); // Redirect to form edit page
         } else {
             alert("Failed to create form");
         }
-    };    
+    };
+
 
   return (
     <Dialog>
