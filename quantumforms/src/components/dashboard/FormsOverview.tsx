@@ -223,7 +223,7 @@ const FormCard = ({
   fields,
 }: Form) => {
   return (
-    <Card>
+    <Card className="md:min-w-[400px] min-h-[400px]">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">{title}</CardTitle>
         <Badge className="w-fit">{createdAt}</Badge>
@@ -235,11 +235,10 @@ const FormCard = ({
         </CardDescription>
       </CardContent>
 
-      <CardFooter className="flex-col justify-start items-start gap-2">
+      <CardFooter className="flex-col justify-start w-full items-start gap-2">
         <h2 className="text-md font-semibold">Fields:</h2>
 
-        <article className="flex flex-col gap-2">
-          <Accordion type="multiple" className="w-full">
+          <Accordion type="multiple" className="w-full flex flex-col gap-2">
             {fields.length > 0 &&
               fields.map((field: Field) => {
                 const { id, type, label } = field;
@@ -261,7 +260,6 @@ const FormCard = ({
                 );
               })}
           </Accordion>
-        </article>
       </CardFooter>
     </Card>
   );
@@ -293,7 +291,7 @@ function FormsOverview() {
         </article>
       </article>
 
-      <article className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12">
+      <article className="grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12">
         {sampleForms.length > 0 &&
           sampleForms.map((form: Form) => {
             const { id, title, description, createdAt, updatedAt, fields } =
