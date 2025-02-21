@@ -7,6 +7,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useMutation } from "@tanstack/react-query";
 import { createForm } from "@/helpers/queries/createForm";
+import { toast } from "sonner";
 
 function CreateNewFormDialog() {
     const [title, setTitle] = useState("")
@@ -16,14 +17,18 @@ function CreateNewFormDialog() {
 
     const mutation = useMutation({
         mutationFn: async () => await createForm(router, title, description),
-        onSuccess: () => {
-            console.log("New form created");
+        onSuccess: (data) => {
+            console.log("New form created", data);
+
+            // Redirect to the form editor
+            // const newForm = await response.json();
+            // router.push(`/forms/${newForm.id}`); // Redirect to form edit page
         },
         onError: () => {
             console.log("An error occured while creating form");
 
             // Show an error toast
-            
+            toast.error("An error occured while creating your form...please try again later")
         }
     })
 
