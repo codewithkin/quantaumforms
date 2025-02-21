@@ -1,4 +1,4 @@
-import { Form } from "@/types";
+import { Field, Form } from "@/types";
 import {
   Card,
   CardContent,
@@ -20,9 +20,13 @@ function DraggableSection({ form }: { form: Form }) {
     const queryClient = useQueryClientProvider((state) => state.queryClient);
 
     const deleteMutation = useMutation({
-        mutationFn: async () => {
+        mutationFn: async (fieldId: string) => {
             // Make a delete request
-            const res = await axios.delete(`/api/forms/${form.id}`);
+            const res = await axios.delete(`/api/field/${form.id}`, {
+                data: {
+                    fieldId
+                }
+            });
 
             return res.data;
         },
@@ -54,7 +58,7 @@ function DraggableSection({ form }: { form: Form }) {
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Button onClick={() => {
-                                        deleteMutation.mutate();
+                                        deleteMutation.mutate(field.id);
                                     }}
                                     disabled={deleteMutation.isPending}
                                     className="bg-red-500 hover:bg-red-700" size="icon">
