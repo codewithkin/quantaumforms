@@ -252,10 +252,16 @@ export default function FormEditor() {
 
         {/* Field List */}
         <ul className="mt-4 space-y-2">
+          <Label>Fields</Label>
           {form.fields &&
             form.fields.length > 0 &&
             form.fields.map((field: Field) => (
-              <FormField required={field.required} key={field.id} type={field.type} label={field.label} />
+              <FormField
+                required={field.required}
+                key={field.id}
+                type={field.type}
+                label={field.label}
+              />
             ))}
         </ul>
       </aside>

@@ -73,7 +73,7 @@ function FormField({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <CircleAlert size={20} />
+              <CircleAlert fill="black" color="white" size={20} />
             </TooltipTrigger>
 
             <TooltipContent side="right">This field is required</TooltipContent>
