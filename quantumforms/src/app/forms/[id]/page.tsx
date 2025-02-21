@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Loader, PlusCircle, Trash, Settings, List } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Field } from "@/types";
 import Link from "next/link";
+import { useQueryClientProvider } from "@/context/QueryProvider";
 
 export default function FormEditor() {
   const router = useRouter();
@@ -35,6 +36,31 @@ export default function FormEditor() {
 
     retry: 2,
   });
+
+
+  const queryClient = useQueryClientProvider(state => state.queryClient);
+
+    // Mutation for adding a new field
+    const addFieldMutation = useMutation({
+        mutationFn: async () => {
+            return await axios.patch(`/api/forms/${params.id}`, {
+                formId: params.id,
+                type: "text", // Default type (can be changed later)
+                label: "New Field",
+                placeholder: "Enter text",
+                required: false,
+                options: [],
+            });
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["form", params.id]}); // Refresh data
+        },
+    });
+
+    // Function to handle adding a field
+    const handleAddField = async () => {
+        await addFieldMutation.mutateAsync();
+    };
 
   if (isLoading) return <Loader className="animate-spin mx-auto mt-10" />;
 

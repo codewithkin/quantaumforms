@@ -1,11 +1,13 @@
 import axios from "axios";
 
-export async function addNewField ({ formId, 
+export async function addNewField ({ 
+    formId, 
     type, 
     label, 
     placeholder, 
     required, 
-    options }: { formId: 
+    options }: { 
+        formId: 
         string, type: PerformanceServerTiming, 
         label: string, 
         placeholder: string, 
@@ -14,7 +16,7 @@ export async function addNewField ({ formId,
     }) {
     
     try {
-        const res = await axios.patch("/api/forms");
+        const res = await axios.patch(`/api/forms\${formId}`, {formId, type, label, placeholder, required, options});
 
         return res.data;
     } catch (e) {
