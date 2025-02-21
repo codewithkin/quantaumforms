@@ -65,13 +65,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} overflow-y-scroll antialiased bg-slate-200 flex md:flex-row flex-col-reverse min-h-screen`}
+        className={`${poppins.className}`}
       >
         <QueryProvider>
           <SessionProvider>
-            <Sidebar />
-            <MobileBottomBar />
-
             {children}
 
             <Toaster expand richColors />

@@ -35,12 +35,12 @@ function MobileBottomBar() {
         <article className="flex gap-16">
           <Button
             size="icon"
-            variant={path === "/dashboard" ? "default" : "outline"}
+            variant={path === "/user/dashboard" ? "default" : "outline"}
             asChild
           >
-            <Link href="/dashboard">
+            <Link href="/user/dashboard">
               <ChartBar
-                fill={path === "/dashboard" ? "currentColor" : "none"}
+                fill={path === "/user/dashboard" ? "currentColor" : "none"}
                 size={20}
                 strokeWidth={1.5}
               />
@@ -49,12 +49,12 @@ function MobileBottomBar() {
 
           <Button
             size="icon"
-            variant={path === "/forms" ? "default" : "outline"}
+            variant={path === "/user/forms" ? "default" : "outline"}
             asChild
           >
-            <Link href="/forms">
+            <Link href="/user/forms">
               <NotebookText
-                fill={path === "/forms" ? "currentColor" : "none"}
+                fill={path === "/user/forms" ? "currentColor" : "none"}
                 size={20}
                 strokeWidth={1.5}
               />
@@ -63,12 +63,12 @@ function MobileBottomBar() {
 
           <Button
             size="icon"
-            variant={path === "/analytics" ? "default" : "outline"}
+            variant={path === "/user/analytics" ? "default" : "outline"}
             asChild
           >
-            <Link href="/analytics">
+            <Link href="/user/analytics">
               <ChartPie
-                fill={path === "/analytics" ? "currentColor" : "none"}
+                fill={path === "/user/analytics" ? "currentColor" : "none"}
                 size={20}
                 strokeWidth={1.5}
               />
@@ -77,12 +77,12 @@ function MobileBottomBar() {
 
           <Button
             size="icon"
-            variant={path === "/ai" ? "default" : "outline"}
+            variant={path === "/user/ai" ? "default" : "outline"}
             asChild
           >
-            <Link href="/ai">
+            <Link href="/user/ai">
               <BotMessageSquare
-                fill={path === "/ai" ? "currentColor" : "none"}
+                fill={path === "/user/ai" ? "currentColor" : "none"}
                 size={20}
                 strokeWidth={1.5}
               />
