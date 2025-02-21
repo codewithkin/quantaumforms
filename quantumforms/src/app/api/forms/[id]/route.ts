@@ -72,8 +72,8 @@ export async function PATCH(req: NextRequest, {params} : {params: {id: string}})
       data: {
         title: title || existingForm.title,
         description: description || existingForm.description,
-        fields: fields || existingForm.fields,
-        settings: settings || existingForm.settings
+        fields: fields ? {...fields, existingForm.fields} : existingForm.fields,
+        settings: settings ? {...existingForm.settings, ...settings} : existingForm.settings
       }
     })
 
