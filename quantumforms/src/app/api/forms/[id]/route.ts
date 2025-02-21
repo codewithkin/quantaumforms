@@ -38,3 +38,54 @@ export async function GET(
     );
   }
 }
+
+// UPDATE a particular form
+export async function PATCH(req: NextRequest, {params} : {params: {id: string}}) {
+  try {
+    const {id} = await params;
+
+    // Get the data from the request body
+    const {
+      title,
+      description,
+      settings,
+      fields,
+    } = await req.json;
+
+    const existingForm = await prisma.form.findUnique({
+      where: {
+        shareableLink: id
+      },
+      include: {
+        fields,
+        settings
+      }
+    });
+
+    if(!existingForm) throw new Error("This form does not exist");
+
+    // Update the form
+    const updatedForm = await prisma.form.update({
+      where: {
+        shareableLink: id
+      },
+      data: {
+        title: title || existingForm.title,
+        description: description || existingForm.description,
+        fields: fields || existingForm.fields,
+        settings: settings || existingForm.settings
+      }
+    })
+
+    return NextResponse.json(
+      updatedForm,
+      {status: 201}
+    )
+  } catch (e) {
+    console.log("An error occured inside /api/forms/[id]/route.ts under PATCH");
+
+    return NextResponse.json({
+      messgae: "Updating form failed"
+    }, {status: 500})
+  }
+}
