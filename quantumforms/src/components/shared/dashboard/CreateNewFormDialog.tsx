@@ -21,6 +21,9 @@ function CreateNewFormDialog() {
         },
         onError: () => {
             console.log("An error occured while creating form");
+
+            // Show an error toast
+            
         }
     })
 

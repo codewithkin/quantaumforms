@@ -6,6 +6,7 @@ import QueryProvider from "@/context/QueryProvider";
 import { SessionProvider } from "next-auth/react";
 import MobileBottomBar from "@/components/shared/MobileBottomBar";
 import { HeroUIProvider } from "@heroui/system";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -70,7 +71,10 @@ export default function RootLayout({
           <SessionProvider>
             <Sidebar />
             <MobileBottomBar />
+
             {children}
+
+            <Toaster expand richColors />
           </SessionProvider>
         </QueryProvider>
       </body>
