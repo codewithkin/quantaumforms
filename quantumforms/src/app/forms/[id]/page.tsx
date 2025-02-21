@@ -1,32 +1,33 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader, PlusCircle, Trash, Settings, List } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Field } from "@/types";
 
 export default function FormEditor({ params }: { params: { id: string } }) {
     const router = useRouter();
-    const [form, setForm] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [selectedField, setSelectedField] = useState(null);
+    const [selectedField, setSelectedField] = useState<null | Field>(null);
 
-    // Fetch Form Data on Load
-    useEffect(() => {
-        async function fetchForm() {
-            const res = await fetch(`/api/forms/${params.id}`);
-            if (res.ok) {
-                const data = await res.json();
-                setForm(data);
-            } else {
-                router.push("/"); // Redirect if form not found
-            }
-            setLoading(false);
-        }
-        fetchForm();
-    }, [params.id]);
+    // Fetch Form Data using react-query
+    const { data: form, isLoading, isError } = useQuery({
+        queryKey: ["form", params.id],
+        queryFn: async () => {
+            const res = await axios.get(`/api/forms/${params.id}`);
+            return res.data;
+        },
+        retry: 2, // Retry twice on failure
+    });
 
-    if (loading) return <Loader className="animate-spin mx-auto mt-10" />;
+    if (isLoading) return <Loader className="animate-spin mx-auto mt-10" />;
+    if (isError) {
+        router.push("/");
+        return null;
+    }
 
     return (
         <div className="grid grid-cols-[250px_1fr_300px] h-screen">
@@ -41,10 +42,12 @@ export default function FormEditor({ params }: { params: { id: string } }) {
 
                 {/* Field List */}
                 <ul className="mt-4 space-y-2">
-                    {form.fields.map((field, index) => (
+                    {form.fields.map((field: Field) => (
                         <li
                             key={field.id}
-                            className={`p-2 rounded-md cursor-pointer ${selectedField?.id === field.id ? "bg-blue-200" : "bg-white"}`}
+                            className={`p-2 rounded-md cursor-pointer ${
+                                selectedField?.id === field.id ? "bg-blue-200" : "bg-white"
+                            }`}
                             onClick={() => setSelectedField(field)}
                         >
                             <List size={16} className="inline-block mr-2" />
@@ -67,7 +70,7 @@ export default function FormEditor({ params }: { params: { id: string } }) {
                             placeholder="Field Label"
                             value={selectedField.label}
                             onChange={(e) =>
-                                setSelectedField((prev) => ({ ...prev, label: e.target.value }))
+                                setSelectedField((prev: Field) => ({ ...prev, label: e.target.value }))
                             }
                             className="mt-2"
                         />
@@ -75,7 +78,7 @@ export default function FormEditor({ params }: { params: { id: string } }) {
                             placeholder="Placeholder Text"
                             value={selectedField.placeholder}
                             onChange={(e) =>
-                                setSelectedField((prev) => ({ ...prev, placeholder: e.target.value }))
+                                setSelectedField((prev: Field) => ({ ...prev, placeholder: e.target.value }))
                             }
                             className="mt-2"
                         />

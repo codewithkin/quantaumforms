@@ -12,24 +12,7 @@ import { Badge } from "../ui/badge";
 import { Accordion, AccordionContent } from "../ui/accordion";
 import { AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
-
-export type Field = {
-  id: string;
-  type: string;
-  label: string;
-  placeholder: string;
-  required: boolean;
-};
-
-export type Form = {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  fields: Field[];
-};
+import { Form, Field } from "@/types";
 
 const sampleForms = [
   {
