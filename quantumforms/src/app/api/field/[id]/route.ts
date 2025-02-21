@@ -7,8 +7,13 @@ export async function DELETE (req: NextRequest, {params}: {params: {id: string}}
         const { id } = await params;
 
         // Get the field id
-        const {fieldId} = await req.json();
+        const searchParams = req.nextUrl.searchParams; // Get fieldId from query params
 
+        const fieldId = searchParams.get("fieldId");
+
+        if (!fieldId) {
+            throw new Error("Field ID is required");
+        }
         // Find the form with the shareableLink equal to the id
         const form = await prisma.form.findUnique({
             where: {
