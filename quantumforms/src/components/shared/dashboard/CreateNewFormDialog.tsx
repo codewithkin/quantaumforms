@@ -9,16 +9,23 @@ function CreateNewFormDialog() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
 
-    const handleCreateForm = () => {
+    const handleCreateForm = async () => {
         if (!title.trim()) return alert("Form title is required!")
-        
-        // TODO: Handle form creation logic (e.g., send request to API)
-        console.log({ title, description })
-
-        // Reset fields
-        setTitle("")
-        setDescription("")
-    }
+    
+        const response = await fetch("/api/forms", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title, description })
+        });
+    
+        if (response.ok) {
+            const newForm = await response.json();
+            console.log("Form Created:", newForm);
+            // Step 2: Update UI & Navigate to Form Page
+        } else {
+            alert("Failed to create form");
+        }
+    };    
 
   return (
     <Dialog>
