@@ -67,9 +67,7 @@ function Topbar() {
 
       {/* Create new form btn */}
       <article>
-        <Button variant="default" color="primary" className="w-full md:w-fit">
-          Create New Form
-        </Button>
+        
       </article>
     </article>
   );
