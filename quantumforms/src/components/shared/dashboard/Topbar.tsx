@@ -67,7 +67,7 @@ function Topbar() {
       </article>
 
       {/* Create new form btn */}
-        <CreateNewFormDialog />
+      <CreateNewFormDialog />
     </article>
   );
 }

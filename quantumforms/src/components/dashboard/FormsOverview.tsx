@@ -221,28 +221,28 @@ const FormCard = ({
       <CardFooter className="flex-col justify-start w-full items-start gap-2">
         <h2 className="text-md font-semibold">Fields:</h2>
 
-          <Accordion type="multiple" className="w-full flex flex-col gap-2">
-            {fields.length > 0 &&
-              fields.map((field: Field) => {
-                const { id, type, label } = field;
+        <Accordion type="multiple" className="w-full flex flex-col gap-2">
+          {fields.length > 0 &&
+            fields.map((field: Field) => {
+              const { id, type, label } = field;
 
-                return (
-                  <AccordionItem
-                    key={id}
-                    className="border p-2 rounded-xl w-full"
-                    value={id}
-                  >
-                    <AccordionTrigger className="flex w-full justify-between items-center">
-                      {label}
-                      <ChevronDown size={20} strokeWidth={1} />
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <p className="font-semibold text-slate-600">{type}</p>
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
-          </Accordion>
+              return (
+                <AccordionItem
+                  key={id}
+                  className="border p-2 rounded-xl w-full"
+                  value={id}
+                >
+                  <AccordionTrigger className="flex w-full justify-between items-center">
+                    {label}
+                    <ChevronDown size={20} strokeWidth={1} />
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="font-semibold text-slate-600">{type}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
+        </Accordion>
       </CardFooter>
     </Card>
   );

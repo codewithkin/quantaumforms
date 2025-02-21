@@ -1,34 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../../../prisma"
+import { prisma } from "../../../../../prisma";
 
 // GET a particular form
-export async function GET (req: NextRequest, {params}: {params: {id: string}}) {
-    try {
-        const {id} = await params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const { id } = await params;
 
-        if(!id) throw new Error("Shareable link not provided");
+    if (!id) throw new Error("Shareable link not provided");
 
-        // Get the form with the shareableLink from query params
-        const form = await prisma.form.findUnique({
-            where: {
-                shareableLink: id
-            }
-        });
+    // Get the form with the shareableLink from query params
+    const form = await prisma.form.findUnique({
+      where: {
+        shareableLink: id,
+      },
+    });
 
-        if(!form) {
-            console.log("FORM NOT FOUND")
-            return NextResponse.json({
-                message: "No form with that id"
-            });
-        }
-
-        console.log("FORM FOUND: ", form);
-        return NextResponse.json(form);
-    } catch (e) {
-        console.log("An error occured while fetching a particular form: ", e);
-
-        return NextResponse.json({
-            message: "An error occured whle fetching form"
-        }, {status: 500})
+    if (!form) {
+      console.log("FORM NOT FOUND");
+      return NextResponse.json({
+        message: "No form with that id",
+      });
     }
+
+    console.log("FORM FOUND: ", form);
+    return NextResponse.json(form);
+  } catch (e) {
+    console.log("An error occured while fetching a particular form: ", e);
+
+    return NextResponse.json(
+      {
+        message: "An error occured whle fetching form",
+      },
+      { status: 500 },
+    );
+  }
 }
