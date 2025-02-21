@@ -1,11 +1,31 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../prisma";
+import { v4 } from "uuid";
+import { auth } from "@/auth";
 
 // 🟢 CREATE a new form (POST /api/forms)
 export async function POST(req: Request) {
     try {
         const { title, description } = await req.json();
 
+        // Get the currently logged in user's email
+        const session = await auth();
+
+        const email = session?.user?.email;
+
+        if(!email) throw new Error("Email not found")
+
+        // Get the current user's full data
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        })
+
+        const id = user?.id;
+
+        if(!id) throw new Error("ID not found");
+ 
         // Validate input
         if (!title || title.trim() === "") {
             return NextResponse.json({ error: "Title is required" }, { status: 400 });
@@ -15,8 +35,14 @@ export async function POST(req: Request) {
         const newForm = await prisma.form.create({
             data: {
                 title,
+                user: {
+                    connect: {
+                        id
+                    }
+                },
                 description: description || "", // Default to empty string if not provided
                 fields: { create: [] }, // Explicitly set to undefined instead of an empty array
+                shareableLink: v4()
             },
         });
 

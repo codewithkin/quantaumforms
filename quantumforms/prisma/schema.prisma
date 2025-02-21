@@ -66,7 +66,7 @@ model Form {
   settings    Setting? @relation(fields: [settingsId], references: [id])
   settingsId  String?  @unique
 
-  shareableLink String @unique @default(uuid())
+  shareableLink String? @unique @default(uuid())
 }
 
 model Field {
