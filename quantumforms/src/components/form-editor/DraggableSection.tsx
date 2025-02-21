@@ -9,8 +9,29 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "@heroui/input";
+import { Button } from "../ui/button";
+import { Loader2, Trash2 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useQueryClientProvider } from "@/context/QueryProvider";
 
 function DraggableSection({ form }: { form: Form }) {
+    const queryClient = useQueryClientProvider((state) => state.queryClient);
+
+    const deleteMutation = useMutation({
+        mutationFn: async () => {
+            // Make a delete request
+            const res = await axios.delete(`/api/forms/${form.id}`);
+
+            return res.data;
+        },
+        onSuccess: () => {
+            // Invalidate form queries
+            queryClient.invalidateQueries({ queryKey: ["form", form.id] });
+        }
+    })
+
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
       <Card className="cursor-grab px-8 py-4 md:min-w-[400px]">
@@ -27,7 +48,31 @@ function DraggableSection({ form }: { form: Form }) {
                  (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
-                    <Input type={field.type} />
+                    <article className="flex gap-2 items-center">
+                        <Input type={field.type} />
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button onClick={() => {
+                                        deleteMutation.mutate();
+                                    }}
+                                    disabled={deleteMutation.isPending}
+                                    className="bg-red-500 hover:bg-red-700" size="icon">
+                                        {
+                                            deleteMutation.isPending ? 
+                                                <Loader2 size={20} />
+                                             :
+                                                <Trash2 size={20} />
+                                        }
+                                    </Button>
+                                </TooltipTrigger>
+
+                                <TooltipContent>
+                                    Delete field
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </article>
                   </div>
                 ) :
                 (
