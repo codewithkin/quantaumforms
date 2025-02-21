@@ -18,6 +18,7 @@ import { Field } from "@/types";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormField from "@/components/form-editor/FormField";
+import DraggableSection from "@/components/form-editor/DraggableSection";
 
 export default function FormEditor() {
   const queryClient = useQueryClient();
@@ -99,6 +100,10 @@ export default function FormEditor() {
     });
   };
 
+  const handleFormChange = () => {
+    queryClient.invalidateQueries({ queryKey: ["form", params.id] }); // Refresh form
+  };
+
   // Reset the form fields
   const resetForm = () => {
     setFieldData({
@@ -116,9 +121,9 @@ export default function FormEditor() {
   if (isLoading) return <Loader className="animate-spin mx-auto mt-10" />;
 
   return (
-    <div className="grid grid-cols-[250px_1fr_300px] h-screen">
+    <div className="flex h-screen w-full">
       {/* Sidebar */}
-      <aside className="bg-gray-100 p-4 border-r">
+      <aside className="bg-gray-100 p-4 border-r w-1/5">
         <h2 className="text-lg font-semibold">{form.title}</h2>
         <p className="text-sm text-gray-600">{form.description}</p>
 
@@ -265,6 +270,11 @@ export default function FormEditor() {
             ))}
         </ul>
       </aside>
+
+      {/* Form Preview */}
+      <DraggableSection form={form} />
+
+      {/* Form settings */}
     </div>
   );
 }
