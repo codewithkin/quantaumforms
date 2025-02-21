@@ -30,7 +30,7 @@ function MobileBottomBar() {
 
   return (
     <>
-      <article className="flex w-full justify-center bg-white shadow-md p-4 md:hidden gap-4 items-center">
+      <article className="flex w-full justify-center bg-white shadow-md p-4 md:hidden gap-4 items-center absolute bottom-0 left-0 right-0">
         {/* Primary Links */}
         <article className="flex gap-16">
           <Button

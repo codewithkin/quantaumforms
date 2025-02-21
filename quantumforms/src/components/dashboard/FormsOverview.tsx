@@ -291,7 +291,7 @@ function FormsOverview() {
         </article>
       </article>
 
-      <article className="grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12">
+      <article className="grid h-full md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12">
         {sampleForms.length > 0 &&
           sampleForms.map((form: Form) => {
             const { id, title, description, createdAt, updatedAt, fields } =
