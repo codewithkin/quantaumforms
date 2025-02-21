@@ -42,6 +42,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  forms         Form[]
 }
 
 model VerificationToken {
@@ -50,4 +51,42 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Form {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+
+  fields      Field[]  @relation("FormToField") 
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  settings    Setting? @relation(fields: [settingsId], references: [id])
+  settingsId  String?  @unique
+
+  shareableLink String @unique
+}
+
+model Field {
+  id         String   @id @default(cuid())
+  formId     String
+  type       String   // e.g., "text", "email", "select", etc.
+  label      String
+  placeholder String?
+  required   Boolean @default(false)
+  options    String? @db.Text // Store array as JSON string (for select, radio, checkbox)
+
+  form       Form     @relation("FormToField", fields: [formId], references: [id], onDelete: Cascade)
+}
+
+model Setting {
+  id                  String  @id @default(cuid())
+  formId              String  @unique
+  isPublic            Boolean @default(true)
+  allowMultipleResponses Boolean @default(false)
+  showProgress        Boolean @default(false)
+
+  form                Form?
 }
