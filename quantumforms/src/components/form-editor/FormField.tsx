@@ -12,11 +12,9 @@ import React, { useEffect, useState } from "react";
 
 function FormField({
   label,
-  id,
   type,
 }: {
   label: string;
-  id: string;
   type: string;
 }) {
   // Track the icon state
@@ -56,7 +54,7 @@ function FormField({
   }, [label]);
 
   return (
-    <li key={id} className="p-2 rounded-md bg-white">
+    <li className="p-2 rounded-md bg-white">
       {icon}
       {label}
     </li>
