@@ -3,15 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Loader, PlusCircle, Trash, Settings, List } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Field } from "@/types";
 
-export default function FormEditor({ params }: { params: { id: string } }) {
+export default function FormEditor() {
     const router = useRouter();
     const [selectedField, setSelectedField] = useState<null | Field>(null);
+
+    // Get the query params
+    const params = useParams() as {id: string};
 
     // Fetch Form Data using react-query
     const { data: form, isLoading, isError } = useQuery({
@@ -24,9 +27,9 @@ export default function FormEditor({ params }: { params: { id: string } }) {
     });
 
     if (isLoading) return <Loader className="animate-spin mx-auto mt-10" />;
-    if (isError) {
-        router.push("/");
-        return null;
+
+    if(isError) {
+        console.log("An error occured while fetching form: ");
     }
 
     return (
