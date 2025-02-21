@@ -21,6 +21,9 @@ export default function FormEditor() {
         queryKey: ["form", params.id],
         queryFn: async () => {
             const res = await axios.get(`/api/forms/${params.id}`);
+
+            console.log("DATA: ", res.data);
+
             return res.data;
         },
         retry: 2, // Retry twice on failure
@@ -32,11 +35,12 @@ export default function FormEditor() {
         console.log("An error occured while fetching form: ");
     }
 
-    console.log('FORM: ', form);
-
     return (
-        <div className="grid grid-cols-[250px_1fr_300px] h-screen">
-            {/* Sidebar */}
+        <article className={`grid  h-screen w-full ${form && "grid-cols-[250px_1fr_300px]"}`}>
+            {
+                form ?
+                <>
+                    {/* Sidebar */}
             <aside className="bg-gray-100 p-4 border-r">
                 <h2 className="text-lg font-semibold">{form.title}</h2>
                 <p className="text-sm text-gray-600">{form.description}</p>
@@ -104,6 +108,11 @@ export default function FormEditor() {
                     Save Changes
                 </Button>
             </aside>
-        </div>
+                </> :
+                <article className="w-full h-full flex flex-col justify-center items-center">
+                    <h2 className="text-xl text-slate-500">An error occured, form not found</h2>
+                </article>
+            }
+        </article>
     );
 }

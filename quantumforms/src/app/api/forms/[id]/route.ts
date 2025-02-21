@@ -6,8 +6,6 @@ export async function GET (req: NextRequest, {params}: {params: {id: string}}) {
     try {
         const {id} = await params;
 
-        console.log(id)
-
         if(!id) throw new Error("Shareable link not provided");
 
         // Get the form with the shareableLink from query params
@@ -18,11 +16,13 @@ export async function GET (req: NextRequest, {params}: {params: {id: string}}) {
         });
 
         if(!form) {
+            console.log("FORM NOT FOUND")
             return NextResponse.json({
                 message: "No form with that id"
             }, {status: 404});
         }
 
+        console.log("FORM FOUND: ", form);
         return NextResponse.json(form);
     } catch (e) {
         console.log("An error occured while fetching a particular form: ", e);
