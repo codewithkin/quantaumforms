@@ -22,8 +22,7 @@ function CreateNewFormDialog() {
             console.log("New form created", data);
 
             // Redirect to the form editor
-            // const newForm = await response.json();
-            // router.push(`/forms/${newForm.id}`); // Redirect to form edit page
+            router.push(`/forms/${data?.data?.id}`); // Redirect to form edit page
         },
 
         onError: () => {
