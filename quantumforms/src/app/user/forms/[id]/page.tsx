@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectLabel } from "@radix-ui/react-select";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function FormEditor() {
   const queryClient = useQueryClient();
@@ -237,20 +238,6 @@ export default function FormEditor() {
                     </li>
                   ))}
                 </ul>
-              </div>
-            )}
-
-            {/* Textarea for Textarea Type Field */}
-            {fieldData.type === "textarea" && (
-              <div className="mt-4">
-                <Label className="block text-sm font-medium">Textarea</Label>
-                <textarea
-                  name="placeholder"
-                  placeholder="Enter placeholder"
-                  value={fieldData.placeholder}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
               </div>
             )}
 
