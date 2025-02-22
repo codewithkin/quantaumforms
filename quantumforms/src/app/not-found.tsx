@@ -22,7 +22,7 @@ function NotFound() {
         <Button className="bg-orange-500" asChild>
           <Link
             className="flex gap-2 items-center font-semibold"
-            href="/dashboard"
+            href="/user/dashboard"
           >
             <ChevronLeft size={20} />
             Back
