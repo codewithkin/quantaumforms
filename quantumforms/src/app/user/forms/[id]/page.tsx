@@ -19,6 +19,15 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormField from "@/components/form-editor/FormField";
 import DraggableSection from "@/components/form-editor/DraggableSection";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { SelectLabel } from "@radix-ui/react-select";
 
 export default function FormEditor() {
   const queryClient = useQueryClient();
@@ -143,22 +152,29 @@ export default function FormEditor() {
             </DialogHeader>
 
             {/* Field Type Selection */}
-            <Label className="block text-sm font-medium">Field Type</Label>
-            <select
-              className="w-full p-2 border rounded"
+            <Select
               value={fieldData.type}
-              onChange={(e) =>
-                setFieldData({ ...fieldData, type: e.target.value })
+              onValueChange={(value) =>
+                setFieldData({ ...fieldData, type: value })
               }
             >
-              <option value="text">Text</option>
-              <option value="number">Number</option>
-              <option value="email">Email</option>
-              <option value="select">Select</option>
-              <option value="checkbox">Checkbox</option>
-              <option value="textarea">Textarea</option>
-              <option value="date">Date</option>
-            </select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Field Type" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel className="font-semibold">Field Type</SelectLabel>
+                  <SelectItem value="text">Text</SelectItem>
+                  <SelectItem value="number">Number</SelectItem>
+                  <SelectItem value="email">Email</SelectItem>
+                  <SelectItem value="select">Select</SelectItem>
+                  <SelectItem value="checkbox">Checkbox</SelectItem>
+                  <SelectItem value="textarea">Textarea</SelectItem>
+                  <SelectItem value="date">Date</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
 
             {/* Label */}
             <Label className="block text-sm font-medium mt-2">Label</Label>

@@ -11,26 +11,33 @@ import { Input } from "../ui/input";
 import { Textarea } from "@heroui/input";
 import { Button } from "../ui/button";
 import { Loader2, Trash2 } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useQueryClientProvider } from "@/context/QueryProvider";
 
 function DraggableSection({ form }: { form: Form }) {
-    const queryClient = useQueryClientProvider((state) => state.queryClient);
+  const queryClient = useQueryClientProvider((state) => state.queryClient);
 
-    const deleteMutation = useMutation({
-        mutationFn: async (fieldId: string) => {
-            // Make a delete request
-            const res = await axios.delete(`/api/field/${form.id}?fieldId=${fieldId}`);
+  const deleteMutation = useMutation({
+    mutationFn: async (fieldId: string) => {
+      // Make a delete request
+      const res = await axios.delete(
+        `/api/field/${form.id}?fieldId=${fieldId}`,
+      );
 
-            return res.data;
-        },
-        onSuccess: () => {
-            // Invalidate form queries
-            queryClient.invalidateQueries({ queryKey: ["form", form.id] });
-        }
-    })
+      return res.data;
+    },
+    onSuccess: () => {
+      // Invalidate form queries
+      queryClient.invalidateQueries({ queryKey: ["form", form.id] });
+    },
+  });
 
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
@@ -44,38 +51,36 @@ function DraggableSection({ form }: { form: Form }) {
           <form className="w-full flex flex-col justify-start items-start text-start gap-4">
             {form.fields.length > 0 &&
               form.fields.map((field) => {
-                return field.type !== "textarea" ?
-                 (
+                return field.type !== "textarea" ? (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
                     <article className="flex gap-2 items-center">
-                        <Input type={field.type} />
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button onClick={() => {
-                                        deleteMutation.mutate(field.id);
-                                    }}
-                                    disabled={deleteMutation.isPending}
-                                    className="bg-red-500 hover:bg-red-700" size="icon">
-                                        {
-                                            deleteMutation.isPending ? 
-                                                <Loader2 size={20} />
-                                             :
-                                                <Trash2 size={20} />
-                                        }
-                                    </Button>
-                                </TooltipTrigger>
+                      <Input type={field.type} />
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              onClick={() => {
+                                deleteMutation.mutate(field.id);
+                              }}
+                              disabled={deleteMutation.isPending}
+                              className="bg-red-500 hover:bg-red-700"
+                              size="icon"
+                            >
+                              {deleteMutation.isPending ? (
+                                <Loader2 size={20} />
+                              ) : (
+                                <Trash2 size={20} />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
 
-                                <TooltipContent>
-                                    Delete field
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
+                          <TooltipContent>Delete field</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </article>
                   </div>
-                ) :
-                (
+                ) : (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
                     <Textarea />

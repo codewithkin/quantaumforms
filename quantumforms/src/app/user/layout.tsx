@@ -7,13 +7,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <main
-        className={`overflow-y-scroll antialiased bg-slate-200 flex md:flex-row flex-col-reverse min-h-screen`}
-      >
-            <Sidebar />
-            <MobileBottomBar />
+    <main
+      className={`overflow-y-scroll antialiased bg-slate-200 flex md:flex-row flex-col-reverse min-h-screen`}
+    >
+      <Sidebar />
+      <MobileBottomBar />
 
-            {children}
-      </main>
+      {children}
+    </main>
   );
 }

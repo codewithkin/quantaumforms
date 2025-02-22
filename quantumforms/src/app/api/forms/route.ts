@@ -64,7 +64,7 @@ export async function GET({ params }: { params: { id: string } }) {
       include: {
         fields: true,
         settings: true,
-      }
+      },
     });
 
     return NextResponse.json(forms, { status: 200 });
