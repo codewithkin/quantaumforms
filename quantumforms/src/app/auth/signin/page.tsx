@@ -22,7 +22,6 @@ export default function SignIn() {
   const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      setLoading(true);
       signIn("google", { callbackUrl: "/user/dashboard" });
     } catch (e: unknown) {
       console.log("An error occured while signing in with google: ", e);
@@ -33,7 +32,6 @@ export default function SignIn() {
 
   const handleGithubSignIn = async () => {
     try {
-      setLoading(true);
       setLoading(true);
       signIn("github", { callbackUrl: "/user/dashboard" });
     } catch (e: unknown) {
