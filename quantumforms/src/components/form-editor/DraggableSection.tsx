@@ -8,7 +8,6 @@ import {
 } from "../ui/card";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Textarea } from "@heroui/input";
 import { Button } from "../ui/button";
 import { Loader2, Trash2 } from "lucide-react";
 import {
@@ -20,6 +19,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useQueryClientProvider } from "@/context/QueryProvider";
+import { Textarea } from "../ui/textarea";
 
 function DraggableSection({ form }: { form: Form }) {
   const queryClient = useQueryClientProvider((state) => state.queryClient);
@@ -41,7 +41,7 @@ function DraggableSection({ form }: { form: Form }) {
 
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
-      <Card className="cursor-grab px-8 py-4 md:min-w-[400px]">
+      <Card className="cursor-pointer px-8 py-4 md:min-w-[400px]">
         <CardHeader>
           <CardTitle className="text-2xl">{form.title}</CardTitle>
           <CardDescription>{form.description}</CardDescription>
