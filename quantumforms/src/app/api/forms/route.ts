@@ -60,7 +60,11 @@ export async function POST(req: Request) {
 export async function GET({ params }: { params: { id: string } }) {
   try {
     const forms = await prisma.form.findMany({
-      orderBy: { createdAt: "desc" }, // Latest forms first
+      orderBy: { createdAt: "desc" },
+      include: {
+        fields: true,
+        settings: true,
+      }
     });
 
     return NextResponse.json(forms, { status: 200 });
