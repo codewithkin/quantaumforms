@@ -76,9 +76,16 @@ model Field {
   label      String
   placeholder String?
   required   Boolean @default(false)
-  options    String? @db.Text // Store array as JSON string (for select, radio, checkbox)
+  options    Option[] @relation("FieldToOption")
 
   form       Form     @relation("FormToField", fields: [formId], references: [id], onDelete: Cascade)
+}
+
+model Option {
+  id          String @id @default(cuid())
+  fieldId     String
+  value       String
+  field       Field @relation("FieldToOption", fields: [fieldId], references: [id])
 }
 
 model Setting {

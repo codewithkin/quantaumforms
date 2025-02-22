@@ -20,6 +20,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useQueryClientProvider } from "@/context/QueryProvider";
 import { Textarea } from "../ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 function DraggableSection({ form }: { form: Form }) {
   const queryClient = useQueryClientProvider((state) => state.queryClient);
@@ -50,8 +51,8 @@ function DraggableSection({ form }: { form: Form }) {
         <CardContent>
           <form className="w-full flex flex-col justify-start items-start text-start gap-4">
             {form.fields.length > 0 &&
-              form.fields.map((field) => {
-                return field.type !== "textarea" ? (
+              form.fields.map((field: Field) => {
+                return field.type !== "textarea" && field.type !== "checkbox" && field.type !== "radio" && field.type !== "select" ? (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
                     <article className="flex gap-2 items-center">
@@ -80,12 +81,46 @@ function DraggableSection({ form }: { form: Form }) {
                       </TooltipProvider>
                     </article>
                   </div>
+                ) : field.type === "textarea" ? (
+                  (
+                    <div key={field.id}>
+                      <Label>{field.label}</Label>
+                      <Textarea />
+                    </div>
+                  )
+                ) :
+                field.type === "checkbox" ? (
+                  (
+                    <div key={field.id}>
+                      <Label>{field.label}</Label>
+                      <Input type="checkbox" />
+                    </div>
+                  )
+                ) :
+                field.type === "radio" ? (
+                  (
+                    <div key={field.id}>
+                      <Label>{field.label}</Label>
+                      <Input type="radio" />
+                    </div>
+                  )
                 ) : (
-                  <div key={field.id}>
-                    <Label>{field.label}</Label>
-                    <Textarea />
-                  </div>
-                );
+                  (
+                    <div key={field.id}>
+                      <Label>{field.label}</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder={field.placeholder} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {field && field.options && field.options.map((option: string) => (
+                            <SelectItem value={option} key={option}>{option}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                ) 
+              )
               })}
           </form>
         </CardContent>

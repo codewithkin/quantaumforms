@@ -51,10 +51,12 @@ export async function PUT(
   try {
     const { id } = await params;
 
-    // Get the data from the request body
-    const { type, label, placeholder, required } = await req.json();
+    const xycd = await req.json();
 
-    console.log("FIELDS: ", type);
+    // Get the data from the request body
+    const { type, label, placeholder, required, options } = xycd;
+
+    console.log("FIELDS: ", xycd);
 
     const existingForm = await prisma.form.findUnique({
       where: {
@@ -72,11 +74,12 @@ export async function PUT(
 
     const newField = await prisma.field.create({
       data: {
-        formId,
+        formId: formId || "",
         type,
         placeholder,
         label,
         required,
+        options: options || [],
       },
     });
 

@@ -225,7 +225,7 @@ export default function FormEditor() {
                   {fieldData.options.map((option, index) => (
                     <li
                       key={index}
-                      className="flex justify-between items-center p-1 bg-gray-200 rounded-md mt-1"
+                      className="flex justify-between items-center py-1 px-4 bg-gray-200 rounded-md mt-1"
                     >
                       {option}
                       <Button
