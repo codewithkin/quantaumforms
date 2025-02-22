@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Button } from "../ui/button";
 import {
@@ -13,6 +14,8 @@ import { Accordion, AccordionContent } from "../ui/accordion";
 import { AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 import { Form, Field } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const sampleForms = [
   {
@@ -249,6 +252,17 @@ const FormCard = ({
 };
 
 function FormsOverview() {
+  // Fetch the user's forms
+  const {data: forms} = useQuery({
+    queryKey: ["forms"],
+    queryFn: async () => {
+      const res = await axios.get("/api/forms");
+      return res.data
+    }
+  }) as { data: Form[] }
+
+  console.log("YOUR FORMS: ", forms)
+
   return (
     <article className="flex flex-col gap-4">
       <article className="w-full flex flex-col gap-2 md:flex-row py-8 justify-between items-center">
@@ -275,10 +289,9 @@ function FormsOverview() {
       </article>
 
       <article className="grid h-full md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12">
-        {sampleForms.length > 0 &&
-          sampleForms.map((form: Form) => {
-            const { id, title, description, createdAt, updatedAt, fields } =
-              form;
+        {forms && forms.length > 0 &&
+          forms.map((form: Form) => {
+            const { id, title, description, createdAt, updatedAt, fields } = form;
 
             return (
               <FormCard

@@ -10,7 +10,7 @@ async function page() {
     return redirect("/auth/signin");
   }
 
-  return redirect("/dashboard");
+  return redirect("/user/dashboard");
 }
 
 export default page;
