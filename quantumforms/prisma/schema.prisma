@@ -66,6 +66,9 @@ model Form {
   settings    Setting? @relation(fields: [settingsId], references: [id])
   settingsId  String?  @unique
   responses   Response[]
+  primaryColor  String?
+  secondaryColor String?
+  logo         String?
 
   shareableLink String? @unique @default(uuid())
 }
