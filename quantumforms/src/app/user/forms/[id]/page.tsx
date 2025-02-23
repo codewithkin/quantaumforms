@@ -286,7 +286,7 @@ export default function FormEditor() {
 
         {/* Branding (logo, primary, secondary colors) */}
         <Label>Branding</Label>
-        <article className="flex flex-col justify-center items-center w-full my-8">
+        <form className="flex flex-col justify-center items-center w-full gap-8">
             {/* Logo */}
             {
               form.logo ?
@@ -300,10 +300,28 @@ export default function FormEditor() {
             }
 
             {/* Primary and secondary colors */}
-            <article className="flex gap-2 mt-4">
+            <article className="flex flex-col gap-4 mb-8 w-full">
+                {/* Primary Color */}
+                <article className="flex flex-col gap-2 w-full">
+                  <Label>Primary Color</Label>
+                  <Input
+                    type="color"
+                    className="w-full"
+                    defaultValue={form.primaryColor || "#ffffff"}
+                  />
+                </article>
 
+                {/* Secondary Color */}
+                <article className="flex flex-col gap-2 w-full">
+                  <Label>Secondary Color</Label>
+                  <Input
+                    type="color"
+                    className="w-full"
+                    defaultValue={form.secondaryColor || "#000000"}
+                  />
+                </article>
             </article>
-        </article>
+        </form>
       </aside>
     </div>
   );
