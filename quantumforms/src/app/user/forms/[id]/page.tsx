@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader, PlusCircle, Trash, Image as ImageIcon, Camera } from "lucide-react";
+import { Loader, PlusCircle, Trash, Image as ImageIcon, Camera, Loader2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Field } from "@/types";
 import { Label } from "@/components/ui/label";
@@ -350,7 +350,17 @@ export default function FormEditor() {
                 </article>
             </article>
 
-            <Button className="self-start" variant="default" type="submit">Save</Button>
+            <Button className="self-start" disabled={updateFormBrandingMutation.isPending} variant="default" type="submit">
+              {
+                updateFormBrandingMutation.isPending &&
+                <Loader2 className="animate-spin"size={20} />
+              }
+              {
+                updateFormBrandingMutation.isPending ?
+                "Saving..." :
+                "Save"
+              }
+            </Button>
         </form>
       </aside>
     </div>
