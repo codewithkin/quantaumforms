@@ -16,16 +16,20 @@ import { ChevronDown, Loader } from "lucide-react";
 import { Form, Field } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const FormCard = ({
   title,
   createdAt,
   description,
+  shareableLink,
   id,
   fields,
 }: Form) => {
+  const router = useRouter();
+
   return (
-    <Card className="md:min-w-[400px] min-h-[400px]">
+    <Card onClick={() => router.push(`/user/forms/${shareableLink}`)} className="md:min-w-[400px] min-h-[400px]">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">{title}</CardTitle>
         <Badge className="w-fit">{createdAt}</Badge>
@@ -111,11 +115,12 @@ function FormsOverview() {
         {sortedForms && !isLoading ?
           sortedForms.length > 0 &&
           sortedForms.map((form: Form) => {
-            const { id, title, description, createdAt, fields } = form;
+            const { id, title, description, shareableLink, createdAt, fields } = form;
 
             return (
               <FormCard
                 key={id}
+                shareableLink={shareableLink}
                 title={title}
                 createdAt={createdAt}
                 description={description}

@@ -15,6 +15,7 @@ export type Form = {
   id: string;
   title: string;
   description: string;
+  shareableLink: string,
   createdAt: string;
   updatedAt: string;
   userId: string;
