@@ -19,8 +19,8 @@ export async function GET(
       include: {
         fields: {
           include: {
-            options: true
-          }
+            options: true,
+          },
         },
         settings: true,
       },
@@ -82,7 +82,7 @@ export async function PUT(
         type,
         placeholder,
         label,
-        required
+        required,
       },
     });
 

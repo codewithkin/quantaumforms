@@ -7,7 +7,7 @@ export type Field = {
   options: {
     id: string;
     value: string;
-    fieldId: string
+    fieldId: string;
   }[];
 };
 

@@ -48,19 +48,22 @@ function DraggableSection({ form }: { form: Form }) {
   });
 
   const simulateSubmission = () => {
-    toast("This is an example, for submitted")
-  }
+    toast("This is an example, for submitted");
+  };
 
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
-      <Card className="cursor-pointer px-8 py-4 md:min-w-[400px]">
+      <Card className="px-8 py-4 md:min-w-[400px]">
         <CardHeader>
           <CardTitle className="text-2xl">{form.title}</CardTitle>
           <CardDescription>{form.description}</CardDescription>
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={simulateSubmission} className="w-full flex flex-col justify-start items-start text-start gap-4">
+          <form
+            onSubmit={simulateSubmission}
+            className="w-full flex flex-col justify-start items-start text-start gap-4"
+          >
             {form.fields.length > 0 &&
               form.fields.map((field: Field) => {
                 return field.type !== "textarea" &&
@@ -75,6 +78,7 @@ function DraggableSection({ form }: { form: Form }) {
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Button
+                              type="button"
                               onClick={() => {
                                 deleteMutation.mutate(field.id);
                               }}
@@ -89,7 +93,6 @@ function DraggableSection({ form }: { form: Form }) {
                               )}
                             </Button>
                           </TooltipTrigger>
-
                           <TooltipContent>Delete field</TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
@@ -98,41 +101,142 @@ function DraggableSection({ form }: { form: Form }) {
                 ) : field.type === "textarea" ? (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
-                    <Textarea />
+                    <article className="flex gap-2 items-center">
+                      <Textarea />
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              type="button"
+                              onClick={() => deleteMutation.mutate(field.id)}
+                              disabled={deleteMutation.isPending}
+                              className="bg-red-500 hover:bg-red-700"
+                              size="icon"
+                            >
+                              {deleteMutation.isPending ? (
+                                <Loader2 size={20} />
+                              ) : (
+                                <Trash2 size={20} />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Delete field</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </article>
                   </div>
                 ) : field.type === "checkbox" ? (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
-                    <Input type="checkbox" />
+                    <article className="flex gap-2 items-center">
+                      <Input type="checkbox" />
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              type="button"
+                              onClick={() => deleteMutation.mutate(field.id)}
+                              disabled={deleteMutation.isPending}
+                              className="bg-red-500 hover:bg-red-700"
+                              size="icon"
+                            >
+                              {deleteMutation.isPending ? (
+                                <Loader2 size={20} />
+                              ) : (
+                                <Trash2 size={20} />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Delete field</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </article>
                   </div>
                 ) : field.type === "radio" ? (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
-                    <Input type="radio" />
+                    <article className="flex gap-2 items-center">
+                      <Input type="radio" />
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              onClick={() => deleteMutation.mutate(field.id)}
+                              disabled={deleteMutation.isPending}
+                              type="button"
+                              className="bg-red-500 hover:bg-red-700"
+                              size="icon"
+                            >
+                              {deleteMutation.isPending ? (
+                                <Loader2 size={20} />
+                              ) : (
+                                <Trash2 size={20} />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Delete field</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </article>
                   </div>
                 ) : (
                   <div key={field.id}>
                     <Label>{field.label}</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder={field.placeholder} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {field &&
-                          field.options &&
-                          field.options.map((option: { id: string, value: string, fieldId: string }, index: number) => (
-                            <SelectItem value={option.value} key={index}>
-                              {option.value}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </Select>
+                    <article className="flex gap-2 items-center">
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder={field.placeholder} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {field.options &&
+                            field.options.map(
+                              (
+                                option: {
+                                  id: string;
+                                  value: string;
+                                  fieldId: string;
+                                },
+                                index: number,
+                              ) => (
+                                <SelectItem value={option.value} key={index}>
+                                  {option.value}
+                                </SelectItem>
+                              ),
+                            )}
+                        </SelectContent>
+                      </Select>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              type="button"
+                              onClick={() => deleteMutation.mutate(field.id)}
+                              disabled={deleteMutation.isPending}
+                              className="bg-red-500 hover:bg-red-700"
+                              size="icon"
+                            >
+                              {deleteMutation.isPending ? (
+                                <Loader2 size={20} />
+                              ) : (
+                                <Trash2 size={20} />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Delete field</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </article>
                   </div>
                 );
               })}
 
-            {/* Submit btn */}
-            <Button className="w-full bg-purple-500 text-white hover:bg-purple-700" type="submit" variant="ghost">Submit</Button>
+            <Button
+              className="w-full bg-purple-500 text-white hover:bg-purple-700"
+              type="submit"
+              variant="ghost"
+            >
+              Submit
+            </Button>
           </form>
         </CardContent>
       </Card>

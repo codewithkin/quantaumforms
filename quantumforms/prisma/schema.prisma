@@ -85,7 +85,7 @@ model Option {
   id          String @id @default(cuid())
   fieldId     String
   value       String
-  field       Field @relation("FieldToOption", fields: [fieldId], references: [id])
+  field       Field @relation("FieldToOption", fields: [fieldId], references: [id], onDelete: Cascade)
 }
 
 model Setting {
