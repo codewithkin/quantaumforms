@@ -98,10 +98,10 @@ function FormsOverview() {
 
         {/* Form filters */}
         <article className="flex gap-4 items-center w-full justify-center overflow-x-scroll md:overflow-hidden">
-          <Button variant="default" color="primary" onClick={() => setFilter("Most Responses")}>
+          <Button variant={filter === "Most Responses" ? "default" : "outline"} color="primary" onClick={() => setFilter("Most Responses")}>
             Most Responses
           </Button>
-          <Button variant="outline" color="primary" onClick={() => setFilter("Date")}>
+          <Button variant={filter === "Date" ? "default" : "outline"} color="primary" onClick={() => setFilter("Date")}>
             Date
           </Button>
         </article>
