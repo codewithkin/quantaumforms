@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader, PlusCircle, Trash, List } from "lucide-react";
+import { Loader, PlusCircle, Trash, Image as ImageIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Field } from "@/types";
 import { Label } from "@/components/ui/label";
@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import { SelectLabel } from "@radix-ui/react-select";
 import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
 
 export default function FormEditor() {
   const queryClient = useQueryClient();
@@ -280,6 +281,30 @@ export default function FormEditor() {
       <DraggableSection form={form} />
 
       {/* Form settings */}
+      <aside className="bg-gray-100 p-4 border-r w-1/5">
+      <h2 className="text-lg font-semibold">Form Settings</h2>
+
+        {/* Branding (logo, primary, secondary colors) */}
+        <Label>Branding</Label>
+        <article className="flex flex-col justify-center items-center w-full my-8">
+            {/* Logo */}
+            {
+              form.logo ?
+              <Image height={100} width={100} src={form.logo} alt="Logo" className="rounded-full" /> :
+              <article className="rounded-full bg-slate-200 p-4 flex flex-col justify-center items-center">
+                <ImageIcon 
+                  size={50} 
+                  strokeWidth={1.5}
+                />
+              </article>
+            }
+
+            {/* Primary and secondary colors */}
+            <article className="flex gap-2 mt-4">
+
+            </article>
+        </article>
+      </aside>
     </div>
   );
 }
