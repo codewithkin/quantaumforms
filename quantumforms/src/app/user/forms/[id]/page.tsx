@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader, PlusCircle, Trash, Image as ImageIcon } from "lucide-react";
+import { Loader, PlusCircle, Trash, Image as ImageIcon, Camera } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Field } from "@/types";
 import { Label } from "@/components/ui/label";
@@ -30,6 +30,7 @@ import {
 import { SelectLabel } from "@radix-ui/react-select";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
+import { updateFormBranding } from "@/lib/actions";
 
 export default function FormEditor() {
   const queryClient = useQueryClient();
@@ -112,7 +113,7 @@ export default function FormEditor() {
   };
 
   const handleFormChange = () => {
-    queryClient.invalidateQueries({ queryKey: ["form", params.id] }); // Refresh form
+    queryClient.invalidateQueries({ queryKey: ["form", form.shareableLink] }); // Refresh form
   };
 
   // Reset the form fields
@@ -128,6 +129,24 @@ export default function FormEditor() {
   };
 
   console.log("FORM: ", form);
+
+  // Create an updateFormBranding mutation
+  const updateFormBrandingMutation = useMutation({
+    mutationFn: async (formData: FormData) => {
+      await updateFormBranding(formData);
+    },
+    onSuccess: () => {
+      // Show a success toast
+      toast.success("Form branding updated successfully");
+
+      // Reload the form
+      queryClient.invalidateQueries({ queryKey: ["form", form.shareableLink] })
+    },
+    onError: () => {
+      // Show a success toast
+      toast.error("There was an error updating this form's branding, pleasey try again later");
+    }
+  })
 
   if (isLoading) return <Loader className="animate-spin mx-auto mt-10" />;
 
@@ -286,25 +305,32 @@ export default function FormEditor() {
 
         {/* Branding (logo, primary, secondary colors) */}
         <Label>Branding</Label>
-        <form className="flex flex-col justify-center items-center w-full gap-8">
+        <form action={(formData: FormData) => {
+          formData.append("shareableLink", form.shareableLink);
+
+          updateFormBrandingMutation.mutate(formData);
+        }} className="flex flex-col justify-center items-center w-full gap-8">
             {/* Logo */}
+            <Label>Logo</Label>
             {
               form.logo ?
               <Image height={100} width={100} src={form.logo} alt="Logo" className="rounded-full" /> :
               <article className="rounded-full bg-slate-200 p-4 flex flex-col justify-center items-center">
-                <ImageIcon 
-                  size={50} 
-                  strokeWidth={1.5}
+                <Camera
+                  size={40} 
+                  strokeWidth={1.2}
                 />
               </article>
             }
 
             {/* Primary and secondary colors */}
-            <article className="flex flex-col gap-4 mb-8 w-full">
+            <article className="flex flex-col gap-4 w-full">
                 {/* Primary Color */}
                 <article className="flex flex-col gap-2 w-full">
                   <Label>Primary Color</Label>
                   <Input
+                    name="primaryColor"
+                    id="primaryColor"
                     type="color"
                     className="w-full"
                     defaultValue={form.primaryColor || "#ffffff"}
@@ -315,12 +341,16 @@ export default function FormEditor() {
                 <article className="flex flex-col gap-2 w-full">
                   <Label>Secondary Color</Label>
                   <Input
+                    name="secondaryColor"
+                    id="secondaryColor"
                     type="color"
                     className="w-full"
                     defaultValue={form.secondaryColor || "#000000"}
                   />
                 </article>
             </article>
+
+            <Button className="self-start" variant="default" type="submit">Save</Button>
         </form>
       </aside>
     </div>
