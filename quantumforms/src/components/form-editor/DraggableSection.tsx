@@ -231,7 +231,7 @@ function DraggableSection({ form }: { form: Form }) {
               })}
 
             <Button
-              className="w-full bg-purple-500 text-white hover:bg-purple-700"
+              className={`w-full bg-${form.primaryColor ? `${form.primaryColor}` : "purple-500"} text-white hover:bg-purple-700`}
               type="submit"
               variant="ghost"
             >
