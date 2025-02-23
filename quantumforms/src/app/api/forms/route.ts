@@ -64,8 +64,8 @@ export async function GET({ params }: { params: { id: string } }) {
       include: {
         fields: {
           include: {
-            options: true
-          }
+            options: true,
+          },
         },
         settings: true,
       },

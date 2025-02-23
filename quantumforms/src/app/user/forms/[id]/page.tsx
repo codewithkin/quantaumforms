@@ -165,7 +165,9 @@ export default function FormEditor() {
 
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel className="font-semibold">Field Type</SelectLabel>
+                  <SelectLabel className="font-semibold">
+                    Field Type
+                  </SelectLabel>
                   <SelectItem value="text">Text</SelectItem>
                   <SelectItem value="number">Number</SelectItem>
                   <SelectItem value="email">Email</SelectItem>

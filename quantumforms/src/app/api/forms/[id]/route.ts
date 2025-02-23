@@ -72,6 +72,26 @@ export async function PUT(
 
     if (!existingForm) throw new Error("This form does not exist");
 
+    let newOptions: { id: string; value: string; fieldId: string }[] | [] = [];
+
+    if (options && options.length > 0) {
+      await prisma.option.createMany({
+        data: options.map((option: { value: string; fieldId: string }) => ({
+          value: option.value,
+          fieldId: option.fieldId || "", // Temporarily set fieldId to undefined
+        })),
+      });
+
+      if (newOptions.length > 0) {
+        // Fetch the created options
+        newOptions = await prisma.option.findMany({
+          where: {
+            value: { in: options.map((o: { value: string }) => o.value) }, // Assuming `value` is unique
+          },
+        });
+      }
+    }
+
     const newField = await prisma.field.create({
       data: {
         formId: formId || "",
@@ -79,9 +99,23 @@ export async function PUT(
         placeholder,
         label,
         required,
-        options: options || [],
+        options: {
+          connect: newOptions.map((option) => ({ id: option.id })), // Connect options to field
+        },
       },
     });
+
+    // Update the options' fieldIds
+    if (newOptions.length > 0) {
+      await prisma.option.updateMany({
+        where: {
+          id: { in: newOptions.map((option) => option.id) }, // Assuming `id` is unique
+        },
+        data: {
+          fieldId: newField.id,
+        },
+      });
+    }
 
     // Update the form
     const updatedForm = await prisma.form.update({
@@ -103,8 +137,8 @@ export async function PUT(
       include: {
         fields: {
           include: {
-            options: true
-          }
+            options: true,
+          },
         },
       },
     });

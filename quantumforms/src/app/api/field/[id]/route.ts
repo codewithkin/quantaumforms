@@ -41,8 +41,8 @@ export async function DELETE(
         id: fieldId,
       },
       include: {
-        options: true
-      }
+        options: true,
+      },
     });
 
     console.log("Successfully deleted field: ", deletedField);
