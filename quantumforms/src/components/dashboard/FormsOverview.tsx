@@ -31,7 +31,7 @@ const FormCard = ({
   return (
     <Card
       onClick={() => router.push(`/user/forms/${shareableLink}`)}
-      className="md:min-w-[400px] min-h-[400px]"
+      className="md:min-w-[400px] min-h-[400px] hover:cursor-pointer hover:shadow-xl translition duration-300"
     >
       <CardHeader>
         <CardTitle className="text-xl font-semibold">{title}</CardTitle>
