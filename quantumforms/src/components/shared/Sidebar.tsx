@@ -40,12 +40,12 @@ function Sidebar() {
               <TooltipTrigger>
                 <Button
                   size="icon"
-                  variant={path === "/dashboard" ? "default" : "outline"}
+                  variant={path === "/user/dashboard" ? "default" : "outline"}
                   asChild
                 >
-                  <Link href="/dashboard">
+                  <Link href="/user/dashboard">
                     <ChartBar
-                      fill={path === "/dashboard" ? "currentColor" : "none"}
+                      fill={path === "/user/dashboard" ? "currentColor" : "none"}
                       size={20}
                       strokeWidth={1.5}
                     />
@@ -60,12 +60,12 @@ function Sidebar() {
               <TooltipTrigger>
                 <Button
                   size="icon"
-                  variant={path === "/forms" ? "default" : "outline"}
+                  variant={path === "/user/forms" ? "default" : "outline"}
                   asChild
                 >
-                  <Link href="/forms">
+                  <Link href="/user/forms">
                     <NotebookText
-                      fill={path === "/forms" ? "currentColor" : "none"}
+                      fill={path === "/user/forms" ? "currentColor" : "none"}
                       size={20}
                       strokeWidth={1.5}
                     />
@@ -73,19 +73,19 @@ function Sidebar() {
                 </Button>
               </TooltipTrigger>
 
-              <TooltipContent side="right">Your Forms</TooltipContent>
+              <TooltipContent side="right">Your forms</TooltipContent>
             </Tooltip>
 
             <Tooltip>
               <TooltipTrigger>
                 <Button
                   size="icon"
-                  variant={path === "/analytics" ? "default" : "outline"}
+                  variant={path === "/user/analytics" ? "default" : "outline"}
                   asChild
                 >
-                  <Link href="/analytics">
+                  <Link href="/user/analytics">
                     <ChartPie
-                      fill={path === "/analytics" ? "currentColor" : "none"}
+                      fill={path === "/user/analytics" ? "currentColor" : "none"}
                       size={20}
                       strokeWidth={1.5}
                     />
@@ -93,7 +93,7 @@ function Sidebar() {
                 </Button>
               </TooltipTrigger>
 
-              <TooltipContent side="right">Dashboard</TooltipContent>
+              <TooltipContent side="right">Analytics</TooltipContent>
             </Tooltip>
 
             <Tooltip>
@@ -144,7 +144,7 @@ function Sidebar() {
           <Tooltip>
             <TooltipTrigger>
               <Avatar
-                image={user?.image}
+                image={user?.image || ""}
                 name={user?.name || ""}
                 isBordered
                 color="secondary"
