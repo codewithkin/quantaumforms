@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { toast } from "sonner";
 
 function DraggableSection({ form }: { form: Form }) {
   const queryClient = useQueryClientProvider((state) => state.queryClient);
@@ -46,6 +47,10 @@ function DraggableSection({ form }: { form: Form }) {
     },
   });
 
+  const simulateSubmission = () => {
+    toast("This is an example, for submitted")
+  }
+
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
       <Card className="cursor-pointer px-8 py-4 md:min-w-[400px]">
@@ -55,7 +60,7 @@ function DraggableSection({ form }: { form: Form }) {
         </CardHeader>
 
         <CardContent>
-          <form className="w-full flex flex-col justify-start items-start text-start gap-4">
+          <form onSubmit={simulateSubmission} className="w-full flex flex-col justify-start items-start text-start gap-4">
             {form.fields.length > 0 &&
               form.fields.map((field: Field) => {
                 return field.type !== "textarea" &&
@@ -125,6 +130,9 @@ function DraggableSection({ form }: { form: Form }) {
                   </div>
                 );
               })}
+
+            {/* Submit btn */}
+            <Button className="w-full bg-purple-500 text-white hover:bg-purple-700" type="submit" variant="ghost">Submit</Button>
           </form>
         </CardContent>
       </Card>
