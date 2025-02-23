@@ -70,3 +70,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .page {
+    @apply md:px-20 md:py-8 p-4
+  }
+}
