@@ -12,7 +12,7 @@ import {
 import { Badge } from "../ui/badge";
 import { Accordion, AccordionContent } from "../ui/accordion";
 import { AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader } from "lucide-react";
 import { Form, Field } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -253,18 +253,18 @@ const FormCard = ({
 
 function FormsOverview() {
   // Fetch the user's forms
-  const { data: forms } = useQuery({
+  const { data: forms, isLoading } = useQuery({
     queryKey: ["forms"],
     queryFn: async () => {
       const res = await axios.get("/api/forms");
       return res.data;
     },
-  }) as { data: Form[] };
+  }) as { data: Form[], isLoading: boolean };
 
   console.log("YOUR FORMS: ", forms);
 
   return (
-    <article className="flex flex-col gap-4">
+    <article className="flex flex-col gap-4 w-full h-full">
       <article className="w-full flex flex-col gap-2 md:flex-row py-8 justify-between items-center">
         <h2 className="text-2xl font-semibold">My Forms</h2>
 
@@ -288,8 +288,8 @@ function FormsOverview() {
         </article>
       </article>
 
-      <article className="grid h-full md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12">
-        {forms &&
+      <article className="grid h-full md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12 w-full">
+        {forms && !isLoading ?
           forms.length > 0 &&
           forms.map((form: Form) => {
             const { id, title, description, createdAt, updatedAt, fields } =
@@ -303,8 +303,12 @@ function FormsOverview() {
                 description={description}
                 fields={fields}
               />
-            );
-          })}
+            )
+          }) :
+          <article className="w-full h-full flex justify-center items-center">
+            <Loader className="animate-spin" />
+          </article>
+        }
       </article>
     </article>
   );
