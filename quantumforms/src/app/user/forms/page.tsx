@@ -4,6 +4,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { useQuery } from "@tanstack/react-query";
 import { DockIcon, ListCheck, Loader, Loader2, Table } from "lucide-react";
 import axios from "axios";
+import FormsSwitch from "@/components/forms/FormsSwitch";
+import { Form } from "@prisma/client";
+import { useState } from "react";
 
 function Forms() {
   // Fetch all the forms
@@ -14,9 +17,11 @@ function Forms() {
 
       return res.data
     }
-  })
+  }) as {data: Form[], isLoading: boolean}
 
   console.log("FORMS IN /FORMS: ", forms);
+
+  const [view, setView] = useState<"list" | "table" | "card">("list");
 
   return (
     <article className="page w-full">
@@ -67,7 +72,7 @@ function Forms() {
 
       {
          forms ?
-        <h2>Data</h2> :
+        <FormsSwitch view={view} forms={forms} /> :
         isLoading &&
         <article className="w-full h-full flex flex-col justify-center items-center">
           <Loader size={40} className="animate-spin" />
