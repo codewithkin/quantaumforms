@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -17,195 +17,11 @@ import { Form, Field } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const sampleForms = [
-  {
-    id: "form_1",
-    title: "Customer Feedback Form",
-    description: "Help us improve by sharing your thoughts!",
-    createdAt: "2025-02-20T12:00:00.000Z",
-    updatedAt: "2025-02-20T12:30:00.000Z",
-    userId: "user_123",
-    fields: [
-      {
-        id: "field_1",
-        type: "text",
-        label: "Full Name",
-        placeholder: "Enter your full name",
-        required: true,
-      },
-      {
-        id: "field_2",
-        type: "email",
-        label: "Email Address",
-        placeholder: "Enter your email",
-        required: true,
-      },
-      {
-        id: "field_3",
-        type: "select",
-        label: "How satisfied are you with our service?",
-        options: [
-          "Very Satisfied",
-          "Satisfied",
-          "Neutral",
-          "Dissatisfied",
-          "Very Dissatisfied",
-        ],
-        required: true,
-      },
-      {
-        id: "field_4",
-        type: "textarea",
-        label: "Additional Comments",
-        placeholder: "Enter any additional feedback...",
-        required: false,
-      },
-    ],
-    settings: {
-      isPublic: true,
-      allowMultipleResponses: false,
-      showProgress: true,
-    },
-    shareableLink: "https://yourformapp.com/f/form_1",
-  },
-  {
-    id: "form_2",
-    title: "Job Application Form",
-    description: "Apply for the open position by filling out this form.",
-    createdAt: "2025-02-20T14:15:00.000Z",
-    updatedAt: "2025-02-20T14:30:00.000Z",
-    userId: "user_456",
-    fields: [
-      {
-        id: "field_1",
-        type: "text",
-        label: "Full Name",
-        placeholder: "Enter your full name",
-        required: true,
-      },
-      {
-        id: "field_2",
-        type: "email",
-        label: "Email Address",
-        placeholder: "Enter your email",
-        required: true,
-      },
-      {
-        id: "field_3",
-        type: "file",
-        label: "Upload Resume",
-        required: true,
-      },
-      {
-        id: "field_4",
-        type: "radio",
-        label: "Are you legally authorized to work in this country?",
-        options: ["Yes", "No"],
-        required: true,
-      },
-    ],
-    settings: {
-      isPublic: false,
-      allowMultipleResponses: false,
-      showProgress: false,
-    },
-    shareableLink: "https://yourformapp.com/f/form_2",
-  },
-  {
-    id: "form_3",
-    title: "Event Registration",
-    description: "Register for our upcoming event!",
-    createdAt: "2025-02-21T09:00:00.000Z",
-    updatedAt: "2025-02-21T09:30:00.000Z",
-    userId: "user_789",
-    fields: [
-      {
-        id: "field_1",
-        type: "text",
-        label: "Full Name",
-        required: true,
-      },
-      {
-        id: "field_2",
-        type: "email",
-        label: "Email Address",
-        required: true,
-      },
-      {
-        id: "field_3",
-        type: "select",
-        label: "Ticket Type",
-        options: ["VIP", "General Admission", "Student"],
-        required: true,
-      },
-    ],
-    settings: {
-      isPublic: true,
-      allowMultipleResponses: true,
-      showProgress: false,
-    },
-    shareableLink: "https://yourformapp.com/f/form_3",
-  },
-  {
-    id: "form_4",
-    title: "Survey: Tech Preferences",
-    description: "Tell us about your tech habits!",
-    createdAt: "2025-02-22T10:00:00.000Z",
-    updatedAt: "2025-02-22T10:45:00.000Z",
-    userId: "user_001",
-    fields: [
-      {
-        id: "field_1",
-        type: "checkbox",
-        label: "Which devices do you use?",
-        options: ["Laptop", "Smartphone", "Tablet", "Smartwatch"],
-        required: true,
-      },
-      {
-        id: "field_2",
-        type: "text",
-        label: "Favorite programming language",
-        required: false,
-      },
-    ],
-    settings: {
-      isPublic: false,
-      allowMultipleResponses: true,
-      showProgress: true,
-    },
-    shareableLink: "https://yourformapp.com/f/form_4",
-  },
-  {
-    id: "form_5",
-    title: "Newsletter Signup",
-    description: "Stay updated with our latest news and updates!",
-    createdAt: "2025-02-23T08:30:00.000Z",
-    updatedAt: "2025-02-23T08:45:00.000Z",
-    userId: "user_555",
-    fields: [
-      {
-        id: "field_1",
-        type: "email",
-        label: "Email Address",
-        required: true,
-      },
-    ],
-    settings: {
-      isPublic: true,
-      allowMultipleResponses: false,
-      showProgress: false,
-    },
-    shareableLink: "https://yourformapp.com/f/form_5",
-  },
-];
-
 const FormCard = ({
   title,
   createdAt,
   description,
   id,
-  updatedAt,
-  userId,
   fields,
 }: Form) => {
   return (
@@ -252,6 +68,8 @@ const FormCard = ({
 };
 
 function FormsOverview() {
+  const [filter, setFilter] = useState("Most Responses");
+
   // Fetch the user's forms
   const { data: forms, isLoading } = useQuery({
     queryKey: ["forms"],
@@ -261,7 +79,17 @@ function FormsOverview() {
     },
   }) as { data: Form[], isLoading: boolean };
 
-  console.log("YOUR FORMS: ", forms);
+  const sortedForms = React.useMemo(() => {
+    if (!forms) return [];
+    switch (filter) {
+      case "Most Responses":
+        return [...forms].sort((a, b) => b.responses - a.responses);
+      case "Date":
+        return [...forms].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      default:
+        return forms;
+    }
+  }, [forms, filter]);
 
   return (
     <article className="flex flex-col gap-4 w-full h-full">
@@ -270,30 +98,20 @@ function FormsOverview() {
 
         {/* Form filters */}
         <article className="flex gap-4 items-center w-full justify-center overflow-x-scroll md:overflow-hidden">
-          <Button variant="default" color="primary">
-            Most Reponses
+          <Button variant="default" color="primary" onClick={() => setFilter("Most Responses")}>
+            Most Responses
           </Button>
-          <Button variant="outline" color="primary">
+          <Button variant="outline" color="primary" onClick={() => setFilter("Date")}>
             Date
-          </Button>
-          <Button variant="outline" color="primary">
-            Date
-          </Button>
-          <Button variant="secondary" color="secondary">
-            AI Created
-          </Button>
-          <Button variant="outline" color="primary">
-            Manual Forms
           </Button>
         </article>
       </article>
 
       <article className="grid h-full md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12 w-full">
-        {forms && !isLoading ?
-          forms.length > 0 &&
-          forms.map((form: Form) => {
-            const { id, title, description, createdAt, updatedAt, fields } =
-              form;
+        {sortedForms && !isLoading ?
+          sortedForms.length > 0 &&
+          sortedForms.map((form: Form) => {
+            const { id, title, description, createdAt, fields } = form;
 
             return (
               <FormCard
@@ -315,3 +133,4 @@ function FormsOverview() {
 }
 
 export default FormsOverview;
+
