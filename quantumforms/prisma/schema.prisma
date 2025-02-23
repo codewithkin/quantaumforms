@@ -42,7 +42,18 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  notifications Notification[] @relation("UserToNotification")
   forms         Form[]
+}
+
+model Notification {
+  id          String  @id @default(cuid())
+  success     Boolean
+  message     String
+  userId      String
+  createdAt   DateTime @default(now())
+
+  user        User @relation("UserToNotification", fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {

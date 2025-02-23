@@ -29,7 +29,10 @@ const FormCard = ({
   const router = useRouter();
 
   return (
-    <Card onClick={() => router.push(`/user/forms/${shareableLink}`)} className="md:min-w-[400px] min-h-[400px]">
+    <Card
+      onClick={() => router.push(`/user/forms/${shareableLink}`)}
+      className="md:min-w-[400px] min-h-[400px]"
+    >
       <CardHeader>
         <CardTitle className="text-xl font-semibold">{title}</CardTitle>
         <Badge className="w-fit">{createdAt}</Badge>
@@ -81,7 +84,7 @@ function FormsOverview() {
       const res = await axios.get("/api/forms");
       return res.data;
     },
-  }) as { data: Form[], isLoading: boolean };
+  }) as { data: Form[]; isLoading: boolean };
 
   const sortedForms = React.useMemo(() => {
     if (!forms) return [];
@@ -89,7 +92,10 @@ function FormsOverview() {
       case "Most Responses":
         return [...forms].sort((a, b) => b.responses - a.responses);
       case "Date":
-        return [...forms].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        return [...forms].sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        );
       default:
         return forms;
     }
@@ -102,20 +108,29 @@ function FormsOverview() {
 
         {/* Form filters */}
         <article className="flex gap-4 items-center w-full justify-center overflow-x-scroll md:overflow-hidden">
-          <Button variant={filter === "Most Responses" ? "default" : "outline"} color="primary" onClick={() => setFilter("Most Responses")}>
+          <Button
+            variant={filter === "Most Responses" ? "default" : "outline"}
+            color="primary"
+            onClick={() => setFilter("Most Responses")}
+          >
             Most Responses
           </Button>
-          <Button variant={filter === "Date" ? "default" : "outline"} color="primary" onClick={() => setFilter("Date")}>
+          <Button
+            variant={filter === "Date" ? "default" : "outline"}
+            color="primary"
+            onClick={() => setFilter("Date")}
+          >
             Date
           </Button>
         </article>
       </article>
 
       <article className="grid h-full md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 items-center justify-center gap-4 md:gap-8 xl:gap-12 w-full">
-        {sortedForms && !isLoading ?
+        {sortedForms && !isLoading ? (
           sortedForms.length > 0 &&
           sortedForms.map((form: Form) => {
-            const { id, title, description, shareableLink, createdAt, fields } = form;
+            const { id, title, description, shareableLink, createdAt, fields } =
+              form;
 
             return (
               <FormCard
@@ -126,16 +141,16 @@ function FormsOverview() {
                 description={description}
                 fields={fields}
               />
-            )
-          }) :
+            );
+          })
+        ) : (
           <article className="w-full h-full flex justify-center items-center">
             <Loader className="animate-spin" />
           </article>
-        }
+        )}
       </article>
     </article>
   );
 }
 
 export default FormsOverview;
-

@@ -45,7 +45,9 @@ function Sidebar() {
                 >
                   <Link href="/user/dashboard">
                     <ChartBar
-                      fill={path === "/user/dashboard" ? "currentColor" : "none"}
+                      fill={
+                        path === "/user/dashboard" ? "currentColor" : "none"
+                      }
                       size={20}
                       strokeWidth={1.5}
                     />
@@ -85,7 +87,9 @@ function Sidebar() {
                 >
                   <Link href="/user/analytics">
                     <ChartPie
-                      fill={path === "/user/analytics" ? "currentColor" : "none"}
+                      fill={
+                        path === "/user/analytics" ? "currentColor" : "none"
+                      }
                       size={20}
                       strokeWidth={1.5}
                     />

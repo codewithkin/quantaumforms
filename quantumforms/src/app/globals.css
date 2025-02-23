@@ -73,6 +73,6 @@ body {
 
 @layer components {
   .page {
-    @apply md:px-20 md:py-8 p-4
+    @apply md:px-20 md:py-8 p-4;
   }
 }
