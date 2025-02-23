@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@heroui/input";
 import { DockIcon, ListCheck, Search, Table } from "lucide-react";
 import React from "react";
@@ -11,20 +12,42 @@ function Forms() {
 
         {/* Views */}
         <article className="flex gap-4 items-center justify-center">
-          {/* List View */}
-          <Button size="icon" variant="outline">
-            <ListCheck size={30} strokeWidth={1.5} />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {/* List View */}
+                <Button size="icon" variant="outline">
+                  <ListCheck size={30} strokeWidth={1.5} />
+                </Button>
+              </TooltipTrigger>
 
-          {/* Table View */}
-          <Button size="icon" variant="outline">
-            <Table size={30} strokeWidth={1.5} />
-          </Button>
+              <TooltipContent side="top">List View</TooltipContent>
+            </Tooltip>
 
-          {/* Card View */}
-          <Button size="icon" variant="outline">
-            <DockIcon size={30} strokeWidth={1.5} />
-          </Button>
+            {/* Table View */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {/* Table View */}
+                <Button size="icon" variant="outline">
+                  <Table size={30} strokeWidth={1.5} />
+                </Button>
+              </TooltipTrigger>
+
+              <TooltipContent side="top">Table View</TooltipContent>
+            </Tooltip>
+
+            {/* Card View */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {/* Card View */}
+                <Button size="icon" variant="outline">
+                  <DockIcon size={30} strokeWidth={1.5} />
+                </Button>
+              </TooltipTrigger>
+
+              <TooltipContent side="top">Card View</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </article>
       </article>
     </article>
