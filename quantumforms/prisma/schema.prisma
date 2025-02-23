@@ -65,8 +65,22 @@ model Form {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   settings    Setting? @relation(fields: [settingsId], references: [id])
   settingsId  String?  @unique
+  responses   Response[]
 
   shareableLink String? @unique @default(uuid())
+}
+
+model Response {
+  id        String   @id @default(cuid())
+  formId    String
+  filledAt DateTime @default(now())
+  data      Json
+  timeTaken Int?
+  longestField String?
+  shortestField String?
+  location String?
+
+  form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
 }
 
 model Field {
