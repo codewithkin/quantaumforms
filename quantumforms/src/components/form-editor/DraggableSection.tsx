@@ -48,7 +48,7 @@ function DraggableSection({ form }: { form: Form }) {
   });
 
   const simulateSubmission = () => {
-    toast("This is an example, for submitted");
+    toast("This is just an example, form submitted");
   };
 
   return (
