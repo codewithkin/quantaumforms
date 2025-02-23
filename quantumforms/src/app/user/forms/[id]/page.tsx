@@ -265,10 +265,10 @@ export default function FormEditor() {
           <Label>Fields</Label>
           {form.fields &&
             form.fields.length > 0 &&
-            form.fields.map((field: Field) => (
+            form.fields.map((field: Field, index: number) => (
               <FormField
                 required={field.required}
-                key={field.id}
+                key={index}
                 type={field.type}
                 label={field.label}
               />

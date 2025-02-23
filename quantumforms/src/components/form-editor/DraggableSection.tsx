@@ -115,9 +115,9 @@ function DraggableSection({ form }: { form: Form }) {
                       <SelectContent>
                         {field &&
                           field.options &&
-                          field.options.map((option: string) => (
-                            <SelectItem value={option} key={option}>
-                              {option}
+                          field.options.map((option: { id: string, value: string, fieldId: string }, index: number) => (
+                            <SelectItem value={option.value} key={index}>
+                              {option.value}
                             </SelectItem>
                           ))}
                       </SelectContent>

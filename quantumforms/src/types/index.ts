@@ -4,6 +4,11 @@ export type Field = {
   label: string;
   placeholder: string;
   required: boolean;
+  options: {
+    id: string;
+    value: string;
+    fieldId: string
+  }[];
 };
 
 export type Form = {

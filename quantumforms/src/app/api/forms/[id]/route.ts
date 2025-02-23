@@ -17,7 +17,11 @@ export async function GET(
         shareableLink: id,
       },
       include: {
-        fields: true,
+        fields: {
+          include: {
+            options: true
+          }
+        },
         settings: true,
       },
     });
@@ -72,13 +76,24 @@ export async function PUT(
 
     if (!existingForm) throw new Error("This form does not exist");
 
+    const newField = await prisma.field.create({
+      data: {
+        formId: formId || "",
+        type,
+        placeholder,
+        label,
+        required
+      },
+    });
+
+    // Create new options
     let newOptions: { id: string; value: string; fieldId: string }[] | [] = [];
 
     if (options && options.length > 0) {
       await prisma.option.createMany({
-        data: options.map((option: { value: string; fieldId: string }) => ({
-          value: option.value,
-          fieldId: option.fieldId || "", // Temporarily set fieldId to undefined
+        data: options.map((option: string) => ({
+          value: option,
+          fieldId: newField.id, // Temporarily set fieldId to undefined
         })),
       });
 
@@ -92,30 +107,17 @@ export async function PUT(
       }
     }
 
-    const newField = await prisma.field.create({
+    // Update the field's options
+    await prisma.field.update({
+      where: {
+        id: newField.id,
+      },
       data: {
-        formId: formId || "",
-        type,
-        placeholder,
-        label,
-        required,
         options: {
-          connect: newOptions.map((option) => ({ id: option.id })), // Connect options to field
+          connect: newOptions.map((option) => ({ id: option.id })),
         },
       },
     });
-
-    // Update the options' fieldIds
-    if (newOptions.length > 0) {
-      await prisma.option.updateMany({
-        where: {
-          id: { in: newOptions.map((option) => option.id) }, // Assuming `id` is unique
-        },
-        data: {
-          fieldId: newField.id,
-        },
-      });
-    }
 
     // Update the form
     const updatedForm = await prisma.form.update({
