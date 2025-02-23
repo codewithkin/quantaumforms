@@ -62,7 +62,11 @@ export async function GET({ params }: { params: { id: string } }) {
     const forms = await prisma.form.findMany({
       orderBy: { createdAt: "desc" },
       include: {
-        fields: true,
+        fields: {
+          include: {
+            options: true
+          }
+        },
         settings: true,
       },
     });

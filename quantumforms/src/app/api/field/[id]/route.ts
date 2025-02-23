@@ -40,6 +40,9 @@ export async function DELETE(
       where: {
         id: fieldId,
       },
+      include: {
+        options: true
+      }
     });
 
     console.log("Successfully deleted field: ", deletedField);

@@ -101,7 +101,11 @@ export async function PUT(
         },
       },
       include: {
-        fields: true,
+        fields: {
+          include: {
+            options: true
+          }
+        },
       },
     });
 
