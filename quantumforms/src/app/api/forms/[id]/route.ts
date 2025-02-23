@@ -22,6 +22,7 @@ export async function GET(
             options: true,
           },
         },
+        responses: true,
         settings: true,
       },
     });

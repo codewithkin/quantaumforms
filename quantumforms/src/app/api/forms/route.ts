@@ -67,6 +67,7 @@ export async function GET({ params }: { params: { id: string } }) {
             options: true,
           },
         },
+        responses: true,
         settings: true,
       },
     });
