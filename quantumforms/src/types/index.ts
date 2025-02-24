@@ -20,5 +20,5 @@ export type Form = {
   updatedAt: string;
   userId: string;
   fields: Field[];
-  responses: any[]
+  responses: any[];
 };
