@@ -61,15 +61,15 @@ export async function GET({ params }: { params: { id: string } }) {
   try {
     const session = await auth();
 
-    const userId = session?.user?.id
+    const userId = session?.user?.id;
 
     console.log("USER ID: ", userId);
 
-    if(!userId) throw new Error("User id is missing");
+    if (!userId) throw new Error("User id is missing");
 
     const forms = await prisma.form.findMany({
       where: {
-        userId
+        userId,
       },
       orderBy: { createdAt: "desc" },
       include: {

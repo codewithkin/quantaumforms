@@ -1,6 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useQuery } from "@tanstack/react-query";
 import { DockIcon, ListCheck, Loader, Loader2, Table } from "lucide-react";
 import axios from "axios";
@@ -10,14 +15,14 @@ import { useState } from "react";
 
 function Forms() {
   // Fetch all the forms
-  const {data: forms, isLoading} = useQuery({
+  const { data: forms, isLoading } = useQuery({
     queryKey: ["forms"],
     queryFn: async () => {
       const res = await axios.get("/api/forms");
 
-      return res.data
-    }
-  }) as {data: Form[], isLoading: boolean}
+      return res.data;
+    },
+  }) as { data: Form[]; isLoading: boolean };
 
   console.log("FORMS IN /FORMS: ", forms);
 
@@ -35,7 +40,11 @@ function Forms() {
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* List View */}
-                <Button onClick={() => setView("list")} size="icon" variant={view === "list" ? "default" : "outline"}>
+                <Button
+                  onClick={() => setView("list")}
+                  size="icon"
+                  variant={view === "list" ? "default" : "outline"}
+                >
                   <ListCheck size={30} strokeWidth={1.5} />
                 </Button>
               </TooltipTrigger>
@@ -47,7 +56,11 @@ function Forms() {
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* Table View */}
-                <Button onClick={() => setView("table")} size="icon" variant={view === "table" ? "default" : "outline"}>
+                <Button
+                  onClick={() => setView("table")}
+                  size="icon"
+                  variant={view === "table" ? "default" : "outline"}
+                >
                   <Table size={30} strokeWidth={1.5} />
                 </Button>
               </TooltipTrigger>
@@ -59,7 +72,11 @@ function Forms() {
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* Card View */}
-                <Button onClick={() => setView("card")} size="icon" variant={view === "card" ? "default" : "outline"}>
+                <Button
+                  onClick={() => setView("card")}
+                  size="icon"
+                  variant={view === "card" ? "default" : "outline"}
+                >
                   <DockIcon size={30} strokeWidth={1.5} />
                 </Button>
               </TooltipTrigger>
@@ -70,14 +87,15 @@ function Forms() {
         </article>
       </article>
 
-      {
-         forms ?
-        <FormsSwitch view={view} forms={forms} /> :
-        isLoading &&
-        <article className="w-full h-full flex flex-col justify-center items-center">
-          <Loader size={40} className="animate-spin" />
-        </article> 
-      }
+      {forms ? (
+        <FormsSwitch view={view} forms={forms} />
+      ) : (
+        isLoading && (
+          <article className="w-full h-full flex flex-col justify-center items-center">
+            <Loader size={40} className="animate-spin" />
+          </article>
+        )
+      )}
     </article>
   );
 }

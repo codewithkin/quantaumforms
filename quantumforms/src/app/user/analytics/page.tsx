@@ -8,28 +8,28 @@ function Analytics() {
   const [key, setKey] = useState<string | "all">("all");
   const [responses, setResponses] = useState<Response[]>([]);
 
-  const {data: forms} = useQuery({
+  const { data: forms } = useQuery({
     queryKey: ["forms"],
     queryFn: async () => {
       const res = await axios.get("/api/forms");
 
-      return res.data
-    }
-  })
+      return res.data;
+    },
+  });
 
   useEffect(() => {
-    if(key === "all") {
+    if (key === "all") {
       // Get the responses across all forms
-      if(forms) {
+      if (forms) {
         // Map each form, adding its responses to the response array
         forms.map((form: Form) => {
           // Check if the particular form doesn't already exist inside the response array
-          if(form.responses.length > 0) {
+          if (form.responses.length > 0) {
             setResponses((prev) => [...prev, ...form.responses]);
           } else {
             setResponses((prev) => [...prev]);
           }
-        })
+        });
       }
     }
   }, [key, forms]);
