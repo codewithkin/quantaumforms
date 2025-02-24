@@ -1,11 +1,12 @@
 import { Form } from "@prisma/client";
 import FormListItem from "./views/List";
+import FormsTable from "./views/Table";
 
 function FormsSwitch({ forms, view }: { forms: Form[]; view: string }) {
   return (
     <article className="py-4 w-full">
       {view === "table" ? (
-        <h2>Table here</h2>
+        <FormsTable forms={forms} />
       ) : view === "list" ? (
         <FormListItem forms={forms} />
       ) : (
