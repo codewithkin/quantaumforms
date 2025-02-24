@@ -59,7 +59,18 @@ export async function POST(req: Request) {
 // 🟡 GET all forms (GET /api/forms)
 export async function GET({ params }: { params: { id: string } }) {
   try {
+    const session = await auth();
+
+    const userId = session?.user?.id
+
+    console.log("USER ID: ", userId);
+
+    if(!userId) throw new Error("User id is missing");
+
     const forms = await prisma.form.findMany({
+      where: {
+        userId
+      },
       orderBy: { createdAt: "desc" },
       include: {
         fields: {
