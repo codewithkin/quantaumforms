@@ -12,7 +12,9 @@ function ListViewShareableLinkBadge({shareableLink}: {shareableLink: Form["share
     // Copy the link to the clipboard
     navigator.clipboard.writeText(`${rootUrls.frontendUrl}/forms/${shareableLink}`);
 
-    toast("Copied form to clipboard")
+    toast("Copied form link to clipboard")
+
+    setCopied(true);
   }
 
   return (
