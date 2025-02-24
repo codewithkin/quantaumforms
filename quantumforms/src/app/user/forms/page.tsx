@@ -35,7 +35,7 @@ function Forms() {
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* List View */}
-                <Button size="icon" variant={view === "list" ? "default" : "outline"}>
+                <Button onClick={() => setView("list")} size="icon" variant={view === "list" ? "default" : "outline"}>
                   <ListCheck size={30} strokeWidth={1.5} />
                 </Button>
               </TooltipTrigger>
@@ -47,7 +47,7 @@ function Forms() {
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* Table View */}
-                <Button size="icon" variant={view === "table" ? "default" : "outline"}>
+                <Button onClick={() => setView("table")} size="icon" variant={view === "table" ? "default" : "outline"}>
                   <Table size={30} strokeWidth={1.5} />
                 </Button>
               </TooltipTrigger>
@@ -59,7 +59,7 @@ function Forms() {
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* Card View */}
-                <Button size="icon" variant={view === "card" ? "default" : "outline"}>
+                <Button onClick={() => setView("card")} size="icon" variant={view === "card" ? "default" : "outline"}>
                   <DockIcon size={30} strokeWidth={1.5} />
                 </Button>
               </TooltipTrigger>
