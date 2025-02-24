@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -82,14 +82,22 @@ export default function FormTable({ forms }: { forms: Form[] }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuItem>
-                <Link href={`/forms/${form.id}`}>View Full</Link>
+                <Link className="flex gap-2 items-center" href={`/forms/${form.shareableLink}`}>
+                  <Eye size="20" />
+                  Preview
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={`/user/forms/${form.id}`}>Edit</Link>
+                <Link className="flex gap-2 items-center" href={`/user/forms/${form.shareableLink}`}>
+                  <Pencil size="20" />
+                  Edit
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
+                className="flex gap-2 items-center text-red-500"
                 onClick={() => deleteFormMutation.mutate(form.shareableLink)}
               >
+                <Trash2 size="20" />
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>

@@ -64,7 +64,7 @@ function DraggableSection({ form }: { form: Form }) {
             onSubmit={simulateSubmission}
             className="w-full flex flex-col justify-start items-start text-start gap-4"
           >
-            {form.fields.length > 0 &&
+            {form.fields && form.fields.length > 0 && form.fields.length > 0 &&
               form.fields.map((field: Field) => {
                 return field.type !== "textarea" &&
                   field.type !== "checkbox" &&
