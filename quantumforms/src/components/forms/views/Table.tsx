@@ -9,6 +9,19 @@ import {
 } from "@heroui/table";
 import { Form } from "@/types";
 import ListViewShareableLinkBadge from "./ListViewShareableLinkBadge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
+import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "sonner";
+import { useQueryClientProvider } from "@/context/QueryProvider";
 
 export default function FormTable({ forms }: { forms: Form[] }) {
   const columns = [
@@ -23,6 +36,27 @@ export default function FormTable({ forms }: { forms: Form[] }) {
     form.actions = [];
   });
 
+  const queryClient = useQueryClientProvider((state) => state.queryClient);
+
+  const deleteFormMutation = useMutation({
+    mutationKey: ["deleteForm"],
+    mutationFn: async (shareableLink: string) => {
+      const res = await axios.delete(`/api/forms/${shareableLink}`);
+      return res.data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["forms"] });
+
+      // Show a success toast
+      toast("Form deleted successfully");
+    },
+    onError: (error) => {
+      // Show an error toast
+      toast("An error occurred while deleting the form");
+    },
+  });
+
   const renderCell = useCallback((form: Form, columnKey: any) => {
     const cellValue = form[columnKey];
 
@@ -30,7 +64,7 @@ export default function FormTable({ forms }: { forms: Form[] }) {
 
     switch (columnKey) {
       case "title":
-        return <h2>{form.title}</h2>;
+        return <h2 className="font-semibold text-md">{form.title}</h2>;
       case "shareableLInk":
         return (
           <ListViewShareableLinkBadge shareableLink={form.shareableLink} />
@@ -38,7 +72,29 @@ export default function FormTable({ forms }: { forms: Form[] }) {
       case "responses":
         return <h2>{form.responses.length}</h2>;
       case "actions":
-        return <h2>Actions here</h2>;
+        return (
+          /* DropdownMenu with "View full", "Edit", "Delete", each with its own icon */
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="flex gap-2 items-center" size="icon">
+                <MoreHorizontal size="20" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuItem>
+                <Link href={`/forms/${form.id}`}>View Full</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={`/user/forms/${form.id}`}>Edit</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => deleteFormMutation.mutate(form.shareableLink)}
+              >
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
       default:
         return cellValue;
     }
