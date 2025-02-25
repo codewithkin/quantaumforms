@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Form } from "@prisma/client";
 import React from "react";
 import ListViewShareableLinkBadge from "./ListViewShareableLinkBadge";
+import ListViewMoreOptions from "./ListViewMoreOptions";
 
 function FormListItem({ forms }: { forms: Form[] }) {
   return (
@@ -41,6 +42,7 @@ function FormListItem({ forms }: { forms: Form[] }) {
 
                 <article className="flex gap-2 items-center">
                   <ListViewShareableLinkBadge shareableLink={shareableLink} />
+                  <ListViewMoreOptions form={form} />
                 </article>
               </li>
             );
