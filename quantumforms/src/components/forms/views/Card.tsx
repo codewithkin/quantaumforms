@@ -15,12 +15,13 @@ function FormCards({forms}: {forms: Form[]}) {
                 return (
                     <motion.article 
                     initial={{
-
+                        display: "none",
                         opacity: 0,
                         x: 200
                       }}
       
                       animate={{
+                        display: "grid",
                         opacity: 1,
                         x: 1
                       }}

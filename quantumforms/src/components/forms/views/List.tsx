@@ -20,11 +20,13 @@ function FormListItem({ forms }: { forms: Form[] }) {
               <motion.li
                 key={id}
                 initial={{
+                  display: "none",
                   opacity: 0,
                   y: 200
                 }}
 
                 animate={{
+                  display: "flex",
                   opacity: 1,
                   y: 1
                 }}
