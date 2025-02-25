@@ -106,7 +106,7 @@ const FormAnalytics = () => {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dashed" />}
               />
-              <Bar dataKey="timeTaken" fill="var(--color-desktop)" radius={4} />
+              <Bar dataKey="timeTaken" fill="#C4B5FD" radius={4} />
               <Bar dataKey="longestField" fill="var(--color-mobile)" radius={4} />
             </BarChart>
           </ChartContainer>

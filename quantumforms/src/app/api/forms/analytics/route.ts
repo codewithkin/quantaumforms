@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       },
       include: {
         responses: {
-            take: 10
+            take: 1
         },
       },
     });
