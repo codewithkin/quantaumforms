@@ -1,48 +1,72 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { BarChart, LineChart, PieChart } from "recharts";
 import axios from "axios";
-import { Form, Response } from "@prisma/client";
 
-function Analytics() {
-  const [key, setKey] = useState<string | "all">("all");
-  const [responses, setResponses] = useState<Response[]>([]);
-
-  const { data: forms } = useQuery({
-    queryKey: ["forms"],
-    queryFn: async () => {
-      const res = await axios.get("/api/forms");
-
-      return res.data;
-    },
-  });
-
-  useEffect(() => {
-    if (key === "all") {
-      // Get the responses across all forms
-      if (forms) {
-        // Map each form, adding its responses to the response array
-        forms.map((form: Form) => {
-          // Check if the particular form doesn't already exist inside the response array
-          if (form.responses.length > 0) {
-            setResponses((prev) => [...prev, ...form.responses]);
-          } else {
-            setResponses((prev) => [...prev]);
-          }
-        });
-      }
-    }
-  }, [key, forms]);
-
-  return (
-    <article className="page">
-      <h2 className="text-2xl font-semibold">Form Analytics</h2>
-
-      <article className="md:flex gap-4 items-center justify-center">
-        {/* Responses timeline */}
-      </article>
-    </article>
-  );
+export type analytics = {
+  totalForms: number;
+  totalResponses: number;
+  avgTimeTaken: number;
+  responseTrends: any
 }
 
-export default Analytics;
+const FormAnalytics = () => {
+  const [analytics, setAnalytics] = useState<analytics | null>(null);
+
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        const response = await axios.get("/api/forms/analytics");
+        setAnalytics(response.data);
+      } catch (error) {
+        console.error("Error fetching analytics", error);
+      }
+    };
+
+    fetchAnalytics();
+  }, []);
+
+  if (!analytics) return <p>Loading analytics...</p>;
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+      <Card>
+        <CardContent>
+          <CardTitle className="text-xl font-semibold">Total Forms</CardTitle>
+          <p className="text-3xl font-bold">{analytics.totalForms}</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent>
+          <CardTitle className="text-xl font-semibold">Total Responses</CardTitle>
+          <p className="text-3xl font-bold">{analytics.totalResponses}</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent>
+          <CardTitle className="text-xl font-semibold">Avg. Time to Fill</CardTitle>
+          <p className="text-3xl font-bold">{analytics.avgTimeTaken} sec</p>
+        </CardContent>
+      </Card>
+
+      {/* <Card>
+        <CardContent>
+          <CardTitle className="text-xl font-semibold">Public vs. Private Forms</CardTitle>
+          <PieChart width={200} height={200} data={analytics.publicPrivateBreakdown} />
+        </CardContent>
+      </Card> */}
+
+      <Card className="col-span-2">
+        <CardContent>
+          <CardTitle className="text-xl font-semibold">Response Trends</CardTitle>
+          <LineChart width={600} height={300} data={analytics.responseTrends} />
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default FormAnalytics;
