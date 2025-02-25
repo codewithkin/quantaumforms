@@ -1,8 +1,7 @@
-import { Badge } from "@/components/ui/badge";
-import { Form } from "@prisma/client";
 import React from "react";
 import ListViewShareableLinkBadge from "./ListViewShareableLinkBadge";
 import ListViewMoreOptions from "./ListViewMoreOptions";
+import { Form } from "@/types";
 
 function FormListItem({ forms }: { forms: Form[] }) {
   return (
@@ -16,8 +15,6 @@ function FormListItem({ forms }: { forms: Form[] }) {
               description,
               createdAt,
               shareableLink,
-              primaryColor,
-              secondaryColor,
             } = form;
 
             return (
