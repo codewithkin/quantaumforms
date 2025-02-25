@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useQuery } from "@tanstack/react-query";
 import {
+  Brush,
   Clock,
   DockIcon,
   ListCheck,
@@ -24,6 +25,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
 import { Form } from "@/types";
 
@@ -139,7 +141,22 @@ function Forms() {
               </Button>
             </DropdownMenuTrigger>
 
+            <DropdownMenuSeparator />
+
             <DropdownMenuContent>
+            <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Button
+                    variant="default"
+                    disabled={filteredForms.length !== 0}
+                    onClick={() => handleTimeFilter(15120)}
+                    size="sm"
+                  >
+                    <Brush size={20} strokeWidth={1.5} />
+                    Clear Filters
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Button
