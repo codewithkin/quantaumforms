@@ -15,7 +15,7 @@ import axios from "axios";
 import { Form } from "@/types";
 
 function ListViewMoreOptions({ form }: { form: Form }) {
-    const queryClient = useQueryClientProvider((state) => state.queryClient);
+  const queryClient = useQueryClientProvider((state) => state.queryClient);
 
   const deleteFormMutation = useMutation({
     mutationKey: ["deleteForm"],

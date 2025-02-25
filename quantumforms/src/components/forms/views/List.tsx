@@ -9,12 +9,7 @@ function FormListItem({ forms }: { forms: Form[] }) {
     <ul className="w-full flex flex-col gap-4 overflow-hidden">
       {forms.length > 0
         ? forms.map((form: Form, index: number) => {
-            const {
-              id,
-              title,
-              createdAt,
-              shareableLink,
-            } = form;
+            const { id, title, createdAt, shareableLink } = form;
 
             return (
               <motion.li
@@ -22,17 +17,15 @@ function FormListItem({ forms }: { forms: Form[] }) {
                 initial={{
                   display: "none",
                   opacity: 0,
-                  y: 200
+                  y: 200,
                 }}
-
                 animate={{
                   display: "flex",
                   opacity: 1,
-                  y: 1
+                  y: 1,
                 }}
-
                 transition={{
-                  delay: index * 0.1
+                  delay: index * 0.1,
                 }}
                 className="w-full justify-between flex items-center bg-white text-slate-800 shadow-md rounded-xl hover:cursor-pointer transition duration-300 p-4"
               >

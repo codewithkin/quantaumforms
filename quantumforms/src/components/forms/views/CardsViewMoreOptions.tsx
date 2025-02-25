@@ -14,7 +14,7 @@ import axios from "axios";
 import { Form } from "@/types";
 
 function CardsViewMoreOptions({ form }: { form: Form }) {
-    const queryClient = useQueryClientProvider((state) => state.queryClient);
+  const queryClient = useQueryClientProvider((state) => state.queryClient);
 
   const deleteFormMutation = useMutation({
     mutationKey: ["deleteForm"],
@@ -39,7 +39,11 @@ function CardsViewMoreOptions({ form }: { form: Form }) {
     /* DropdownMenu with "View full", "Edit", "Delete", each with its own icon */
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex gap-2 items-center w-full text-slate-800" size="icon">
+        <Button
+          variant="outline"
+          className="flex gap-2 items-center w-full text-slate-800"
+          size="icon"
+        >
           More
         </Button>
       </DropdownMenuTrigger>
