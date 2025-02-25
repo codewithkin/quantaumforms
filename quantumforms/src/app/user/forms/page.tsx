@@ -7,14 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Brush,
-  Clock,
-  DockIcon,
-  ListCheck,
-  Loader,
-  Table,
-} from "lucide-react";
+import { Brush, Clock, DockIcon, ListCheck, Loader, Table } from "lucide-react";
 import axios from "axios";
 import FormsSwitch from "@/components/forms/FormsSwitch";
 import { useEffect, useState } from "react";
@@ -52,7 +45,7 @@ function Forms() {
     const now = new Date().getTime();
     const newFilteredForms = forms.filter(
       (form) =>
-        new Date(form.createdAt).getTime() > now - hours * 60 * 60 * 1000
+        new Date(form.createdAt).getTime() > now - hours * 60 * 60 * 1000,
     );
     setFilteredForms(newFilteredForms);
   };
@@ -60,7 +53,7 @@ function Forms() {
   const handleResponseFilter = (min: number, max: number) => {
     if (!forms) return;
     const newFilteredForms = forms.filter(
-      (form) => form.responses.length >= min && form.responses.length <= max
+      (form) => form.responses.length >= min && form.responses.length <= max,
     );
     setFilteredForms(newFilteredForms);
   };
@@ -77,7 +70,11 @@ function Forms() {
         <article className="flex gap-4 items-center justify-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="flex gap-2 items-center" variant="outline" size="sm">
+              <Button
+                className="flex gap-2 items-center"
+                variant="outline"
+                size="sm"
+              >
                 <Clock size={20} strokeWidth={1.5} /> Time
               </Button>
             </DropdownMenuTrigger>
@@ -85,17 +82,33 @@ function Forms() {
             <DropdownMenuContent>
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <Button variant="default" onClick={() => setFilteredForms(forms || [])} size="sm">
+                  <Button
+                    variant="default"
+                    onClick={() => setFilteredForms(forms || [])}
+                    size="sm"
+                  >
                     <Brush size={20} strokeWidth={1.5} /> Clear Filters
                   </Button>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <Button variant="secondary" onClick={() => handleTimeFilter(24)} size="sm">Last 24 hours</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleTimeFilter(24)}
+                    size="sm"
+                  >
+                    Last 24 hours
+                  </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Button variant="secondary" onClick={() => handleTimeFilter(168)} size="sm">1 Week</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleTimeFilter(168)}
+                    size="sm"
+                  >
+                    1 Week
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
@@ -103,7 +116,11 @@ function Forms() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="flex gap-2 items-center" variant="outline" size="sm">
+              <Button
+                className="flex gap-2 items-center"
+                variant="outline"
+                size="sm"
+              >
                 Responses
               </Button>
             </DropdownMenuTrigger>
@@ -111,16 +128,40 @@ function Forms() {
             <DropdownMenuContent>
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <Button variant="secondary" onClick={() => handleResponseFilter(0, 5)} size="sm">0 - 5 Responses</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleResponseFilter(0, 5)}
+                    size="sm"
+                  >
+                    0 - 5 Responses
+                  </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Button variant="secondary" onClick={() => handleResponseFilter(6, 20)} size="sm">6 - 20 Responses</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleResponseFilter(6, 20)}
+                    size="sm"
+                  >
+                    6 - 20 Responses
+                  </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Button variant="secondary" onClick={() => handleResponseFilter(21, 50)} size="sm">21 - 50 Responses</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleResponseFilter(21, 50)}
+                    size="sm"
+                  >
+                    21 - 50 Responses
+                  </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Button variant="secondary" onClick={() => handleResponseFilter(51, 100)} size="sm">51 - 100 Responses</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleResponseFilter(51, 100)}
+                    size="sm"
+                  >
+                    51 - 100 Responses
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

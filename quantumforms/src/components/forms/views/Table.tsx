@@ -126,7 +126,10 @@ export default function FormTable({ forms }: { forms: Form[] }) {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No forms yet...you can create a new one though"} items={forms}>
+      <TableBody
+        emptyContent={"No forms yet...you can create a new one though"}
+        items={forms}
+      >
         {(item: any) => (
           <TableRow key={item.id}>
             {(columnKey: any) => (
