@@ -17,6 +17,8 @@ export type Form = {
   description: string;
   shareableLink: string;
   createdAt: string;
+  primaryColor: string;
+  secondaryColor: string;
   updatedAt: string;
   userId: string;
   fields: Field[];
