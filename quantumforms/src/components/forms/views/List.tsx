@@ -39,7 +39,9 @@ function FormListItem({ forms }: { forms: Form[] }) {
                 <article className={`${secondaryColor ? `bg-[${secondaryColor}]` : "bg-purple-400"} w-8 h-8 rounded-full`}></article>
               </article> */}
 
-                <ListViewShareableLinkBadge shareableLink={shareableLink} />
+                <article className="flex gap-2 items-center">
+                  <ListViewShareableLinkBadge shareableLink={shareableLink} />
+                </article>
               </li>
             );
           })

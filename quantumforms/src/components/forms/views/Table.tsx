@@ -82,13 +82,19 @@ export default function FormTable({ forms }: { forms: Form[] }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuItem>
-                <Link className="flex gap-2 items-center" href={`/forms/${form.shareableLink}`}>
+                <Link
+                  className="flex gap-2 items-center"
+                  href={`/forms/${form.shareableLink}`}
+                >
                   <Eye size="20" />
                   Preview
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link className="flex gap-2 items-center" href={`/user/forms/${form.shareableLink}`}>
+                <Link
+                  className="flex gap-2 items-center"
+                  href={`/user/forms/${form.shareableLink}`}
+                >
                   <Pencil size="20" />
                   Edit
                 </Link>
