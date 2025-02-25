@@ -51,7 +51,7 @@ function FormListItem({ forms }: { forms: Form[] }) {
               </motion.li>
             );
           })
-        : null}
+        : <h2 className="text-xl font-medium text-slate-600 text-center">No forms yet...you can create one though</h2>}
     </ul>
   );
 }

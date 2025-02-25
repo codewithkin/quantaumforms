@@ -7,9 +7,9 @@ import CardsViewMoreOptions from "./CardsViewMoreOptions";
 
 function FormCards({ forms }: { forms: Form[] }) {
   return (
-    <article className="grid md:grid-cols-4 sm:grid-cols-2 items-center md:gap-8 gap-4">
+    <article className="grid md:grid-cols-4 sm:grid-cols-2 items-center md:gap-8 gap-4 w-full">
       {forms &&
-        forms.length > 0 &&
+        forms.length > 0 ?
         forms.map((form: Form, index: number) => {
           const { id, title, createdAt, shareableLink } = form;
           return (
@@ -53,7 +53,8 @@ function FormCards({ forms }: { forms: Form[] }) {
               </article>
             </motion.article>
           );
-        })}
+        }) : <h2 className="text-xl font-medium text-slate-600 text-center w-full">No forms yet...you can create one though</h2>
+      }
     </article>
   );
 }
