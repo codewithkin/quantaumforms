@@ -22,7 +22,9 @@ export async function GET(req: NextRequest) {
         userId: id,
       },
       include: {
-        responses: true,
+        responses: {
+            take: 10
+        },
       },
     });
 
@@ -65,13 +67,15 @@ export async function GET(req: NextRequest) {
 
     // Get the response trends (just all of the responses across all the forms)
     const responseTrends = forms
-      .map((form) => form.responses.map((response) => response.data).flat())
+      .filter((form) => form.responses.length > 0)
+      .map((form) => form.responses.map((response) => response).flat())
       .flat();
 
     return NextResponse.json({
       totalForms,
       totalResponses,
-      responseTrends
+      responseTrends,
+      avgTimeTaken
     });
   } catch (e) {
     console.log("An error occured while fetching analytics: ", e);
