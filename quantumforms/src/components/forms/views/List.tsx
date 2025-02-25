@@ -2,24 +2,36 @@ import React from "react";
 import ListViewShareableLinkBadge from "./ListViewShareableLinkBadge";
 import ListViewMoreOptions from "./ListViewMoreOptions";
 import { Form } from "@/types";
+import { motion } from "framer-motion";
 
 function FormListItem({ forms }: { forms: Form[] }) {
   return (
     <ul className="w-full flex flex-col gap-4 overflow-hidden">
       {forms.length > 0
-        ? forms.map((form: Form) => {
+        ? forms.map((form: Form, index: number) => {
             const {
-              updatedAt,
               id,
               title,
-              description,
               createdAt,
               shareableLink,
             } = form;
 
             return (
-              <li
+              <motion.li
                 key={id}
+                initial={{
+                  opacity: 0,
+                  y: 200
+                }}
+
+                animate={{
+                  opacity: 1,
+                  y: 1
+                }}
+
+                transition={{
+                  delay: index * 0.1
+                }}
                 className="w-full justify-between flex items-center bg-white text-slate-800 shadow-md rounded-xl hover:cursor-pointer transition duration-300 p-4"
               >
                 {/* Title and createdAt */}
@@ -41,7 +53,7 @@ function FormListItem({ forms }: { forms: Form[] }) {
                   <ListViewShareableLinkBadge shareableLink={shareableLink} />
                   <ListViewMoreOptions form={form} />
                 </article>
-              </li>
+              </motion.li>
             );
           })
         : null}
