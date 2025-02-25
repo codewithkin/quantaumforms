@@ -28,7 +28,7 @@ function FormCards({forms}: {forms: Form[]}) {
                       transition={{
                         delay: index * 0.1
                       }}
-                    key={id} className={`hover:cursor-pointer grid min-h-[400px] p-4 rounded-xl text-white bg-gradient-to-tr from-orange-300 to-purple-600 w-full`}>
+                    key={id} className={`hover:cursor-pointer grid min-h-[400px] p-4 rounded-xl text-white bg-gradient-to-tr from-sky-400 to-blue-800 w-full`}>
                         <article>
                             <h3 className='text-xl font-semibold'>{title}</h3>
                             <p className='font-semibold'>{createdAt}</p>
