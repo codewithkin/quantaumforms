@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       },
       include: {
         responses: {
-            take: 1
+          take: 1,
         },
       },
     });
@@ -75,7 +75,7 @@ export async function GET(req: NextRequest) {
       totalForms,
       totalResponses,
       responseTrends,
-      avgTimeTaken
+      avgTimeTaken,
     });
   } catch (e) {
     console.log("An error occured while fetching analytics: ", e);
