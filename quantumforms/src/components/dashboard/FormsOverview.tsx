@@ -57,7 +57,7 @@ const FormCard = ({
   };
 
   return (
-    <Card className="md:min-w-[400px] min-h-[400px] hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50 border-gray-200/50">
+    <Card className="md:min-w-[400px] min-fit hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50 border-gray-200/50">
       <CardHeader>
         <CardTitle className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           {title}
