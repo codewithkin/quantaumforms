@@ -13,7 +13,7 @@ export default function RootLayout({
       <Sidebar />
       <MobileBottomBar />
 
-      <article className="overflow-y-scroll h-screen">
+      <article className="overflow-y-scroll w-full h-screen">
         {children}
       </article>
     </main>
