@@ -119,52 +119,52 @@ const FormAnalytics = () => {
       </article>
     );
   }
-
+  
   const COLORS = ['#C4B5FD', '#818CF8', '#6366F1', '#4F46E5'];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
       {/* Key Metrics */}
       <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-gradient-to-r from-orange-500 to-purple-600 text-white">
+        <Card className="bg-gradient-to-br from-blue-50 to-indigo-100 border-none">
           <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-blue-700">
               <Users className="h-4 w-4" />
               <h3 className="text-sm font-medium">Total Forms</h3>
             </div>
-            <p className="text-2xl font-bold">{analytics.totalForms}</p>
+            <p className="text-2xl font-bold text-blue-900">{analytics.totalForms}</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-orange-500 to-purple-600 text-white">
+        <Card className="bg-gradient-to-br from-purple-50 to-pink-100 border-none">
           <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-purple-700">
               <TrendingUp className="h-4 w-4" />
               <h3 className="text-sm font-medium">Total Responses</h3>
             </div>
-            <p className="text-2xl font-bold">{analytics.totalResponses}</p>
+            <p className="text-2xl font-bold text-purple-900">{analytics.totalResponses}</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-orange-500 to-purple-600 text-white">
+        <Card className="bg-gradient-to-br from-emerald-50 to-teal-100 border-none">
           <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-emerald-700">
               <Clock className="h-4 w-4" />
               <h3 className="text-sm font-medium">Avg. Time</h3>
             </div>
-            <p className="text-2xl font-bold">{analytics.avgTimeTaken}s</p>
-              </CardContent>
-            </Card>
+            <p className="text-2xl font-bold text-emerald-900">{analytics.avgTimeTaken}s</p>
+          </CardContent>
+        </Card>
 
-        <Card className="bg-gradient-to-r from-orange-500 to-purple-600 text-white">
+        <Card className="bg-gradient-to-br from-amber-50 to-orange-100 border-none">
           <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-amber-700">
               <CheckCircle className="h-4 w-4" />
               <h3 className="text-sm font-medium">Completion Rate</h3>
             </div>
-            <p className="text-2xl font-bold">{Math.round(analytics.completionRate)}%</p>
-              </CardContent>
-            </Card>
+            <p className="text-2xl font-bold text-amber-900">{Math.round(analytics.completionRate)}%</p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Response Trends Chart */}
