@@ -63,6 +63,86 @@ function DraggableSection({ form }: { form: Form }) {
   const settings = form?.settings || defaultSettings;
   const style = settings?.style || defaultSettings.style;
 
+  // Add renderField function
+  const renderField = (field: Field) => {
+    switch (field.type) {
+      case "textarea":
+        return (
+          <Textarea 
+            className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200 min-h-[100px]"
+            placeholder={field.placeholder}
+          />
+        );
+      
+      case "select":
+        return (
+          <Select>
+            <SelectTrigger className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200">
+              <SelectValue placeholder={field.placeholder} />
+            </SelectTrigger>
+            <SelectContent>
+              {field.options?.map((option) => (
+                <SelectItem 
+                  key={option.id} 
+                  value={option.value}
+                  className="hover:bg-blue-50 focus:bg-blue-50"
+                >
+                  {option.value}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        );
+
+      case "checkbox":
+      case "radio":
+        return (
+          <Input 
+            type={field.type}
+            className="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500"
+          />
+        );
+
+      default:
+        return (
+          <Input 
+            type={field.type} 
+            className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200"
+            placeholder={field.placeholder}
+          />
+        );
+    }
+  };
+
+  // Add DeleteFieldButton component
+  const DeleteFieldButton = ({ fieldId, deleteMutation }: { 
+    fieldId: string;
+    deleteMutation: any;
+  }) => (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            type="button"
+            onClick={() => deleteMutation.mutate(fieldId)}
+            disabled={deleteMutation.isPending}
+            className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-md"
+            size="icon"
+          >
+            {deleteMutation.isPending ? (
+              <Loader2 size={20} className="animate-spin" />
+            ) : (
+              <Trash2 size={20} />
+            )}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent className="bg-white text-red-600 font-medium">
+          Delete field
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
       <Card 
@@ -153,7 +233,5 @@ function DraggableSection({ form }: { form: Form }) {
     </article>
   );
 }
-
-// Helper components remain the same...
 
 export default DraggableSection;
