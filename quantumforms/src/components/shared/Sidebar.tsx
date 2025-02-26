@@ -24,7 +24,7 @@ function Sidebar() {
   const user = session?.user;
 
   return (
-    <aside className="md:min-h-screen p-4 bg-gradient-to-b from-white to-gray-50 w-fit hidden md:flex md:flex-col justify-between border-r border-gray-100">
+    <aside className="md:min-h-screen overflow-y-hidden max-h-screen p-4 bg-gradient-to-b from-white to-gray-50 w-fit hidden md:flex md:flex-col justify-between border-r border-gray-100">
       <article className="hidden md:flex md:flex-col gap-16">
         {/* App Icon */}
         <article className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg flex flex-col justify-center items-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">

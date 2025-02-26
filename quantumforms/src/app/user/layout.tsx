@@ -8,12 +8,14 @@ export default function RootLayout({
 }>) {
   return (
     <main
-      className={`overflow-y-scroll antialiased bg-slate-200 flex md:flex-row flex-col-reverse min-h-screen`}
+      className={`overflow-hidden antialiased bg-slate-200 flex md:flex-row flex-col-reverse min-h-screen`}
     >
       <Sidebar />
       <MobileBottomBar />
 
-      {children}
+      <article className="overflow-y-scroll h-screen">
+        {children}
+      </article>
     </main>
   );
 }
