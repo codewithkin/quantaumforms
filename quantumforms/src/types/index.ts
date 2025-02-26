@@ -26,14 +26,21 @@ export interface Form {
   createdAt: Date;
   updatedAt: string;
   userId: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  logo?: string;
   fields: Field[];
   responses: Response[];
-  settings: {
+  settings?: {
+    id: string;
+    formId: string;
     isPublic: boolean;
+    allowMultipleResponses: boolean;
+    showProgress: boolean;
     theme: 'light' | 'dark';
-    submitMessage?: string;
-    showProgressBar?: boolean;
-    style: {
+    submitMessage: string;
+    notifyOnSubmission: boolean;
+    style?: {
       primaryColor: string;
       secondaryColor: string;
       font?: string;
@@ -46,10 +53,15 @@ export interface Form {
 export interface Response {
   id: string;
   formId: string;
+  filledAt: Date;
   data: Record<string, any>;
-  submittedAt: Date;
-  deviceInfo?: {
-    type: 'mobile' | 'desktop' | 'tablet';
-    browser: string;
-  };
+  timeTaken?: number;
+  longestField?: string;
+  shortestField?: string;
+  location?: string;
+  deviceType?: string;
+  browser?: string;
+  platform?: string;
+  completed: boolean;
+  rating?: number;
 }

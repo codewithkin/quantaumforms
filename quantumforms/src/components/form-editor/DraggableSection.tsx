@@ -46,6 +46,7 @@ import {
 } from "lucide-react";
 import { updateFormSettings } from "@/lib/actions";
 import { useRouter } from "next/navigation";
+import { Setting } from "@prisma/client";
 
 function DraggableSection({ form }: { form: Form }) {
   const queryClient = useQueryClientProvider((state) => state.queryClient);
