@@ -11,18 +11,18 @@ export async function POST(req: Request) {
     // Get the currently logged in user's email
     const session = await auth();
 
-    const email = session?.user?.email;
+    const id = session?.user?.id;
 
-    if (!email) throw new Error("Email not found");
+    console.log("SESSION: ", session);
+
+    if (!id) throw new Error("ID not found");
 
     // Get the current user's full data
     const user = await prisma.user.findUnique({
       where: {
-        email,
+        id,
       },
     });
-
-    const id = user?.id;
 
     if (!id) throw new Error("ID not found");
 
