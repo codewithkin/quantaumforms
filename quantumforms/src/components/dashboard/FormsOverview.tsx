@@ -57,22 +57,15 @@ const FormCard = ({
   };
 
   return (
-    <Card className="md:min-w-[400px] min-fit hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50 border-gray-200/50">
+    <Card className="bg-white border-gray-100 hover:border-gray-200 transition-colors">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          {title}
-        </CardTitle>
-        <div className="flex items-center gap-2 text-gray-600 bg-gray-50 px-3 py-1.5 rounded-full w-fit">
-          <Calendar size={16} />
-          <span className="text-sm">{createdAt}</span>
-        </div>
+        <CardTitle className="text-gray-900">{title}</CardTitle>
+        <CardDescription className="text-gray-500">
+          {description}
+        </CardDescription>
       </CardHeader>
 
       <CardContent>
-        <CardDescription className="text-gray-600 line-clamp-2">
-          {description}
-        </CardDescription>
-        
         <Accordion type="multiple" className="w-full flex flex-col gap-2">
           {fields.length > 0 &&
             fields.map((field: Field) => {
@@ -89,7 +82,7 @@ const FormCard = ({
                     <ChevronDown size={20} strokeWidth={1.5} className="text-gray-500" />
                   </AccordionTrigger>
                   <AccordionContent>
-                    <p className="font-medium text-purple-600 bg-purple-50 px-3 py-1.5 rounded-full w-fit text-sm">
+                    <p className="font-medium text-gray-600 bg-gray-50 px-3 py-1.5 rounded-full w-fit text-sm">
                       {type}
                     </p>
                   </AccordionContent>
@@ -103,11 +96,13 @@ const FormCard = ({
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
             {settings?.isPublic ? (
-              <Badge variant="success">Public</Badge>
+              <Badge className="bg-gray-100 text-gray-900 hover:bg-gray-200">Public</Badge>
             ) : (
               <Badge variant="secondary">Private</Badge>
             )}
-            <Badge variant="outline">{fields.length} Fields</Badge>
+            <Badge variant="outline" className="text-gray-600">
+              {fields.length} Fields
+            </Badge>
           </div>
 
           <DropdownMenu>
@@ -138,7 +133,7 @@ const FormCard = ({
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem 
-                className="text-red-600 focus:text-red-600" 
+                className="text-red-700 focus:text-red-700 focus:bg-red-50" 
                 onClick={handleDelete}
               >
                 <Trash2 className="mr-2 h-4 w-4" /> Delete Form
@@ -149,17 +144,9 @@ const FormCard = ({
 
         <div className="flex gap-2 w-full">
           <Button 
-            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            onClick={() => router.push(`/user/forms/${id}`)}
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
           >
-            <Edit className="mr-2 h-4 w-4" /> Edit
-          </Button>
-          <Button 
-            variant="outline" 
-            className="flex-1"
-            onClick={() => router.push(`/user/forms/${id}/analytics`)}
-          >
-            <BarChart3 className="mr-2 h-4 w-4" /> Analytics
+            View Form
           </Button>
         </div>
       </CardFooter>

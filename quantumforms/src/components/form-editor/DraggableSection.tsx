@@ -174,7 +174,7 @@ function DraggableSection({ form }: { form: Form }) {
             )}
           </Button>
         </TooltipTrigger>
-        <TooltipContent className="bg-white text-red-600 font-medium">
+        <TooltipContent className="bg-white border-gray-100 text-gray-900 font-medium">
           Delete field
         </TooltipContent>
       </Tooltip>
@@ -186,10 +186,10 @@ function DraggableSection({ form }: { form: Form }) {
       <Card 
         className={cn(
           "w-full md:max-w-lg px-8 py-6",
-          "border-gray-200/50 shadow-lg",
+          "border-gray-100 shadow-sm",
           settings.theme === 'dark' 
             ? 'bg-gray-900 text-white' 
-            : 'bg-gradient-to-br from-white to-gray-50'
+            : 'bg-white'
         )}
       >
         <CardHeader>
@@ -277,7 +277,7 @@ function DraggableSection({ form }: { form: Form }) {
       {/* Settings Button */}
       <Button
         variant="outline"
-        className="fixed bottom-4 right-4"
+        className="fixed bottom-4 right-4 border-gray-200 text-gray-700 hover:bg-gray-50"
         onClick={() => setShowSettings(true)}
       >
         <Settings className="w-4 h-4 mr-2" />
@@ -287,10 +287,12 @@ function DraggableSection({ form }: { form: Form }) {
       {/* Settings Dialog */}
       <Dialog open={showSettings} onOpenChange={setShowSettings}>
         <DialogContent className={cn(
-          settings.theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white'
+          settings.theme === 'dark' 
+            ? 'bg-gray-900 text-white' 
+            : 'bg-white border-gray-100'
         )}>
           <DialogHeader>
-            <DialogTitle>Form Settings</DialogTitle>
+            <DialogTitle className="text-gray-900">Form Settings</DialogTitle>
           </DialogHeader>
           
           <form 
@@ -372,15 +374,15 @@ function DraggableSection({ form }: { form: Form }) {
             </div>
 
             <div className="space-y-2">
-              <Label>Theme</Label>
+              <Label className="text-gray-700">Theme</Label>
               <Select
                 name="theme"
                 value={localSettings.theme}
                 onValueChange={(value) => 
-                  setLocalSettings(prev => ({ ...prev, theme: value }))
+                  setLocalSettings((prev: any) => ({ ...prev, theme: value as "light" | "dark" }))
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className="border-gray-200">
                   <SelectValue placeholder="Select theme" />
                 </SelectTrigger>
                 <SelectContent>
@@ -391,7 +393,7 @@ function DraggableSection({ form }: { form: Form }) {
             </div>
 
             <div className="space-y-2">
-              <Label>Submit Button Text</Label>
+              <Label className="text-gray-700">Submit Button Text</Label>
               <Input
                 name="submitMessage"
                 value={localSettings.submitMessage}
@@ -399,12 +401,13 @@ function DraggableSection({ form }: { form: Form }) {
                   setLocalSettings(prev => ({ ...prev, submitMessage: e.target.value }))
                 }
                 placeholder="Submit"
+                className="border-gray-200"
               />
             </div>
 
             <Button 
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
             >
               Save Changes
             </Button>

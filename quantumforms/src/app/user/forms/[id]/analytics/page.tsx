@@ -37,7 +37,7 @@ export default function FormAnalytics() {
     );
   }
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+  const COLORS = ['#1f2937', '#374151', '#4b5563', '#6b7280', '#9ca3af'];
 
   // Helper function to render empty state
   const EmptyState = ({ message }: { message: string }) => (
@@ -49,73 +49,78 @@ export default function FormAnalytics() {
 
   return (
     <div className="page space-y-8">
-      <h1 className="text-3xl font-bold">Form Analytics</h1>
+      <h1 className="text-3xl font-bold text-gray-900">Form Analytics</h1>
 
       {/* Overview Stats - Always show numbers, default to 0 */}
       <div className="grid md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="bg-white border-gray-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Responses</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Total Responses</CardTitle>
+            <Users className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{analytics.totalResponses || 0}</div>
+            <div className="text-2xl font-bold text-gray-900">{analytics.totalResponses || 0}</div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-gray-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg. Time to Complete</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Avg. Time to Complete</CardTitle>
+            <Clock className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{(analytics.avgTimeTaken || 0).toFixed(1)}s</div>
+            <div className="text-2xl font-bold text-gray-900">{(analytics.avgTimeTaken || 0).toFixed(1)}s</div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-gray-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
-            <BarChart className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Completion Rate</CardTitle>
+            <BarChart className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{(analytics.completionRate || 0).toFixed(1)}%</div>
+            <div className="text-2xl font-bold text-gray-900">{(analytics.completionRate || 0).toFixed(1)}%</div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-gray-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Unique Countries</CardTitle>
-            <Globe className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Unique Countries</CardTitle>
+            <Globe className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{Object.keys(analytics.locationStats || {}).length}</div>
+            <div className="text-2xl font-bold text-gray-900">{Object.keys(analytics.locationStats || {}).length}</div>
           </CardContent>
         </Card>
       </div>
 
       {/* Charts - Show empty states when no data */}
-      <Card className="p-4">
+      <Card className="p-4 bg-white border-gray-100">
         <CardHeader>
-          <CardTitle>Response Trends</CardTitle>
+          <CardTitle className="text-gray-900">Response Trends</CardTitle>
         </CardHeader>
         <CardContent className="h-[300px]">
           {analytics.responseTrends?.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={analytics.responseTrends}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis 
                   dataKey="date" 
                   tickFormatter={(date) => format(new Date(date), 'MMM d')}
+                  stroke="#6b7280"
                 />
-                <YAxis />
+                <YAxis stroke="#6b7280" />
                 <Tooltip 
                   labelFormatter={(date) => format(new Date(date), 'MMM d, yyyy')}
+                  contentStyle={{ 
+                    backgroundColor: 'white',
+                    border: '1px solid #e5e7eb'
+                  }}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="count" 
-                  stroke="#8884d8" 
+                  stroke="#1f2937" 
                   strokeWidth={2}
                 />
               </LineChart>
@@ -127,9 +132,9 @@ export default function FormAnalytics() {
       </Card>
 
       <div className="grid md:grid-cols-2 gap-4">
-        <Card className="p-4">
+        <Card className="p-4 bg-white border-gray-100">
           <CardHeader>
-            <CardTitle>Device Distribution</CardTitle>
+            <CardTitle className="text-gray-900">Device Distribution</CardTitle>
           </CardHeader>
           <CardContent className="h-[300px]">
             {Object.keys(analytics.deviceStats || {}).length > 0 ? (
@@ -145,7 +150,7 @@ export default function FormAnalytics() {
                     labelLine={false}
                     label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
                     outerRadius={80}
-                    fill="#8884d8"
+                    fill={COLORS[0]}
                     dataKey="value"
                   >
                     {Object.entries(analytics.deviceStats).map((entry, index) => (
@@ -161,9 +166,9 @@ export default function FormAnalytics() {
           </CardContent>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-4 bg-white border-gray-100">
           <CardHeader>
-            <CardTitle>Geographic Distribution</CardTitle>
+            <CardTitle className="text-gray-900">Geographic Distribution</CardTitle>
           </CardHeader>
           <CardContent className="h-[300px]">
             {Object.keys(analytics.locationStats || {}).length > 0 ? (
@@ -179,7 +184,7 @@ export default function FormAnalytics() {
                     labelLine={false}
                     label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
                     outerRadius={80}
-                    fill="#8884d8"
+                    fill={COLORS[0]}
                     dataKey="value"
                   >
                     {Object.entries(analytics.locationStats).map((entry, index) => (

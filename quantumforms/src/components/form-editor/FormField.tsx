@@ -8,6 +8,7 @@ import {
   Lock,
   Mail,
   TextCursorInput,
+  X,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import {
@@ -16,6 +17,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import {
+  Button,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Input,
+} from "../ui";
 
 function FormField({
   label,
