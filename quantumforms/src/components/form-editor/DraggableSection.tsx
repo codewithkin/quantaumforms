@@ -262,7 +262,8 @@ function DraggableSection({ form }: { form: Form }) {
               style={{
                 backgroundColor: form.primaryColor || defaultSettings.style.primaryColor
               }}
-              type="submit"
+              type="button"
+              onClick={simulateSubmission}
             >
               {settings.submitMessage}
             </Button>
