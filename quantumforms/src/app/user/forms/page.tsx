@@ -65,7 +65,7 @@ function Forms() {
     <article className="page w-full">
       {/* Heading with gradient text */}
       <article className="w-full justify-between items-center flex">
-        <h2 className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+        <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           All Forms
         </h2>
       </article>
@@ -76,44 +76,41 @@ function Forms() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="flex gap-2 items-center bg-gradient-to-r from-blue-50 to-indigo-100 text-blue-700 hover:from-blue-100 hover:to-indigo-200 border-blue-200"
+                className="flex gap-2 items-center bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 hover:from-blue-100 hover:to-indigo-200 border-blue-200 shadow-sm"
                 variant="outline"
                 size="sm"
               >
                 <Clock size={20} strokeWidth={1.5} /> Time
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuSeparator />
-            <DropdownMenuContent className="border-blue-100">
+            <DropdownMenuContent className="border-blue-100 shadow-lg">
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Button
-                    variant="default"
+                    variant="ghost"
                     onClick={() => setFilteredForms(forms || [])}
                     size="sm"
-                    className="bg-gradient-to-r from-red-50 to-orange-100 text-red-700 hover:from-red-100 hover:to-orange-200 border-red-200"
+                    className="w-full bg-red-50 text-red-700 hover:bg-red-100"
                   >
-                    <Brush size={20} strokeWidth={1.5} /> Clear Filters
+                    <Brush size={20} strokeWidth={1.5} className="mr-2" /> Clear Filters
                   </Button>
                 </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Button
-                    variant="secondary"
+                    variant="ghost"
                     onClick={() => handleTimeFilter(24)}
                     size="sm"
-                    className="bg-gradient-to-r from-purple-50 to-pink-100 text-purple-700 hover:from-purple-100 hover:to-pink-200"
+                    className="w-full bg-purple-50 text-purple-700 hover:bg-purple-100"
                   >
                     Last 24 hours
                   </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Button
-                    variant="secondary"
+                    variant="ghost"
                     onClick={() => handleTimeFilter(168)}
                     size="sm"
-                    className="bg-gradient-to-r from-emerald-50 to-teal-100 text-emerald-700 hover:from-emerald-100 hover:to-teal-200"
+                    className="w-full bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
                   >
                     1 Week
                   </Button>
@@ -125,23 +122,23 @@ function Forms() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="flex gap-2 items-center bg-gradient-to-r from-purple-50 to-pink-100 text-purple-700 hover:from-purple-100 hover:to-pink-200 border-purple-200"
+                className="flex gap-2 items-center bg-gradient-to-br from-purple-50 to-pink-100 text-purple-700 hover:from-purple-100 hover:to-pink-200 border-purple-200 shadow-sm"
                 variant="outline"
                 size="sm"
               >
                 <ListCheck size={20} strokeWidth={1.5} /> Responses
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="border-purple-100">
+            <DropdownMenuContent className="border-purple-100 shadow-lg">
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="w-full">
                   <Button
-                    variant="default"
+                    variant="ghost"
                     onClick={() => setFilteredForms(forms || [])}
                     size="sm"
-                    className="bg-gradient-to-r from-red-50 to-orange-100 text-red-700 hover:from-red-100 hover:to-orange-200 border-red-200"
+                    className="w-full bg-red-50 text-red-700 hover:bg-red-100"
                   >
-                    <Brush size={20} strokeWidth={1.5} /> Clear Filter
+                    <Brush size={20} strokeWidth={1.5} className="mr-2" /> Clear Filter
                   </Button>
                 </DropdownMenuItem>
                 {[
@@ -150,12 +147,12 @@ function Forms() {
                   { range: [21, 50], label: "21 - 50", color: "emerald" },
                   { range: [51, 100], label: "51+", color: "amber" },
                 ].map(({ range, label, color }) => (
-                  <DropdownMenuItem key={range.join("-")}>
+                  <DropdownMenuItem key={range.join("-")} className="w-full">
                     <Button
-                      variant="secondary"
+                      variant="ghost"
                       onClick={() => handleResponseFilter(range[0], range[1])}
                       size="sm"
-                      className={`w-full bg-gradient-to-r from-${color}-50 to-${color}-100 text-${color}-700 hover:from-${color}-100 hover:to-${color}-200`}
+                      className={`w-full bg-${color}-50 text-${color}-700 hover:bg-${color}-100`}
                     >
                       {label} Responses
                     </Button>
@@ -170,7 +167,7 @@ function Forms() {
       {/* Loading State */}
       {!forms && isLoading ? (
         <article className="w-full h-full flex flex-col justify-center items-center">
-          <Loader size={40} className="animate-spin text-purple-600" />
+          <Loader size={40} className="animate-spin text-blue-600" />
         </article>
       ) : (
         <FormsSwitch view={view} forms={filteredForms} />
