@@ -53,29 +53,33 @@ function DraggableSection({ form }: { form: Form }) {
 
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
-      <Card className="px-8 py-4 md:min-w-[400px]">
+      <Card className="px-8 py-4 md:min-w-[400px] bg-gradient-to-br from-white to-gray-50 border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader>
-          <CardTitle className="text-2xl">{form.title}</CardTitle>
-          <CardDescription>{form.description}</CardDescription>
+          <CardTitle className="text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            {form.title}
+          </CardTitle>
+          <CardDescription className="text-gray-600">{form.description}</CardDescription>
         </CardHeader>
 
         <CardContent>
           <form
             onSubmit={simulateSubmission}
-            className="w-full flex flex-col justify-start items-start text-start gap-4"
+            className="w-full flex flex-col justify-start items-start text-start gap-6"
           >
             {form.fields &&
-              form.fields.length > 0 &&
               form.fields.length > 0 &&
               form.fields.map((field: Field) => {
                 return field.type !== "textarea" &&
                   field.type !== "checkbox" &&
                   field.type !== "radio" &&
                   field.type !== "select" ? (
-                  <div key={field.id}>
-                    <Label>{field.label}</Label>
+                  <div key={field.id} className="w-full space-y-2">
+                    <Label className="font-medium text-gray-700">{field.label}</Label>
                     <article className="flex gap-2 items-center">
-                      <Input type={field.type} />
+                      <Input 
+                        type={field.type} 
+                        className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200"
+                      />
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -85,26 +89,28 @@ function DraggableSection({ form }: { form: Form }) {
                                 deleteMutation.mutate(field.id);
                               }}
                               disabled={deleteMutation.isPending}
-                              className="bg-red-500 hover:bg-red-700"
+                              className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-md"
                               size="icon"
                             >
                               {deleteMutation.isPending ? (
-                                <Loader2 size={20} />
+                                <Loader2 size={20} className="animate-spin" />
                               ) : (
                                 <Trash2 size={20} />
                               )}
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent>Delete field</TooltipContent>
+                          <TooltipContent className="bg-white text-red-600 font-medium">
+                            Delete field
+                          </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </article>
                   </div>
                 ) : field.type === "textarea" ? (
-                  <div key={field.id}>
-                    <Label>{field.label}</Label>
-                    <article className="flex gap-2 items-center">
-                      <Textarea />
+                  <div key={field.id} className="w-full space-y-2">
+                    <Label className="font-medium text-gray-700">{field.label}</Label>
+                    <article className="flex gap-2 items-start">
+                      <Textarea className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200 min-h-[100px]" />
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -112,26 +118,31 @@ function DraggableSection({ form }: { form: Form }) {
                               type="button"
                               onClick={() => deleteMutation.mutate(field.id)}
                               disabled={deleteMutation.isPending}
-                              className="bg-red-500 hover:bg-red-700"
+                              className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-md"
                               size="icon"
                             >
                               {deleteMutation.isPending ? (
-                                <Loader2 size={20} />
+                                <Loader2 size={20} className="animate-spin" />
                               ) : (
                                 <Trash2 size={20} />
                               )}
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent>Delete field</TooltipContent>
+                          <TooltipContent className="bg-white text-red-600 font-medium">
+                            Delete field
+                          </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </article>
                   </div>
-                ) : field.type === "checkbox" ? (
-                  <div key={field.id}>
-                    <Label>{field.label}</Label>
+                ) : field.type === "checkbox" || field.type === "radio" ? (
+                  <div key={field.id} className="w-full space-y-2">
+                    <Label className="font-medium text-gray-700">{field.label}</Label>
                     <article className="flex gap-2 items-center">
-                      <Input type="checkbox" />
+                      <Input 
+                        type={field.type}
+                        className="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500"
+                      />
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -139,71 +150,47 @@ function DraggableSection({ form }: { form: Form }) {
                               type="button"
                               onClick={() => deleteMutation.mutate(field.id)}
                               disabled={deleteMutation.isPending}
-                              className="bg-red-500 hover:bg-red-700"
+                              className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-md"
                               size="icon"
                             >
                               {deleteMutation.isPending ? (
-                                <Loader2 size={20} />
+                                <Loader2 size={20} className="animate-spin" />
                               ) : (
                                 <Trash2 size={20} />
                               )}
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent>Delete field</TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </article>
-                  </div>
-                ) : field.type === "radio" ? (
-                  <div key={field.id}>
-                    <Label>{field.label}</Label>
-                    <article className="flex gap-2 items-center">
-                      <Input type="radio" />
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              onClick={() => deleteMutation.mutate(field.id)}
-                              disabled={deleteMutation.isPending}
-                              type="button"
-                              className="bg-red-500 hover:bg-red-700"
-                              size="icon"
-                            >
-                              {deleteMutation.isPending ? (
-                                <Loader2 size={20} />
-                              ) : (
-                                <Trash2 size={20} />
-                              )}
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>Delete field</TooltipContent>
+                          <TooltipContent className="bg-white text-red-600 font-medium">
+                            Delete field
+                          </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </article>
                   </div>
                 ) : (
-                  <div key={field.id}>
-                    <Label>{field.label}</Label>
+                  <div key={field.id} className="w-full space-y-2">
+                    <Label className="font-medium text-gray-700">{field.label}</Label>
                     <article className="flex gap-2 items-center">
                       <Select>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200">
                           <SelectValue placeholder={field.placeholder} />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-white border-gray-200">
                           {field.options &&
                             field.options.map(
-                              (
-                                option: {
-                                  id: string;
-                                  value: string;
-                                  fieldId: string;
-                                },
-                                index: number,
-                              ) => (
-                                <SelectItem value={option.value} key={index}>
+                              (option: {
+                                id: string;
+                                value: string;
+                                fieldId: string;
+                              }, index: number) => (
+                                <SelectItem 
+                                  value={option.value} 
+                                  key={index}
+                                  className="hover:bg-blue-50 focus:bg-blue-50"
+                                >
                                   {option.value}
                                 </SelectItem>
-                              ),
+                              )
                             )}
                         </SelectContent>
                       </Select>
@@ -214,17 +201,19 @@ function DraggableSection({ form }: { form: Form }) {
                               type="button"
                               onClick={() => deleteMutation.mutate(field.id)}
                               disabled={deleteMutation.isPending}
-                              className="bg-red-500 hover:bg-red-700"
+                              className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-md"
                               size="icon"
                             >
                               {deleteMutation.isPending ? (
-                                <Loader2 size={20} />
+                                <Loader2 size={20} className="animate-spin" />
                               ) : (
                                 <Trash2 size={20} />
                               )}
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent>Delete field</TooltipContent>
+                          <TooltipContent className="bg-white text-red-600 font-medium">
+                            Delete field
+                          </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </article>
@@ -233,9 +222,8 @@ function DraggableSection({ form }: { form: Form }) {
               })}
 
             <Button
-              className={`w-full bg-${form.primaryColor ? `${form.primaryColor}` : "purple-500"} text-white hover:bg-purple-700`}
+              className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-300`}
               type="submit"
-              variant="ghost"
             >
               Submit
             </Button>
