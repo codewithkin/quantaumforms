@@ -58,6 +58,7 @@ function DraggableSection({ form }: { form: Form }) {
     submitMessage: form.settings?.submitMessage ?? 'Submit',
     notifyOnSubmission: form.settings?.notifyOnSubmission ?? false,
   });
+  
   const router = useRouter();
 
   const deleteMutation = useMutation({

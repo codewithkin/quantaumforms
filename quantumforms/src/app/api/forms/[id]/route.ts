@@ -62,7 +62,7 @@ export async function PUT(
 
     const existingForm = await prisma.form.findUnique({
       where: {
-        shareableLink: id,
+        id,
       },
       include: {
         fields: true,
