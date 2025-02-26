@@ -120,7 +120,7 @@ export async function PUT(
     // Update the form
     const updatedForm = await prisma.form.update({
       where: {
-        shareableLink: id,
+        id,
       },
       data: {
         // Ensure fields is an array with the correct connect structure
@@ -171,7 +171,7 @@ export async function DELETE(
 
     const form = await prisma.form.findUnique({
       where: {
-        shareableLink: id,
+        id,
       },
     });
 
@@ -184,7 +184,7 @@ export async function DELETE(
 
     const deletedForm = await prisma.form.delete({
       where: {
-        shareableLink: id,
+        id,
       },
       include: {
         fields: true,
