@@ -90,6 +90,7 @@ export async function GET(req: NextRequest) {
         longestField: response.longestField,
         deviceType: response.deviceType,
         completed: response.completed,
+        location: response.location,
       }))
       .sort((a, b) => a.filledAt.getTime() - b.filledAt.getTime());
 

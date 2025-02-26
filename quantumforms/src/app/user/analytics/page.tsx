@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -22,6 +22,13 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import axios from "axios";
 import { Loader2, TrendingUp, Users, Clock, CheckCircle, Smartphone, Laptop } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export type Analytics = {
   totalForms: number;
@@ -44,8 +51,53 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
+// Add this helper function at the top level
+const hasData = (data: Record<string, number>) => {
+  return Object.keys(data).length > 0;
+};
+
 const FormAnalytics = () => {
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
+  const [timeFilter, setTimeFilter] = useState("all"); // all, week, month, year
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [chartWidth, setChartWidth] = useState(0);
+
+  const filterData = useCallback((data: any[], filter: string) => {
+    const now = new Date();
+    const filtered = data.filter((item) => {
+      const date = new Date(item.filledAt);
+      switch (filter) {
+        case 'week':
+          return now.getTime() - date.getTime() <= 7 * 24 * 60 * 60 * 1000;
+        case 'month':
+          return now.getTime() - date.getTime() <= 30 * 24 * 60 * 60 * 1000;
+        case 'year':
+          return now.getTime() - date.getTime() <= 365 * 24 * 60 * 60 * 1000;
+        default:
+          return true;
+      }
+    });
+    return filtered;
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setChartWidth(containerRef.current.clientWidth);
+      }
+    };
+
+    // Initial width
+    updateWidth();
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(containerRef.current);
+
+    // Cleanup
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -101,8 +153,8 @@ const FormAnalytics = () => {
               <h3 className="text-sm font-medium">Avg. Time</h3>
             </div>
             <p className="text-2xl font-bold">{analytics.avgTimeTaken}s</p>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
         <Card className="bg-gradient-to-r from-orange-500 to-purple-600 text-white">
           <CardContent className="pt-4">
@@ -111,59 +163,170 @@ const FormAnalytics = () => {
               <h3 className="text-sm font-medium">Completion Rate</h3>
             </div>
             <p className="text-2xl font-bold">{Math.round(analytics.completionRate)}%</p>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
       </div>
 
       {/* Response Trends Chart */}
-      <Card className="md:col-span-2">
-        <CardHeader>
-          <CardTitle>Response Trends</CardTitle>
-          <CardDescription>Form submission trends over time</CardDescription>
+      <Card className="md:col-span-2 w-full">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+              <CardTitle>Response Trends</CardTitle>
+            <CardDescription>Form submission trends over time</CardDescription>
+          </div>
+          <Select defaultValue="all" onValueChange={setTimeFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select time range" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Time</SelectItem>
+              <SelectItem value="week">Past Week</SelectItem>
+              <SelectItem value="month">Past Month</SelectItem>
+              <SelectItem value="year">Past Year</SelectItem>
+            </SelectContent>
+          </Select>
+            </CardHeader>
+        <CardContent ref={containerRef} className="w-full">
+          <div className="w-full overflow-x-auto">
+            <BarChart 
+              width={chartWidth || 1700} 
+              height={300} 
+              data={filterData(analytics.responseTrends, timeFilter)}
+              margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="filledAt" tickFormatter={(value) => new Date(value).toLocaleDateString()} />
+              <Tooltip />
+              <Bar dataKey="timeTaken" fill="#C4B5FD" />
+            </BarChart>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Location Distribution */}
+      <Card className="md:col-span-2 w-full">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Geographic Distribution</CardTitle>
+            <CardDescription>Responses by country</CardDescription>
+          </div>
+          <Select defaultValue="all" onValueChange={setTimeFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select time range" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Time</SelectItem>
+              <SelectItem value="week">Past Week</SelectItem>
+              <SelectItem value="month">Past Month</SelectItem>
+              <SelectItem value="year">Past Year</SelectItem>
+            </SelectContent>
+          </Select>
         </CardHeader>
-        <CardContent>
-          <BarChart width={800} height={300} data={analytics.responseTrends}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="filledAt" />
-            <Tooltip />
-            <Bar dataKey="timeTaken" fill="#C4B5FD" />
-          </BarChart>
+        <CardContent className="w-full">
+          {hasData(analytics.responseTrends.reduce((acc, response) => {
+            if (response.location) {
+              acc[response.location] = (acc[response.location] || 0) + 1;
+            }
+            return acc;
+          }, {})) ? (
+            <div className="w-full overflow-x-auto">
+              <BarChart 
+                width={chartWidth || 300}
+                height={300} 
+                data={filterData(
+                  Object.entries(analytics.responseTrends.reduce((acc, response) => {
+                    if (response.location) {
+                      acc[response.location] = (acc[response.location] || 0) + 1;
+                    }
+                    return acc;
+                  }, {})).map(([country, count]) => ({
+                    country,
+                    count
+                  })),
+                  timeFilter
+                )}
+                margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="country" />
+                <Tooltip />
+                <Bar dataKey="count" fill="#C4B5FD" />
+              </BarChart>
+            </div>
+          ) : (
+            <div className="flex justify-center items-center h-[300px] text-muted-foreground">
+              <p className="text-lg font-medium">Nothing to show yet...</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
       {/* Device Distribution */}
       <Card>
-        <CardHeader>
-          <CardTitle>Device Distribution</CardTitle>
-          <CardDescription>Responses by device type</CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Device Distribution</CardTitle>
+            <CardDescription>Responses by device type</CardDescription>
+          </div>
+          <Select defaultValue="all" onValueChange={setTimeFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select time range" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Time</SelectItem>
+              <SelectItem value="week">Past Week</SelectItem>
+              <SelectItem value="month">Past Month</SelectItem>
+              <SelectItem value="year">Past Year</SelectItem>
+            </SelectContent>
+          </Select>
         </CardHeader>
-        <CardContent>
-          <PieChart width={200} height={200}>
-            <Pie
-              data={Object.entries(analytics.deviceStats).map(([name, value]) => ({
-                name,
-                value,
-              }))}
-              cx={100}
-              cy={100}
-              innerRadius={60}
-              outerRadius={80}
-              paddingAngle={5}
-            >
-              {Object.entries(analytics.deviceStats).map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
+        <CardContent className="flex justify-center">
+          {hasData(analytics.deviceStats) ? (
+            <PieChart width={300} height={300}>
+              <Pie
+                dataKey="value"
+                data={Object.entries(analytics.deviceStats).map(([name, value]) => ({
+                  name,
+                  value,
+                }))}
+                cx={150}
+                cy={150}
+                innerRadius={60}
+                outerRadius={80}
+                paddingAngle={5}
+              >
+                {Object.entries(analytics.deviceStats).map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          ) : (
+            <div className="flex justify-center items-center h-[300px] text-muted-foreground">
+              <p className="text-lg font-medium">Nothing to show yet...</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
       {/* Form Privacy Distribution */}
       <Card>
-        <CardHeader>
-          <CardTitle>Form Privacy</CardTitle>
-          <CardDescription>Public vs Private Forms</CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Form Privacy</CardTitle>
+            <CardDescription>Public vs Private Forms</CardDescription>
+          </div>
+          <Select defaultValue="all" onValueChange={setTimeFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select time range" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Time</SelectItem>
+              <SelectItem value="week">Past Week</SelectItem>
+              <SelectItem value="month">Past Month</SelectItem>
+              <SelectItem value="year">Past Year</SelectItem>
+            </SelectContent>
+          </Select>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
