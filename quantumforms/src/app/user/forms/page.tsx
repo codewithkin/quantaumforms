@@ -60,18 +60,20 @@ function Forms() {
 
   return (
     <article className="page w-full">
-      {/* Heading and view controls */}
+      {/* Heading with gradient text */}
       <article className="w-full justify-between items-center flex">
-        <h2 className="text-2xl font-semibold">All Forms</h2>
+        <h2 className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          All Forms
+        </h2>
       </article>
 
-      {/* Filters */}
+      {/* Enhanced Filters */}
       <article className="w-full justify-between items-center flex my-4">
         <article className="flex gap-4 items-center justify-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="flex gap-2 items-center"
+                className="flex gap-2 items-center bg-gradient-to-r from-blue-50 to-indigo-100 text-blue-700 hover:from-blue-100 hover:to-indigo-200 border-blue-200"
                 variant="outline"
                 size="sm"
               >
@@ -79,13 +81,14 @@ function Forms() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuSeparator />
-            <DropdownMenuContent>
+            <DropdownMenuContent className="border-blue-100">
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Button
                     variant="default"
                     onClick={() => setFilteredForms(forms || [])}
                     size="sm"
+                    className="bg-gradient-to-r from-red-50 to-orange-100 text-red-700 hover:from-red-100 hover:to-orange-200 border-red-200"
                   >
                     <Brush size={20} strokeWidth={1.5} /> Clear Filters
                   </Button>
@@ -97,6 +100,7 @@ function Forms() {
                     variant="secondary"
                     onClick={() => handleTimeFilter(24)}
                     size="sm"
+                    className="bg-gradient-to-r from-purple-50 to-pink-100 text-purple-700 hover:from-purple-100 hover:to-pink-200"
                   >
                     Last 24 hours
                   </Button>
@@ -106,6 +110,7 @@ function Forms() {
                     variant="secondary"
                     onClick={() => handleTimeFilter(168)}
                     size="sm"
+                    className="bg-gradient-to-r from-emerald-50 to-teal-100 text-emerald-700 hover:from-emerald-100 hover:to-teal-200"
                   >
                     1 Week
                   </Button>
@@ -117,7 +122,7 @@ function Forms() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="flex gap-2 items-center"
+                className="flex gap-2 items-center bg-gradient-to-r from-purple-50 to-pink-100 text-purple-700 hover:from-purple-100 hover:to-pink-200 border-purple-200"
                 variant="outline"
                 size="sm"
               >
@@ -125,58 +130,38 @@ function Forms() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuSeparator />
-            <DropdownMenuContent>
+            <DropdownMenuContent className="border-purple-100">
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Button
-                    variant="secondary"
-                    onClick={() => handleResponseFilter(0, 5)}
-                    size="sm"
-                  >
-                    0 - 5 Responses
-                  </Button>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Button
-                    variant="secondary"
-                    onClick={() => handleResponseFilter(6, 20)}
-                    size="sm"
-                  >
-                    6 - 20 Responses
-                  </Button>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Button
-                    variant="secondary"
-                    onClick={() => handleResponseFilter(21, 50)}
-                    size="sm"
-                  >
-                    21 - 50 Responses
-                  </Button>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Button
-                    variant="secondary"
-                    onClick={() => handleResponseFilter(51, 100)}
-                    size="sm"
-                  >
-                    51 - 100 Responses
-                  </Button>
-                </DropdownMenuItem>
+                {[
+                  { range: [0, 5], color: "blue" },
+                  { range: [6, 20], color: "purple" },
+                  { range: [21, 50], color: "emerald" },
+                  { range: [51, 100], color: "amber" },
+                ].map(({ range, color }) => (
+                  <DropdownMenuItem key={range.join("-")}>
+                    <Button
+                      variant="secondary"
+                      onClick={() => handleResponseFilter(range[0], range[1])}
+                      size="sm"
+                      className={`bg-gradient-to-r from-${color}-50 to-${color}-100 text-${color}-700 hover:from-${color}-100 hover:to-${color}-200`}
+                    >
+                      {range[0]} - {range[1]} Responses
+                    </Button>
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
         </article>
       </article>
 
-      {forms ? (
-        <FormsSwitch view={view} forms={filteredForms} />
+      {/* Loading State */}
+      {!forms && isLoading ? (
+        <article className="w-full h-full flex flex-col justify-center items-center">
+          <Loader size={40} className="animate-spin text-purple-600" />
+        </article>
       ) : (
-        isLoading && (
-          <article className="w-full h-full flex flex-col justify-center items-center">
-            <Loader size={40} className="animate-spin" />
-          </article>
-        )
+        <FormsSwitch view={view} forms={filteredForms} />
       )}
     </article>
   );
