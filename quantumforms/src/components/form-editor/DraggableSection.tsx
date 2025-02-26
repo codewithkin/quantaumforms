@@ -29,6 +29,7 @@ import {
 } from "../ui/select";
 import { toast } from "sonner";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 function DraggableSection({ form }: { form: Form }) {
   const queryClient = useQueryClientProvider((state) => state.queryClient);
@@ -49,14 +50,15 @@ function DraggableSection({ form }: { form: Form }) {
 
   // Default settings if none exist
   const defaultSettings = {
+    isPublic: true,
     theme: 'light',
+    submitMessage: 'Submit',
+    showProgressBar: false,
     style: {
       primaryColor: '#4F46E5',
       secondaryColor: '#6B7280',
       font: 'inherit',
-    },
-    showProgressBar: false,
-    submitMessage: 'Submit',
+    }
   };
 
   // Safely access settings with fallbacks
@@ -146,9 +148,13 @@ function DraggableSection({ form }: { form: Form }) {
   return (
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
       <Card 
-        className={`px-8 py-4 md:min-w-[400px] ${
-          settings?.theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gradient-to-br from-white to-gray-50'
-        } border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300`}
+        className={cn(
+          "px-8 py-4 md:min-w-[400px]",
+          "border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300",
+          settings?.theme === 'dark' 
+            ? 'bg-gray-900 text-white' 
+            : 'bg-gradient-to-br from-white to-gray-50'
+        )}
         style={{
           fontFamily: style?.font || 'inherit',
           ...(style?.backgroundImage && {
