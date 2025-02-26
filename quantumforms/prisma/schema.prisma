@@ -93,6 +93,11 @@ model Response {
   longestField String?
   shortestField String?
   location String?
+  deviceType String?
+  browser String?
+  platform String?
+  completed Boolean @default(true)
+  rating Int?
 
   form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
 }
