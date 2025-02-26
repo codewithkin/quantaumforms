@@ -52,9 +52,12 @@ function Forms() {
 
   const handleResponseFilter = (min: number, max: number) => {
     if (!forms) return;
-    const newFilteredForms = forms.filter(
-      (form) => form.responses.length >= min && form.responses.length <= max,
-    );
+    
+    const newFilteredForms = forms.filter((form) => {
+      const responseCount = Array.isArray(form.responses) ? form.responses.length : 0;
+      return responseCount >= min && responseCount <= max;
+    });
+    
     setFilteredForms(newFilteredForms);
   };
 
@@ -126,26 +129,35 @@ function Forms() {
                 variant="outline"
                 size="sm"
               >
-                Responses
+                <ListCheck size={20} strokeWidth={1.5} /> Responses
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuSeparator />
             <DropdownMenuContent className="border-purple-100">
               <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Button
+                    variant="default"
+                    onClick={() => setFilteredForms(forms || [])}
+                    size="sm"
+                    className="bg-gradient-to-r from-red-50 to-orange-100 text-red-700 hover:from-red-100 hover:to-orange-200 border-red-200"
+                  >
+                    <Brush size={20} strokeWidth={1.5} /> Clear Filter
+                  </Button>
+                </DropdownMenuItem>
                 {[
-                  { range: [0, 5], color: "blue" },
-                  { range: [6, 20], color: "purple" },
-                  { range: [21, 50], color: "emerald" },
-                  { range: [51, 100], color: "amber" },
-                ].map(({ range, color }) => (
+                  { range: [0, 5], label: "0 - 5", color: "blue" },
+                  { range: [6, 20], label: "6 - 20", color: "purple" },
+                  { range: [21, 50], label: "21 - 50", color: "emerald" },
+                  { range: [51, 100], label: "51+", color: "amber" },
+                ].map(({ range, label, color }) => (
                   <DropdownMenuItem key={range.join("-")}>
                     <Button
                       variant="secondary"
                       onClick={() => handleResponseFilter(range[0], range[1])}
                       size="sm"
-                      className={`bg-gradient-to-r from-${color}-50 to-${color}-100 text-${color}-700 hover:from-${color}-100 hover:to-${color}-200`}
+                      className={`w-full bg-gradient-to-r from-${color}-50 to-${color}-100 text-${color}-700 hover:from-${color}-100 hover:to-${color}-200`}
                     >
-                      {range[0]} - {range[1]} Responses
+                      {label} Responses
                     </Button>
                   </DropdownMenuItem>
                 ))}

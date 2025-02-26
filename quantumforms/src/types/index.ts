@@ -11,16 +11,25 @@ export type Field = {
   }[];
 };
 
-export type Form = {
+export interface Form {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   shareableLink: string;
-  createdAt: string;
+  createdAt: Date;
   primaryColor: string;
   secondaryColor: string;
   updatedAt: string;
   userId: string;
   fields: Field[];
-  responses: any[];
-};
+  responses: Response[];
+  settings?: {
+    isPublic: boolean;
+  };
+}
+
+export interface Response {
+  id: string;
+  formId: string;
+  // ... other response properties
+}
