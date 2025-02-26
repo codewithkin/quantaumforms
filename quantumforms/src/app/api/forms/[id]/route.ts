@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma";
+import { auth } from "@/auth";
 
 // GET a particular form
 export async function GET(
@@ -7,43 +8,39 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   try {
-    const { id } = await params;
+    const session = await auth();
+    const userId = session?.user?.id;
 
-    if (!id) throw new Error("Shareable link not provided");
+    const {id} = await params;
 
-    // Get the form with the shareableLink from query params
     const form = await prisma.form.findUnique({
-      where: {
-        shareableLink: id,
+      where: { 
+        id,
+        userId, // Ensure user owns the form
       },
       include: {
         fields: {
           include: {
-            options: true,
-          },
+            options: true
+          }
         },
-        responses: true,
-        settings: true,
-      },
+        settings: true
+      }
     });
 
     if (!form) {
-      console.log("FORM NOT FOUND");
-      return NextResponse.json({
-        message: "No form with that id",
-      });
+      return NextResponse.json(
+        { error: "Form not found" },
+        { status: 404 }
+      );
     }
 
-    console.log("FORM FOUND: ", form);
     return NextResponse.json(form);
-  } catch (e) {
-    console.log("An error occured while fetching a particular form: ", e);
-
+  } catch (error) {
+    console.error("Error fetching form:", error);
     return NextResponse.json(
-      {
-        message: "An error occured whle fetching form",
-      },
-      { status: 500 },
+      { error: "Failed to fetch form" },
+      { status: 500 }
     );
   }
 }

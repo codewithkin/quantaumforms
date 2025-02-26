@@ -22,19 +22,20 @@ export default function FormPage() {
   const { data: session } = useSession();
   const [formData, setFormData] = useState<Record<string, any>>({});
 
-  // Fetch form data
+  // Fetch form data using shareableLink
   const { data: form, isLoading } = useQuery<Form>({
     queryKey: ["form", params.id],
     queryFn: async () => {
-      const res = await axios.get(`/api/forms/${params.id}`);
+      // Here we use the shareableLink since this is the public view
+      const res = await axios.get(`/api/forms/public/${params.id}`);
       return res.data;
     },
   });
 
-  // Submit form response mutation
+  // Submit form response mutation using form.id
   const submitMutation = useMutation({
     mutationFn: async (data: Record<string, any>) => {
-      const res = await axios.post(`/api/forms/${params.id}/submit`, data);
+      const res = await axios.post(`/api/forms/${form?.id}/submit`, data);
       return res.data;
     },
     onSuccess: () => {

@@ -26,7 +26,7 @@ export async function POST(
       data: {
         formId: id,
         data: formData,
-        timeTaken: null, // Not in schema yet
+        timeTaken: null,
         deviceType: deviceInfo.device.type || 'desktop',
         browser: deviceInfo.browser.name || 'unknown',
         platform: deviceInfo.os.name || 'unknown',
@@ -35,16 +35,16 @@ export async function POST(
       },
     });
 
-    // Get the form to check if notifications are enabled
+    // Get the form with settings and user info
     const form = await prisma.form.findUnique({
       where: { id },
       include: {
-        user: true,
         settings: true,
+        user: true,
       },
     });
 
-    // If notifications are enabled, create a notification for the form owner
+    // Create notification if enabled
     if (form?.settings?.notifyOnSubmission) {
       await prisma.notification.create({
         data: {

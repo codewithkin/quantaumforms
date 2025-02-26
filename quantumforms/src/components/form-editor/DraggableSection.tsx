@@ -56,6 +56,7 @@ function DraggableSection({ form }: { form: Form }) {
     showProgress: form.settings?.showProgress ?? false,
     theme: form.settings?.theme ?? 'light',
     submitMessage: form.settings?.submitMessage ?? 'Submit',
+    notifyOnSubmission: form.settings?.notifyOnSubmission ?? false,
   });
   const router = useRouter();
 
@@ -350,6 +351,22 @@ function DraggableSection({ form }: { form: Form }) {
                 value={localSettings.showProgress.toString()} 
               />
               <Label>Show Progress Bar</Label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Switch
+                name="notifyOnSubmission"
+                checked={localSettings.notifyOnSubmission}
+                onCheckedChange={(checked) => 
+                  setLocalSettings(prev => ({ ...prev, notifyOnSubmission: checked }))
+                }
+              />
+              <input 
+                type="hidden" 
+                name="notifyOnSubmission" 
+                value={localSettings.notifyOnSubmission.toString()} 
+              />
+              <Label>Notify on Submission</Label>
             </div>
 
             <div className="space-y-2">

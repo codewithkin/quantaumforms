@@ -129,6 +129,7 @@ model Setting {
   showProgress        Boolean @default(false)
   theme               String? @default("light")
   submitMessage       String? @default("Submit")
+  notifyOnSubmission  Boolean @default(false)
   style               Json?   // For storing primaryColor, secondaryColor, font, etc.
 
   form                Form?
