@@ -5,11 +5,23 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { Loader2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -53,9 +65,9 @@ export default function FormPage() {
   };
 
   const handleInputChange = (fieldId: string, value: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [fieldId]: value
+      [fieldId]: value,
     }));
   };
 
@@ -77,36 +89,45 @@ export default function FormPage() {
 
   const isCreator = session?.user?.id === form.userId;
   const defaultStyle = {
-    primaryColor: '#4F46E5',
-    secondaryColor: '#6B7280',
+    primaryColor: "#4F46E5",
+    secondaryColor: "#6B7280",
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-gray-50 to-white">
-      <Card 
+      <Card
         className={`md:max- ${
-          form.settings?.theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white'
+          form.settings?.theme === "dark"
+            ? "bg-gray-900 text-white"
+            : "bg-white"
         }`}
       >
         <CardHeader>
           {form.settings?.style?.logo && (
-            <Image 
-              src={form.settings.style.logo} 
-              alt="Form Logo" 
-              width={100} 
-              height={100} 
+            <Image
+              src={form.settings.style.logo}
+              alt="Form Logo"
+              width={100}
+              height={100}
               className="mx-auto mb-4"
             />
           )}
-          <CardTitle 
+          <CardTitle
             className="text-2xl text-center"
-            style={{ color: form.settings?.style?.primaryColor || defaultStyle.primaryColor }}
+            style={{
+              color:
+                form.settings?.style?.primaryColor || defaultStyle.primaryColor,
+            }}
           >
             {form.title}
           </CardTitle>
-          <CardDescription 
+          <CardDescription
             className="text-center"
-            style={{ color: form.settings?.style?.secondaryColor || defaultStyle.secondaryColor }}
+            style={{
+              color:
+                form.settings?.style?.secondaryColor ||
+                defaultStyle.secondaryColor,
+            }}
           >
             {form.description}
           </CardDescription>
@@ -118,7 +139,9 @@ export default function FormPage() {
               <div key={field.id} className="space-y-2">
                 <Label>
                   {field.label}
-                  {field.required && <span className="text-red-500 ml-1">*</span>}
+                  {field.required && (
+                    <span className="text-red-500 ml-1">*</span>
+                  )}
                 </Label>
 
                 {field.type === "textarea" ? (
@@ -126,13 +149,17 @@ export default function FormPage() {
                     placeholder={field.placeholder}
                     required={field.required}
                     value={formData[field.id] || ""}
-                    onChange={(e) => handleInputChange(field.id, e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(field.id, e.target.value)
+                    }
                     className="w-full"
                   />
                 ) : field.type === "select" ? (
-                  <Select 
-                    value={formData[field.id]} 
-                    onValueChange={(value) => handleInputChange(field.id, value)}
+                  <Select
+                    value={formData[field.id]}
+                    onValueChange={(value) =>
+                      handleInputChange(field.id, value)
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder={field.placeholder} />
@@ -151,7 +178,9 @@ export default function FormPage() {
                     placeholder={field.placeholder}
                     required={field.required}
                     value={formData[field.id] || ""}
-                    onChange={(e) => handleInputChange(field.id, e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(field.id, e.target.value)
+                    }
                     className="w-full"
                   />
                 )}
@@ -162,12 +191,14 @@ export default function FormPage() {
               </div>
             ))}
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full"
               disabled={submitMutation.isPending}
-              style={{ 
-                backgroundColor: form.settings?.style?.primaryColor || defaultStyle.primaryColor 
+              style={{
+                backgroundColor:
+                  form.settings?.style?.primaryColor ||
+                  defaultStyle.primaryColor,
               }}
             >
               {submitMutation.isPending ? (
@@ -196,4 +227,4 @@ export default function FormPage() {
       )}
     </div>
   );
-} 
+}

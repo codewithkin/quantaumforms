@@ -21,7 +21,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import axios from "axios";
-import { Loader2, TrendingUp, Users, Clock, CheckCircle, Smartphone, Laptop } from "lucide-react";
+import {
+  Loader2,
+  TrendingUp,
+  Users,
+  Clock,
+  CheckCircle,
+  Smartphone,
+  Laptop,
+} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -67,11 +75,11 @@ const FormAnalytics = () => {
     const filtered = data.filter((item) => {
       const date = new Date(item.filledAt);
       switch (filter) {
-        case 'week':
+        case "week":
           return now.getTime() - date.getTime() <= 7 * 24 * 60 * 60 * 1000;
-        case 'month':
+        case "month":
           return now.getTime() - date.getTime() <= 30 * 24 * 60 * 60 * 1000;
-        case 'year':
+        case "year":
           return now.getTime() - date.getTime() <= 365 * 24 * 60 * 60 * 1000;
         default:
           return true;
@@ -119,8 +127,8 @@ const FormAnalytics = () => {
       </article>
     );
   }
-  
-  const COLORS = ['#C4B5FD', '#818CF8', '#6366F1', '#4F46E5'];
+
+  const COLORS = ["#C4B5FD", "#818CF8", "#6366F1", "#4F46E5"];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
@@ -132,7 +140,9 @@ const FormAnalytics = () => {
               <Users className="h-4 w-4" />
               <h3 className="text-sm font-medium">Total Forms</h3>
             </div>
-            <p className="text-2xl font-bold text-blue-900">{analytics.totalForms}</p>
+            <p className="text-2xl font-bold text-blue-900">
+              {analytics.totalForms}
+            </p>
           </CardContent>
         </Card>
 
@@ -142,7 +152,9 @@ const FormAnalytics = () => {
               <TrendingUp className="h-4 w-4" />
               <h3 className="text-sm font-medium">Total Responses</h3>
             </div>
-            <p className="text-2xl font-bold text-purple-900">{analytics.totalResponses}</p>
+            <p className="text-2xl font-bold text-purple-900">
+              {analytics.totalResponses}
+            </p>
           </CardContent>
         </Card>
 
@@ -152,7 +164,9 @@ const FormAnalytics = () => {
               <Clock className="h-4 w-4" />
               <h3 className="text-sm font-medium">Avg. Time</h3>
             </div>
-            <p className="text-2xl font-bold text-emerald-900">{analytics.avgTimeTaken}s</p>
+            <p className="text-2xl font-bold text-emerald-900">
+              {analytics.avgTimeTaken}s
+            </p>
           </CardContent>
         </Card>
 
@@ -162,7 +176,9 @@ const FormAnalytics = () => {
               <CheckCircle className="h-4 w-4" />
               <h3 className="text-sm font-medium">Completion Rate</h3>
             </div>
-            <p className="text-2xl font-bold text-amber-900">{Math.round(analytics.completionRate)}%</p>
+            <p className="text-2xl font-bold text-amber-900">
+              {Math.round(analytics.completionRate)}%
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -171,7 +187,7 @@ const FormAnalytics = () => {
       <Card className="md:col-span-2 w-full">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-              <CardTitle>Response Trends</CardTitle>
+            <CardTitle>Response Trends</CardTitle>
             <CardDescription>Form submission trends over time</CardDescription>
           </div>
           <Select defaultValue="all" onValueChange={setTimeFilter}>
@@ -185,17 +201,20 @@ const FormAnalytics = () => {
               <SelectItem value="year">Past Year</SelectItem>
             </SelectContent>
           </Select>
-            </CardHeader>
+        </CardHeader>
         <CardContent ref={containerRef} className="w-full">
           <div className="w-full overflow-x-auto">
-            <BarChart 
-              width={chartWidth || 1700} 
-              height={300} 
+            <BarChart
+              width={chartWidth || 1700}
+              height={300}
               data={filterData(analytics.responseTrends, timeFilter)}
               margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="filledAt" tickFormatter={(value) => new Date(value).toLocaleDateString()} />
+              <XAxis
+                dataKey="filledAt"
+                tickFormatter={(value) => new Date(value).toLocaleDateString()}
+              />
               <Tooltip />
               <Bar dataKey="timeTaken" fill="#C4B5FD" />
             </BarChart>
@@ -223,27 +242,32 @@ const FormAnalytics = () => {
           </Select>
         </CardHeader>
         <CardContent className="w-full">
-          {hasData(analytics.responseTrends.reduce((acc, response) => {
-            if (response.location) {
-              acc[response.location] = (acc[response.location] || 0) + 1;
-            }
-            return acc;
-          }, {})) ? (
+          {hasData(
+            analytics.responseTrends.reduce((acc, response) => {
+              if (response.location) {
+                acc[response.location] = (acc[response.location] || 0) + 1;
+              }
+              return acc;
+            }, {}),
+          ) ? (
             <div className="w-full overflow-x-auto">
-              <BarChart 
+              <BarChart
                 width={chartWidth || 300}
-                height={300} 
+                height={300}
                 data={filterData(
-                  Object.entries(analytics.responseTrends.reduce((acc, response) => {
-                    if (response.location) {
-                      acc[response.location] = (acc[response.location] || 0) + 1;
-                    }
-                    return acc;
-                  }, {})).map(([country, count]) => ({
+                  Object.entries(
+                    analytics.responseTrends.reduce((acc, response) => {
+                      if (response.location) {
+                        acc[response.location] =
+                          (acc[response.location] || 0) + 1;
+                      }
+                      return acc;
+                    }, {}),
+                  ).map(([country, count]) => ({
                     country,
-                    count
+                    count,
                   })),
-                  timeFilter
+                  timeFilter,
                 )}
                 margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
               >
@@ -285,10 +309,12 @@ const FormAnalytics = () => {
             <PieChart width={300} height={300}>
               <Pie
                 dataKey="value"
-                data={Object.entries(analytics.deviceStats).map(([name, value]) => ({
-                  name,
-                  value,
-                }))}
+                data={Object.entries(analytics.deviceStats).map(
+                  ([name, value]) => ({
+                    name,
+                    value,
+                  }),
+                )}
                 cx={150}
                 cy={150}
                 innerRadius={60}
@@ -296,7 +322,10 @@ const FormAnalytics = () => {
                 paddingAngle={5}
               >
                 {Object.entries(analytics.deviceStats).map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -335,18 +364,27 @@ const FormAnalytics = () => {
                 <span>Public Forms</span>
                 <span>{analytics.publicPrivateStats.public}</span>
               </div>
-              <Progress value={
-                (analytics.publicPrivateStats.public / analytics.totalForms) * 100
-              } className="bg-purple-200" />
+              <Progress
+                value={
+                  (analytics.publicPrivateStats.public / analytics.totalForms) *
+                  100
+                }
+                className="bg-purple-200"
+              />
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Private Forms</span>
                 <span>{analytics.publicPrivateStats.private}</span>
               </div>
-              <Progress value={
-                (analytics.publicPrivateStats.private / analytics.totalForms) * 100
-              } className="bg-orange-200" />
+              <Progress
+                value={
+                  (analytics.publicPrivateStats.private /
+                    analytics.totalForms) *
+                  100
+                }
+                className="bg-orange-200"
+              />
             </div>
           </div>
         </CardContent>

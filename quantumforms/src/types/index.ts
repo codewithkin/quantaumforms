@@ -37,7 +37,7 @@ export interface Form {
     isPublic: boolean;
     allowMultipleResponses: boolean;
     showProgress: boolean;
-    theme: 'light' | 'dark';
+    theme: "light" | "dark";
     submitMessage: string;
     notifyOnSubmission: boolean;
     style?: {

@@ -24,7 +24,7 @@ export default function AccountSettings() {
   const handleSettingChange = async (key: string, value: boolean | string) => {
     try {
       await updateAccountSettings({ [key]: value });
-      setSettings(prev => ({ ...prev, [key]: value }));
+      setSettings((prev) => ({ ...prev, [key]: value }));
       toast.success("Settings updated successfully");
     } catch (error) {
       toast.error("Failed to update settings");
@@ -47,14 +47,20 @@ export default function AccountSettings() {
       {/* Subscription Info */}
       <Card className="bg-white border-gray-100">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-gray-900">Subscription</CardTitle>
+          <CardTitle className="text-2xl font-bold text-gray-900">
+            Subscription
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <h3 className="text-lg font-semibold text-gray-900">Current Plan</h3>
-                <Badge className={getPlanBadgeColor(session?.user?.plan || "FREE")}>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Current Plan
+                </h3>
+                <Badge
+                  className={getPlanBadgeColor(session?.user?.plan || "FREE")}
+                >
                   {session?.user?.plan || "FREE"}
                 </Badge>
               </div>
@@ -64,9 +70,7 @@ export default function AccountSettings() {
                 </p>
               )}
             </div>
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-            >
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
               Upgrade Plan
             </Button>
           </div>
@@ -76,7 +80,9 @@ export default function AccountSettings() {
       {/* Account Settings */}
       <Card className="bg-white border-gray-100">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-gray-900">Account Settings</CardTitle>
+          <CardTitle className="text-2xl font-bold text-gray-900">
+            Account Settings
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
@@ -89,7 +95,9 @@ export default function AccountSettings() {
               </div>
               <Switch
                 checked={settings.emailNotifications}
-                onCheckedChange={(checked) => handleSettingChange('emailNotifications', checked)}
+                onCheckedChange={(checked) =>
+                  handleSettingChange("emailNotifications", checked)
+                }
               />
             </div>
 
@@ -102,26 +110,32 @@ export default function AccountSettings() {
               </div>
               <Switch
                 checked={settings.marketingEmails}
-                onCheckedChange={(checked) => handleSettingChange('marketingEmails', checked)}
+                onCheckedChange={(checked) =>
+                  handleSettingChange("marketingEmails", checked)
+                }
               />
             </div>
 
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label className="text-gray-900">Two-Factor Authentication</Label>
+                <Label className="text-gray-900">
+                  Two-Factor Authentication
+                </Label>
                 <p className="text-sm text-gray-500">
                   Add an extra layer of security to your account
                 </p>
               </div>
               <Switch
                 checked={settings.twoFactorAuth}
-                onCheckedChange={(checked) => handleSettingChange('twoFactorAuth', checked)}
+                onCheckedChange={(checked) =>
+                  handleSettingChange("twoFactorAuth", checked)
+                }
               />
             </div>
           </div>
 
           <div className="pt-4 border-t border-gray-200">
-            <Button 
+            <Button
               variant="destructive"
               className="bg-red-600 hover:bg-red-700 text-white"
             >
@@ -132,4 +146,4 @@ export default function AccountSettings() {
       </Card>
     </div>
   );
-} 
+}

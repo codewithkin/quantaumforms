@@ -52,12 +52,14 @@ function Forms() {
 
   const handleResponseFilter = (min: number, max: number) => {
     if (!forms) return;
-    
+
     const newFilteredForms = forms.filter((form) => {
-      const responseCount = Array.isArray(form.responses) ? form.responses.length : 0;
+      const responseCount = Array.isArray(form.responses)
+        ? form.responses.length
+        : 0;
       return responseCount >= min && responseCount <= max;
     });
-    
+
     setFilteredForms(newFilteredForms);
   };
 
@@ -92,7 +94,8 @@ function Forms() {
                     size="sm"
                     className="w-full bg-red-50 text-red-700 hover:bg-red-100"
                   >
-                    <Brush size={20} strokeWidth={1.5} className="mr-2" /> Clear Filters
+                    <Brush size={20} strokeWidth={1.5} className="mr-2" /> Clear
+                    Filters
                   </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -138,7 +141,8 @@ function Forms() {
                     size="sm"
                     className="w-full bg-red-50 text-red-700 hover:bg-red-100"
                   >
-                    <Brush size={20} strokeWidth={1.5} className="mr-2" /> Clear Filter
+                    <Brush size={20} strokeWidth={1.5} className="mr-2" /> Clear
+                    Filter
                   </Button>
                 </DropdownMenuItem>
                 {[

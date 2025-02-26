@@ -57,34 +57,42 @@ export async function GET(req: NextRequest) {
 
     // Calculate completion rate
     const completedResponses = forms.reduce(
-      (acc, form) => acc + form.responses.filter(r => r.completed).length,
-      0
+      (acc, form) => acc + form.responses.filter((r) => r.completed).length,
+      0,
     );
-    const completionRate = totalResponses ? (completedResponses / totalResponses) * 100 : 0;
+    const completionRate = totalResponses
+      ? (completedResponses / totalResponses) * 100
+      : 0;
 
     // Calculate device breakdown
-    const deviceStats = forms.reduce((acc, form) => {
-      form.responses.forEach(response => {
-        if (response.deviceType) {
-          acc[response.deviceType] = (acc[response.deviceType] || 0) + 1;
-        }
-      });
-      return acc;
-    }, {} as Record<string, number>);
+    const deviceStats = forms.reduce(
+      (acc, form) => {
+        form.responses.forEach((response) => {
+          if (response.deviceType) {
+            acc[response.deviceType] = (acc[response.deviceType] || 0) + 1;
+          }
+        });
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     // Calculate average time taken
-    const avgTimeTaken = Math.round(forms.reduce((acc, form) => {
-      const formAvg = form.responses.reduce(
-        (sum, response) => sum + (response.timeTaken || 0),
-        0
-      ) / (form.responses.length || 1);
-      return acc + formAvg;
-    }, 0) / (forms.length || 1));
+    const avgTimeTaken = Math.round(
+      forms.reduce((acc, form) => {
+        const formAvg =
+          form.responses.reduce(
+            (sum, response) => sum + (response.timeTaken || 0),
+            0,
+          ) / (form.responses.length || 1);
+        return acc + formAvg;
+      }, 0) / (forms.length || 1),
+    );
 
     // Get response trends with more details
     const responseTrends = forms
-      .flatMap(form => form.responses)
-      .map(response => ({
+      .flatMap((form) => form.responses)
+      .map((response) => ({
         filledAt: response.filledAt,
         timeTaken: response.timeTaken,
         longestField: response.longestField,
@@ -95,7 +103,7 @@ export async function GET(req: NextRequest) {
       .sort((a, b) => a.filledAt.getTime() - b.filledAt.getTime());
 
     // Calculate public vs private forms
-    const publicForms = forms.filter(form => form.settings?.isPublic).length;
+    const publicForms = forms.filter((form) => form.settings?.isPublic).length;
     const privateForms = totalForms - publicForms;
 
     return NextResponse.json({
@@ -113,8 +121,11 @@ export async function GET(req: NextRequest) {
     });
   } catch (e) {
     console.error("An error occurred while fetching analytics: ", e);
-    return NextResponse.json({
-      message: "An error occurred while fetching analytics",
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: "An error occurred while fetching analytics",
+      },
+      { status: 500 },
+    );
   }
 }

@@ -1,6 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/types";
-import { Pencil, Copy, Link as LinkIcon, BarChart3, Eye, Share2, Settings } from "lucide-react";
+import {
+  Pencil,
+  Copy,
+  Link as LinkIcon,
+  BarChart3,
+  Eye,
+  Share2,
+  Settings,
+} from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import CardsViewMoreOptions from "./CardsViewMoreOptions";
@@ -18,7 +26,9 @@ function FormCards({ forms }: { forms: Form[] }) {
   const [copied, setCopied] = useState(false);
 
   const copyShareableLink = (shareableLink: string) => {
-    navigator.clipboard.writeText(`${window.location.origin}/forms/${shareableLink}`);
+    navigator.clipboard.writeText(
+      `${window.location.origin}/forms/${shareableLink}`,
+    );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     toast.success("Link copied to clipboard");
@@ -51,11 +61,17 @@ function FormCards({ forms }: { forms: Form[] }) {
                 <h3 className="text-xl font-semibold">{title}</h3>
                 <p className="font-semibold">{createdAt}</p>
                 <div className="flex items-center gap-2 mt-2">
-                  <Badge variant="outline" className="bg-white/10 text-white border-white/20">
+                  <Badge
+                    variant="outline"
+                    className="bg-white/10 text-white border-white/20"
+                  >
                     {form.responses.length} Responses
                   </Badge>
                   {form.settings?.isPublic && (
-                    <Badge variant="outline" className="bg-white/10 text-white border-white/20">
+                    <Badge
+                      variant="outline"
+                      className="bg-white/10 text-white border-white/20"
+                    >
                       Public
                     </Badge>
                   )}
@@ -65,7 +81,7 @@ function FormCards({ forms }: { forms: Form[] }) {
               {/* Controls */}
               <article className="flex flex-col gap-2 w-full justify-self-end self-end">
                 <div className="flex gap-2 w-full">
-                  <Button 
+                  <Button
                     className="flex-1 bg-white/20 hover:bg-white/30"
                     asChild
                   >
@@ -73,8 +89,8 @@ function FormCards({ forms }: { forms: Form[] }) {
                       <Edit className="mr-2 h-4 w-4" /> Edit
                     </Link>
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="flex-1 bg-white/10 hover:bg-white/20 border-white/20"
                     onClick={() => copyShareableLink(shareableLink)}
                   >
@@ -87,7 +103,10 @@ function FormCards({ forms }: { forms: Form[] }) {
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 border-white/20">
+                    <Button
+                      variant="outline"
+                      className="w-full bg-white/10 hover:bg-white/20 border-white/20"
+                    >
                       More Options
                     </Button>
                   </DropdownMenuTrigger>

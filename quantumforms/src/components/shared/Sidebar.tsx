@@ -51,7 +51,10 @@ function Sidebar() {
                   </Link>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="right" className="bg-white font-semibold text-blue-600 shadow-lg border-gray-100">
+              <TooltipContent
+                side="right"
+                className="bg-white font-semibold text-blue-600 shadow-lg border-gray-100"
+              >
                 Dashboard
               </TooltipContent>
             </Tooltip>
@@ -73,7 +76,10 @@ function Sidebar() {
                   </Link>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="right" className="bg-white font-semibold text-blue-600  shadow-lg border-gray-100">
+              <TooltipContent
+                side="right"
+                className="bg-white font-semibold text-blue-600  shadow-lg border-gray-100"
+              >
                 Your forms
               </TooltipContent>
             </Tooltip>
@@ -95,7 +101,10 @@ function Sidebar() {
                   </Link>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="right" className="bg-white font-semibold text-blue-600 shadow-lg border-gray-100">
+              <TooltipContent
+                side="right"
+                className="bg-white font-semibold text-blue-600 shadow-lg border-gray-100"
+              >
                 Analytics
               </TooltipContent>
             </Tooltip>
@@ -121,7 +130,7 @@ function Sidebar() {
                 className="flex gap-2 items-center justify-center text-blue-600 font-semibold bg-white shadow-lg border-gray-100"
                 side="right"
               >
-                <Zap className="text-amber-400" size={14} /> 
+                <Zap className="text-amber-400" size={14} />
                 <span>FormGenie</span>
               </TooltipContent>
             </Tooltip>
@@ -144,7 +153,10 @@ function Sidebar() {
                 </Link>
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="right" className="bg-white text-blue-600 shadow-lg border-gray-100">
+            <TooltipContent
+              side="right"
+              className="bg-white text-blue-600 shadow-lg border-gray-100"
+            >
               Sign Out
             </TooltipContent>
           </Tooltip>
@@ -164,7 +176,10 @@ function Sidebar() {
                 </div>
               </div>
             </TooltipTrigger>
-            <TooltipContent side="right" className="bg-white shadow-lg border-gray-100">
+            <TooltipContent
+              side="right"
+              className="bg-white shadow-lg border-gray-100"
+            >
               <CloudLightning className="text-yellow-500" />
               <span className="text-blue-600">FormGenie</span>
             </TooltipContent>

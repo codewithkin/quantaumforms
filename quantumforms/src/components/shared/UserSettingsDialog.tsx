@@ -14,16 +14,17 @@ import { Badge } from "@/components/ui/badge";
 import { useSession } from "next-auth/react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { 
-  User, 
-  Settings, 
-  CreditCard, 
-  Mail, 
-  MapPin, 
+import {
+  User,
+  Settings,
+  CreditCard,
+  Mail,
+  MapPin,
   Link as LinkIcon,
   Bell,
   Shield,
-  Globe
+  Globe,
+  Loader2,
 } from "lucide-react";
 
 interface UserSettingsDialogProps {
@@ -49,10 +50,15 @@ const TABS = [
   },
 ] as const;
 
-export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogProps) => {
+export const UserSettingsDialog = ({
+  open,
+  onOpenChange,
+}: UserSettingsDialogProps) => {
   const { data: session, update } = useSession();
-  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]["id"]>("profile");
-  
+  const [activeTab, setActiveTab] =
+    useState<(typeof TABS)[number]["id"]>("profile");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [formData, setFormData] = useState({
     name: session?.user?.name || "",
     email: session?.user?.email || "",
@@ -71,18 +77,21 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
 
   const handleProfileUpdate = async () => {
     try {
+      setIsSubmitting(true);
       await updateProfile(formData);
       await update(formData);
       toast.success("Profile updated successfully");
     } catch (error) {
       toast.error("Failed to update profile");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleSettingChange = async (key: string, value: boolean) => {
     try {
       await updateAccountSettings({ [key]: value });
-      setSettings(prev => ({ ...prev, [key]: value }));
+      setSettings((prev) => ({ ...prev, [key]: value }));
       toast.success("Settings updated successfully");
     } catch (error) {
       toast.error("Failed to update settings");
@@ -103,13 +112,7 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                   height={80}
                   className="rounded-full"
                 />
-              ) : (
-                <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
-                  <span className="text-2xl text-gray-500">
-                    {session?.user?.name?.[0]?.toUpperCase()}
-                  </span>
-                </div>
-              )}
+              ) : null}
               <ImageUpload
                 onUpload={(url) => setFormData({ ...formData, image: url })}
               />
@@ -120,7 +123,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 <Label>Username</Label>
                 <Input
                   value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, username: e.target.value })
+                  }
                   className="border-gray-200"
                 />
               </div>
@@ -129,7 +134,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 <Label>Name</Label>
                 <Input
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   className="border-gray-200"
                 />
               </div>
@@ -138,7 +145,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 <Label>Bio</Label>
                 <Textarea
                   value={formData.bio}
-                  onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, bio: e.target.value })
+                  }
                   className="border-gray-200"
                   placeholder="Tell us about yourself"
                 />
@@ -148,7 +157,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 <Label>Location</Label>
                 <Input
                   value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, location: e.target.value })
+                  }
                   className="border-gray-200"
                   placeholder="City, Country"
                 />
@@ -158,17 +169,27 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 <Label>Website</Label>
                 <Input
                   value={formData.website}
-                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, website: e.target.value })
+                  }
                   className="border-gray-200"
                   placeholder="https://example.com"
                 />
               </div>
 
-              <Button 
+              <Button
                 onClick={handleProfileUpdate}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                disabled={isSubmitting}
               >
-                Save Changes
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  'Save Changes'
+                )}
               </Button>
             </div>
           </div>
@@ -189,12 +210,14 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
 
             <div className="space-y-4">
               <h3 className="font-semibold">Available Plans</h3>
-              
+
               <div className="rounded-lg border border-gray-200 p-4 space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium">Starter</h4>
-                    <p className="text-sm text-gray-500">Perfect for small teams</p>
+                    <p className="text-sm text-gray-500">
+                      Perfect for small teams
+                    </p>
                   </div>
                   <Button variant="outline">$10/month</Button>
                 </div>
@@ -204,7 +227,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium">Ultimate</h4>
-                    <p className="text-sm text-gray-500">For larger organizations</p>
+                    <p className="text-sm text-gray-500">
+                      For larger organizations
+                    </p>
                   </div>
                   <Button variant="outline">$29/month</Button>
                 </div>
@@ -226,7 +251,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 </div>
                 <Switch
                   checked={settings.emailNotifications}
-                  onCheckedChange={(checked) => handleSettingChange('emailNotifications', checked)}
+                  onCheckedChange={(checked) =>
+                    handleSettingChange("emailNotifications", checked)
+                  }
                 />
               </div>
 
@@ -239,7 +266,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 </div>
                 <Switch
                   checked={settings.marketingEmails}
-                  onCheckedChange={(checked) => handleSettingChange('marketingEmails', checked)}
+                  onCheckedChange={(checked) =>
+                    handleSettingChange("marketingEmails", checked)
+                  }
                 />
               </div>
 
@@ -252,7 +281,9 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                 </div>
                 <Switch
                   checked={settings.twoFactorAuth}
-                  onCheckedChange={(checked) => handleSettingChange('twoFactorAuth', checked)}
+                  onCheckedChange={(checked) =>
+                    handleSettingChange("twoFactorAuth", checked)
+                  }
                 />
               </div>
             </div>
@@ -276,7 +307,7 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
                   "flex items-center gap-2 w-full px-4 py-2 rounded-md text-sm transition-colors",
                   activeTab === id
                     ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -288,7 +319,7 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
           {/* Content */}
           <div className="p-6">
             <h2 className="text-lg font-semibold mb-6">
-              {TABS.find(tab => tab.id === activeTab)?.label}
+              {TABS.find((tab) => tab.id === activeTab)?.label}
             </h2>
             {renderContent()}
           </div>
@@ -296,4 +327,4 @@ export const UserSettingsDialog = ({ open, onOpenChange }: UserSettingsDialogPro
       </DialogContent>
     </Dialog>
   );
-}; 
+};

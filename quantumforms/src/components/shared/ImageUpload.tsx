@@ -16,14 +16,14 @@ export function ImageUpload({ onUpload }: ImageUploadProps) {
     if (!file) return;
 
     // Check file type
-    if (!file.type.includes('image')) {
-      toast.error('Please upload an image file');
+    if (!file.type.includes("image")) {
+      toast.error("Please upload an image file");
       return;
     }
 
     // Check file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('File size should be less than 5MB');
+      toast.error("File size should be less than 5MB");
       return;
     }
 
@@ -32,22 +32,22 @@ export function ImageUpload({ onUpload }: ImageUploadProps) {
 
       // Create FormData
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
       // Upload to your storage service (e.g., S3, Cloudinary)
-      const response = await fetch('/api/upload', {
-        method: 'POST',
+      const response = await fetch("/api/upload", {
+        method: "POST",
         body: formData,
       });
 
-      if (!response.ok) throw new Error('Upload failed');
+      if (!response.ok) throw new Error("Upload failed");
 
       const data = await response.json();
       onUpload(data.url);
-      toast.success('Image uploaded successfully');
+      toast.success("Image uploaded successfully");
     } catch (error) {
-      console.error('Upload error:', error);
-      toast.error('Failed to upload image');
+      console.error("Upload error:", error);
+      toast.error("Failed to upload image");
     } finally {
       setIsUploading(false);
     }
@@ -73,10 +73,10 @@ export function ImageUpload({ onUpload }: ImageUploadProps) {
         >
           <span>
             <UploadCloud className="mr-2 h-4 w-4" />
-            {isUploading ? 'Uploading...' : 'Upload Image'}
+            {isUploading ? "Uploading..." : "Upload Image"}
           </span>
         </Button>
       </label>
     </div>
   );
-} 
+}

@@ -43,18 +43,18 @@ export async function updateFormBranding(formData: FormData) {
 
 export async function updateFormSettings(formData: FormData) {
   try {
-    const formId = formData.get('formId') as string;
+    const formId = formData.get("formId") as string;
     const settings = {
-      isPublic: formData.get('isPublic') === 'true',
-      allowMultipleResponses: formData.get('allowMultipleResponses') === 'true',
-      showProgress: formData.get('showProgress') === 'true',
-      theme: formData.get('theme') as string,
-      submitMessage: formData.get('submitMessage') as string,
+      isPublic: formData.get("isPublic") === "true",
+      allowMultipleResponses: formData.get("allowMultipleResponses") === "true",
+      showProgress: formData.get("showProgress") === "true",
+      theme: formData.get("theme") as string,
+      submitMessage: formData.get("submitMessage") as string,
     };
 
     await prisma.setting.upsert({
-      where: { 
-        formId 
+      where: {
+        formId,
       },
       create: {
         ...settings,
@@ -66,8 +66,8 @@ export async function updateFormSettings(formData: FormData) {
     revalidatePath(`/user/forms/${formId}`);
     return { success: true };
   } catch (error) {
-    console.error('Failed to update settings:', error);
-    return { success: false, error: 'Failed to update settings' };
+    console.error("Failed to update settings:", error);
+    return { success: false, error: "Failed to update settings" };
   }
 }
 
@@ -89,11 +89,11 @@ export async function updateProfile(formData: {
       },
     });
 
-    revalidatePath('/user/profile');
+    revalidatePath("/user/profile");
     return { success: true };
   } catch (error) {
-    console.error('Failed to update profile:', error);
-    return { success: false, error: 'Failed to update profile' };
+    console.error("Failed to update profile:", error);
+    return { success: false, error: "Failed to update profile" };
   }
 }
 
@@ -114,10 +114,10 @@ export async function updateAccountSettings(settings: Record<string, boolean>) {
       },
     });
 
-    revalidatePath('/user/settings');
+    revalidatePath("/user/settings");
     return { success: true };
   } catch (error) {
-    console.error('Failed to update settings:', error);
-    return { success: false, error: 'Failed to update settings' };
+    console.error("Failed to update settings:", error);
+    return { success: false, error: "Failed to update settings" };
   }
 }

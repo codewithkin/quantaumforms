@@ -40,7 +40,9 @@ export default function ProfilePage() {
     <div className="container max-w-2xl py-10">
       <Card className="bg-white border-gray-100">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-gray-900">Profile Settings</CardTitle>
+          <CardTitle className="text-2xl font-bold text-gray-900">
+            Profile Settings
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
@@ -73,7 +75,9 @@ export default function ProfilePage() {
                 <Input
                   disabled={!isEditing}
                   value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, username: e.target.value })
+                  }
                   className="border-gray-200"
                 />
               </div>
@@ -83,7 +87,9 @@ export default function ProfilePage() {
                 <Input
                   disabled={!isEditing}
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   className="border-gray-200"
                 />
               </div>
@@ -93,7 +99,9 @@ export default function ProfilePage() {
                 <Input
                   disabled={!isEditing}
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   className="border-gray-200"
                 />
               </div>
@@ -103,7 +111,9 @@ export default function ProfilePage() {
                 <Textarea
                   disabled={!isEditing}
                   value={formData.bio}
-                  onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, bio: e.target.value })
+                  }
                   className="border-gray-200"
                   placeholder="Tell us about yourself"
                 />
@@ -114,7 +124,9 @@ export default function ProfilePage() {
                 <Input
                   disabled={!isEditing}
                   value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, location: e.target.value })
+                  }
                   className="border-gray-200"
                   placeholder="City, Country"
                 />
@@ -125,7 +137,9 @@ export default function ProfilePage() {
                 <Input
                   disabled={!isEditing}
                   value={formData.website}
-                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, website: e.target.value })
+                  }
                   className="border-gray-200"
                   placeholder="https://example.com"
                 />
@@ -134,14 +148,14 @@ export default function ProfilePage() {
               <div className="flex gap-2">
                 {isEditing ? (
                   <>
-                    <Button 
+                    <Button
                       type="submit"
                       className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
                     >
                       Save Changes
                     </Button>
-                    <Button 
-                      type="button" 
+                    <Button
+                      type="button"
                       variant="outline"
                       className="border-gray-200 text-gray-700 hover:bg-gray-50"
                       onClick={() => setIsEditing(false)}
@@ -150,7 +164,7 @@ export default function ProfilePage() {
                     </Button>
                   </>
                 ) : (
-                  <Button 
+                  <Button
                     type="button"
                     variant="outline"
                     className="border-gray-200 text-gray-700 hover:bg-gray-50"
@@ -166,4 +180,4 @@ export default function ProfilePage() {
       </Card>
     </div>
   );
-} 
+}

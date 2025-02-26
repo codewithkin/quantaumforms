@@ -1,6 +1,13 @@
 import { Form } from "@/types";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { Users, Clock, Edit, Eye } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
@@ -16,7 +23,7 @@ export default function FormsSwitch({ view, forms }: FormsSwitchProps) {
       {forms.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[200px] rounded-lg border-2 border-dashed border-gray-200 bg-gradient-to-br from-blue-50 to-indigo-100">
           <p className="text-gray-600 text-lg font-medium">No forms found</p>
-          <Button 
+          <Button
             asChild
             className="mt-4 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white shadow-md hover:shadow-lg transition-all duration-300"
           >
@@ -26,8 +33,8 @@ export default function FormsSwitch({ view, forms }: FormsSwitchProps) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {forms.map((form) => (
-            <Card 
-              key={form.id} 
+            <Card
+              key={form.id}
               className="bg-gradient-to-br from-white to-gray-50 border border-gray-200/50"
             >
               <CardHeader className="pb-3">
@@ -42,11 +49,15 @@ export default function FormsSwitch({ view, forms }: FormsSwitchProps) {
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full">
                     <Users size={16} />
-                    <span className="font-medium">{form.responses.length} responses</span>
+                    <span className="font-medium">
+                      {form.responses.length} responses
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-purple-600 bg-purple-50 px-3 py-1.5 rounded-full">
                     <Clock size={16} />
-                    <span className="font-medium">{formatDistanceToNow(new Date(form.createdAt))}</span>
+                    <span className="font-medium">
+                      {formatDistanceToNow(new Date(form.createdAt))}
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -63,7 +74,7 @@ export default function FormsSwitch({ view, forms }: FormsSwitchProps) {
                   )}
                 </div>
                 <div className="flex gap-2 w-full">
-                  <Button 
+                  <Button
                     className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                     asChild
                   >
@@ -71,11 +82,7 @@ export default function FormsSwitch({ view, forms }: FormsSwitchProps) {
                       <Edit className="mr-2 h-4 w-4" /> Edit Form
                     </Link>
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    className="flex-1"
-                    asChild
-                  >
+                  <Button variant="outline" className="flex-1" asChild>
                     <Link href={`/forms/${form.shareableLink}`}>
                       <Eye className="mr-2 h-4 w-4" /> View Form
                     </Link>

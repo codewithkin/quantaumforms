@@ -11,28 +11,25 @@ export async function GET(
     const session = await auth();
     const userId = session?.user?.id;
 
-    const {id} = await params;
+    const { id } = await params;
 
     const form = await prisma.form.findUnique({
-      where: { 
+      where: {
         id,
         userId, // Ensure user owns the form
       },
       include: {
         fields: {
           include: {
-            options: true
-          }
+            options: true,
+          },
         },
-        settings: true
-      }
+        settings: true,
+      },
     });
 
     if (!form) {
-      return NextResponse.json(
-        { error: "Form not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Form not found" }, { status: 404 });
     }
 
     return NextResponse.json(form);
@@ -40,7 +37,7 @@ export async function GET(
     console.error("Error fetching form:", error);
     return NextResponse.json(
       { error: "Failed to fetch form" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

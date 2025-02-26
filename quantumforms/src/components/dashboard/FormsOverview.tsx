@@ -11,7 +11,21 @@ import {
 } from "../ui/card";
 import { Accordion, AccordionContent } from "../ui/accordion";
 import { AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
-import { ChevronDown, Loader, Calendar, TrendingUp, BarChart3, Copy, Edit, Eye, Link as LinkIcon, MoreHorizontal, Settings, Share2, Trash2 } from "lucide-react";
+import {
+  ChevronDown,
+  Loader,
+  Calendar,
+  TrendingUp,
+  BarChart3,
+  Copy,
+  Edit,
+  Eye,
+  Link as LinkIcon,
+  MoreHorizontal,
+  Settings,
+  Share2,
+  Trash2,
+} from "lucide-react";
 import { Form, Field } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -40,7 +54,9 @@ const FormCard = ({
   const [copied, setCopied] = useState(false);
 
   const copyShareableLink = () => {
-    navigator.clipboard.writeText(`${window.location.origin}/forms/${shareableLink}`);
+    navigator.clipboard.writeText(
+      `${window.location.origin}/forms/${shareableLink}`,
+    );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     toast.success("Link copied to clipboard!");
@@ -79,7 +95,11 @@ const FormCard = ({
                 >
                   <AccordionTrigger className="flex w-full justify-between items-center">
                     <span className="text-gray-700">{label}</span>
-                    <ChevronDown size={20} strokeWidth={1.5} className="text-gray-500" />
+                    <ChevronDown
+                      size={20}
+                      strokeWidth={1.5}
+                      className="text-gray-500"
+                    />
                   </AccordionTrigger>
                   <AccordionContent>
                     <p className="font-medium text-gray-600 bg-gray-50 px-3 py-1.5 rounded-full w-fit text-sm">
@@ -96,7 +116,9 @@ const FormCard = ({
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
             {settings?.isPublic ? (
-              <Badge className="bg-gray-100 text-gray-900 hover:bg-gray-200">Public</Badge>
+              <Badge className="bg-gray-100 text-gray-900 hover:bg-gray-200">
+                Public
+              </Badge>
             ) : (
               <Badge variant="secondary">Private</Badge>
             )}
@@ -112,13 +134,19 @@ const FormCard = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => router.push(`/user/forms/${id}`)}>
+              <DropdownMenuItem
+                onClick={() => router.push(`/user/forms/${id}`)}
+              >
                 <Edit className="mr-2 h-4 w-4" /> Edit Form
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push(`/user/forms/${id}/analytics`)}>
+              <DropdownMenuItem
+                onClick={() => router.push(`/user/forms/${id}/analytics`)}
+              >
                 <BarChart3 className="mr-2 h-4 w-4" /> View Analytics
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push(`/forms/${shareableLink}`)}>
+              <DropdownMenuItem
+                onClick={() => router.push(`/forms/${shareableLink}`)}
+              >
                 <Eye className="mr-2 h-4 w-4" /> Preview
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -128,12 +156,14 @@ const FormCard = ({
               <DropdownMenuItem>
                 <Share2 className="mr-2 h-4 w-4" /> Share Form
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push(`/user/forms/${id}/settings`)}>
+              <DropdownMenuItem
+                onClick={() => router.push(`/user/forms/${id}/settings`)}
+              >
                 <Settings className="mr-2 h-4 w-4" /> Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem 
-                className="text-red-700 focus:text-red-700 focus:bg-red-50" 
+              <DropdownMenuItem
+                className="text-red-700 focus:text-red-700 focus:bg-red-50"
                 onClick={handleDelete}
               >
                 <Trash2 className="mr-2 h-4 w-4" /> Delete Form
@@ -143,9 +173,7 @@ const FormCard = ({
         </div>
 
         <div className="flex gap-2 w-full">
-          <Button 
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-          >
+          <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
             View Form
           </Button>
         </div>
@@ -169,7 +197,9 @@ function FormsOverview() {
     if (!forms) return [];
     switch (filter) {
       case "Most Responses":
-        return [...forms].sort((a, b) => b.responses.length - a.responses.length);
+        return [...forms].sort(
+          (a, b) => b.responses.length - a.responses.length,
+        );
       case "Date":
         return [...forms].sort(
           (a, b) =>
@@ -223,7 +253,9 @@ function FormsOverview() {
             ))
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center min-h-[200px] rounded-lg border-2 border-dashed border-gray-200 bg-gradient-to-br from-blue-50 to-indigo-100">
-              <p className="text-gray-600 text-lg font-medium">No forms found</p>
+              <p className="text-gray-600 text-lg font-medium">
+                No forms found
+              </p>
             </div>
           )
         ) : (
