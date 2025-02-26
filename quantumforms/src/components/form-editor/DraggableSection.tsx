@@ -39,9 +39,6 @@ import {
 } from "../ui/dialog";
 import {
   Switch,
-  SwitchDescription,
-  SwitchThumb,
-  SwitchTrack,
 } from "../ui/switch";
 import {
   Settings,
@@ -185,7 +182,7 @@ function DraggableSection({ form }: { form: Form }) {
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
       <Card 
         className={cn(
-          "w-full max-w-3xl px-8 py-6",
+          "w-full md:max-w-lg px-8 py-6",
           "border-gray-200/50 shadow-lg",
           settings.theme === 'dark' 
             ? 'bg-gray-900 text-white' 
