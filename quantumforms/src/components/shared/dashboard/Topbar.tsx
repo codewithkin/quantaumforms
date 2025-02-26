@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Avatar } from "@heroui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenuGroup,
   DropdownMenuLabel,
@@ -10,7 +10,7 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, User, Settings, LogOut, CreditCard, UserCircle } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Input } from "@heroui/input";
@@ -19,10 +19,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { Form } from "@/types";
 import axios from "axios";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import { UserSettingsDialog } from "@/components/shared/UserSettingsDialog";
 
 function Topbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+  const { data: session } = useSession();
+  const [showSettings, setShowSettings] = useState(false);
 
   const { data: forms } = useQuery<Form[]>({
     queryKey: ["forms"],
@@ -42,85 +47,65 @@ function Topbar() {
   }, [forms, searchQuery]);
 
   return (
-    <article className="p-4 flex md:flex-row flex-col w-full gap-4 justify-between md:items-center bg-white border-b border-gray-100">
-      {/* Avatar and Search Input */}
-      <article className="flex gap-4 items-center">
+    <header className="border-b border-gray-100 bg-white">
+      <div className="container flex h-16 items-center justify-between">
+        <Button
+          variant="ghost"
+          className="font-semibold text-xl"
+          onClick={() => router.push("/user/forms")}
+        >
+          QuantumForms
+        </Button>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="flex gap-2 items-center bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 hover:from-blue-100 hover:to-indigo-200 border-blue-200" size="sm">
-              <Avatar size="sm" color="primary" />
-              <ChevronDown size="20" />
+            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Avatar className="h-10 w-10">
+                <AvatarImage 
+                  src={session?.user?.image || ''} 
+                  alt={session?.user?.name || 'User'} 
+                />
+                <AvatarFallback className="bg-gray-100 text-gray-600">
+                  {session?.user?.name?.[0]?.toUpperCase() || 'U'}
+                </AvatarFallback>
+              </Avatar>
             </Button>
           </DropdownMenuTrigger>
-
-          <DropdownMenuContent className="w-56 shadow-lg">
-            <DropdownMenuLabel className="text-blue-600">My Account</DropdownMenuLabel>
+          <DropdownMenuContent className="w-56" align="end">
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none text-gray-900">
+                  {session?.user?.name}
+                </p>
+                <p className="text-xs leading-none text-gray-500">
+                  {session?.user?.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-
             <DropdownMenuGroup>
-              <DropdownMenuItem className="hover:bg-blue-50">
-                Profile Picture and Name
+              <DropdownMenuItem onClick={() => setShowSettings(true)}>
+                <UserCircle className="mr-2 h-4 w-4" />
+                <span>Account Settings</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
-
-            <DropdownMenuLabel className="text-purple-600">Account Management</DropdownMenuLabel>
             <DropdownMenuSeparator />
-
-            <DropdownMenuGroup>
-              {[
-                { href: "/profile", label: "Edit Profile" },
-                { href: "/billing", label: "Billing and Subscription" },
-                { href: "/notifications", label: "Notification Preferences" },
-                { href: "/support", label: "Help and Support" },
-              ].map((item) => (
-                <DropdownMenuItem
-                  key={item.href}
-                  className="hover:bg-purple-50"
-                  onClick={() => router.push(item.href)}
-                >
-                  {item.label}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuGroup>
+            <DropdownMenuItem 
+              className="text-red-600 focus:text-red-600" 
+              onClick={() => signOut()}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="relative w-full max-w-[400px] md:min-w-[400px]">
-          <Input
-            placeholder="Search for a form..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-gradient-to-br from-gray-50 to-white border-gray-200"
-          />
-          <Search 
-            size={20} 
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          />
-          {searchQuery.trim() && filteredForms.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 max-h-[300px] overflow-y-auto z-10">
-              {filteredForms.map((form) => (
-                <div
-                  key={form.id}
-                  className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0"
-                  onClick={() => {
-                    router.push(`/user/forms/${form.id}`);
-                    setSearchQuery("");
-                  }}
-                >
-                  <h3 className="font-medium text-gray-700">{form.title}</h3>
-                  {form.description && (
-                    <p className="text-sm text-gray-500 line-clamp-1">{form.description}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </article>
-
-      {/* Create new form btn */}
-      <CreateNewFormDialog />
-    </article>
+        <UserSettingsDialog 
+          open={showSettings} 
+          onOpenChange={setShowSettings}
+        />
+      </div>
+    </header>
   );
 }
 

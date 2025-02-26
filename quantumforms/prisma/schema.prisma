@@ -44,6 +44,7 @@ model User {
   sessions      Session[]
   notifications Notification[] @relation("UserToNotification")
   forms         Form[]
+  settings      UserSettings?
 }
 
 model Notification {
@@ -133,4 +134,13 @@ model Setting {
   style               Json?   // For storing primaryColor, secondaryColor, font, etc.
 
   form                Form?
+}
+
+model UserSettings {
+  id                 String  @id @default(cuid())
+  userId            String  @unique
+  emailNotifications Boolean @default(true)
+  marketingEmails    Boolean @default(false)
+  twoFactorAuth      Boolean @default(false)
+  user              User    @relation(fields: [userId], references: [id])
 }
