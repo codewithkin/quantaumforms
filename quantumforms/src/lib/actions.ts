@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "../../prisma";
+import { revalidatePath } from "next/cache";
 
 export async function updateFormBranding(formData: FormData) {
   // Update the form's branding (primary and secondary color, logo)
@@ -37,4 +38,34 @@ export async function updateFormBranding(formData: FormData) {
   });
 
   return true;
+}
+
+export async function updateFormSettings(formData: FormData) {
+  try {
+    const formId = formData.get('formId') as string;
+    const settings = {
+      isPublic: formData.get('isPublic') === 'true',
+      allowMultipleResponses: formData.get('allowMultipleResponses') === 'true',
+      showProgress: formData.get('showProgress') === 'true',
+      theme: formData.get('theme') as string,
+      submitMessage: formData.get('submitMessage') as string,
+    };
+
+    await prisma.setting.upsert({
+      where: { 
+        formId 
+      },
+      create: {
+        ...settings,
+        formId,
+      },
+      update: settings,
+    });
+
+    revalidatePath(`/user/forms/${formId}`);
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to update settings:', error);
+    return { success: false, error: 'Failed to update settings' };
+  }
 }

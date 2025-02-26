@@ -127,6 +127,9 @@ model Setting {
   isPublic            Boolean @default(true)
   allowMultipleResponses Boolean @default(false)
   showProgress        Boolean @default(false)
+  theme               String? @default("light")
+  submitMessage       String? @default("Submit")
+  style               Json?   // For storing primaryColor, secondaryColor, font, etc.
 
   form                Form?
 }

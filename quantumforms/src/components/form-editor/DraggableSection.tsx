@@ -30,9 +30,37 @@ import {
 import { toast } from "sonner";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import {
+  Switch,
+  SwitchDescription,
+  SwitchThumb,
+  SwitchTrack,
+} from "../ui/switch";
+import {
+  Settings,
+  SettingsIcon,
+} from "lucide-react";
+import { updateFormSettings } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 function DraggableSection({ form }: { form: Form }) {
   const queryClient = useQueryClientProvider((state) => state.queryClient);
+  const [showSettings, setShowSettings] = useState(false);
+  const [localSettings, setLocalSettings] = useState({
+    isPublic: form.settings?.isPublic ?? true,
+    allowMultipleResponses: form.settings?.allowMultipleResponses ?? false,
+    showProgress: form.settings?.showProgress ?? false,
+    theme: form.settings?.theme ?? 'light',
+    submitMessage: form.settings?.submitMessage ?? 'Submit',
+  });
+  const router = useRouter();
 
   const deleteMutation = useMutation({
     mutationFn: async (fieldId: string) => {
@@ -48,22 +76,34 @@ function DraggableSection({ form }: { form: Form }) {
     toast("This is just an example, form submitted");
   };
 
+  // Settings mutation
+  const updateSettingsMutation = useMutation({
+    mutationFn: async (settings: Partial<Setting>) => {
+      const res = await axios.patch(`/api/forms/${form.id}/settings`, settings);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["form", form.id] });
+      toast.success("Settings updated successfully");
+    },
+  });
+
   // Default settings if none exist
   const defaultSettings = {
     isPublic: true,
+    allowMultipleResponses: false,
+    showProgress: false,
     theme: 'light',
     submitMessage: 'Submit',
-    showProgressBar: false,
     style: {
-      primaryColor: '#4F46E5',
-      secondaryColor: '#6B7280',
+      primaryColor: form.primaryColor || '#4F46E5',
+      secondaryColor: form.secondaryColor || '#6B7280',
       font: 'inherit',
     }
   };
 
   // Safely access settings with fallbacks
   const settings = form?.settings || defaultSettings;
-  const style = settings?.style || defaultSettings.style;
 
   // Add renderField function
   const renderField = (field: Field) => {
@@ -71,24 +111,20 @@ function DraggableSection({ form }: { form: Form }) {
       case "textarea":
         return (
           <Textarea 
-            className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200 min-h-[100px]"
             placeholder={field.placeholder}
+            className="w-full"
           />
         );
       
       case "select":
         return (
           <Select>
-            <SelectTrigger className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder={field.placeholder} />
             </SelectTrigger>
             <SelectContent>
-              {field.options?.map((option) => (
-                <SelectItem 
-                  key={option.id} 
-                  value={option.value}
-                  className="hover:bg-blue-50 focus:bg-blue-50"
-                >
+              {field.options.map((option) => (
+                <SelectItem key={option.id} value={option.value}>
                   {option.value}
                 </SelectItem>
               ))}
@@ -109,8 +145,8 @@ function DraggableSection({ form }: { form: Form }) {
         return (
           <Input 
             type={field.type} 
-            className="bg-white border-gray-200 focus:border-blue-500 focus:ring-blue-200"
             placeholder={field.placeholder}
+            className="w-full"
           />
         );
     }
@@ -149,25 +185,17 @@ function DraggableSection({ form }: { form: Form }) {
     <article className="w-full h-full flex flex-col items-center justify-center text-center">
       <Card 
         className={cn(
-          "px-8 py-4 md:min-w-[400px]",
-          "border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300",
-          settings?.theme === 'dark' 
+          "w-full max-w-3xl px-8 py-6",
+          "border-gray-200/50 shadow-lg",
+          settings.theme === 'dark' 
             ? 'bg-gray-900 text-white' 
             : 'bg-gradient-to-br from-white to-gray-50'
         )}
-        style={{
-          fontFamily: style?.font || 'inherit',
-          ...(style?.backgroundImage && {
-            backgroundImage: `url(${style.backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }),
-        }}
       >
         <CardHeader>
-          {style?.logo && (
+          {form.logo && (
             <Image 
-              src={style.logo} 
+              src={form.logo} 
               alt="Form Logo" 
               width={100} 
               height={100} 
@@ -175,28 +203,27 @@ function DraggableSection({ form }: { form: Form }) {
             />
           )}
           <CardTitle 
-            className="text-2xl"
-            style={{ color: style?.primaryColor || defaultSettings.style.primaryColor }}
+            className="text-2xl font-bold"
+            style={{ color: form.primaryColor || defaultSettings.style.primaryColor }}
           >
             {form.title}
           </CardTitle>
-          <CardDescription style={{ color: style?.secondaryColor || defaultSettings.style.secondaryColor }}>
+          <CardDescription 
+            style={{ color: form.secondaryColor || defaultSettings.style.secondaryColor }}
+          >
             {form.description}
           </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <form
-            onSubmit={simulateSubmission}
-            className="w-full flex flex-col justify-start items-start text-start gap-6"
-          >
-            {settings?.showProgressBar && (
+          <form className="w-full flex flex-col gap-6">
+            {settings.showProgress && (
               <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div 
                   className="h-full transition-all duration-300"
                   style={{ 
                     width: '0%',
-                    backgroundColor: style?.primaryColor || defaultSettings.style.primaryColor
+                    backgroundColor: form.primaryColor || defaultSettings.style.primaryColor
                   }}
                 />
               </div>
@@ -204,13 +231,23 @@ function DraggableSection({ form }: { form: Form }) {
 
             {form.fields?.map((field) => (
               <div key={field.id} className="w-full space-y-2">
-                <Label className="font-medium text-gray-700">
+                <Label 
+                  className={cn(
+                    "font-medium",
+                    settings.theme === 'dark' ? 'text-white' : 'text-gray-700'
+                  )}
+                >
                   {field.label}
                   {field.required && <span className="text-red-500 ml-1">*</span>}
                 </Label>
                 
                 {field.helpText && (
-                  <p className="text-sm text-gray-500">{field.helpText}</p>
+                  <p className={cn(
+                    "text-sm",
+                    settings.theme === 'dark' ? 'text-gray-300' : 'text-gray-500'
+                  )}>
+                    {field.helpText}
+                  </p>
                 )}
 
                 <article className="flex gap-2 items-center">
@@ -224,18 +261,139 @@ function DraggableSection({ form }: { form: Form }) {
             ))}
 
             <Button
-              className="w-full"
+              className="w-full text-white"
               style={{
-                backgroundColor: style?.primaryColor || defaultSettings.style.primaryColor,
-                color: 'white'
+                backgroundColor: form.primaryColor || defaultSettings.style.primaryColor
               }}
               type="submit"
             >
-              {settings?.submitMessage || defaultSettings.submitMessage}
+              {settings.submitMessage}
             </Button>
           </form>
         </CardContent>
       </Card>
+
+      {/* Settings Button */}
+      <Button
+        variant="outline"
+        className="fixed bottom-4 right-4"
+        onClick={() => setShowSettings(true)}
+      >
+        <Settings className="w-4 h-4 mr-2" />
+        Form Settings
+      </Button>
+
+      {/* Settings Dialog */}
+      <Dialog open={showSettings} onOpenChange={setShowSettings}>
+        <DialogContent className={cn(
+          settings.theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white'
+        )}>
+          <DialogHeader>
+            <DialogTitle>Form Settings</DialogTitle>
+          </DialogHeader>
+          
+          <form 
+            action={async (formData: FormData) => {
+              formData.append('formId', form.id);
+              const result = await updateFormSettings(formData);
+              if (result.success) {
+                toast.success("Settings updated successfully");
+                setShowSettings(false);
+                router.refresh();
+              } else {
+                toast.error(result.error || "Failed to update settings");
+              }
+            }}
+            className="space-y-4"
+          >
+            <div className="flex items-center gap-2">
+              <Switch
+                name="isPublic"
+                checked={localSettings.isPublic}
+                onCheckedChange={(checked) => 
+                  setLocalSettings(prev => ({ ...prev, isPublic: checked }))
+                }
+              />
+              <input 
+                type="hidden" 
+                name="isPublic" 
+                value={localSettings.isPublic.toString()} 
+              />
+              <Label>Public Form</Label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Switch
+                name="allowMultipleResponses"
+                checked={localSettings.allowMultipleResponses}
+                onCheckedChange={(checked) => 
+                  setLocalSettings(prev => ({ ...prev, allowMultipleResponses: checked }))
+                }
+              />
+              <input 
+                type="hidden" 
+                name="allowMultipleResponses" 
+                value={localSettings.allowMultipleResponses.toString()} 
+              />
+              <Label>Allow Multiple Responses</Label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Switch
+                name="showProgress"
+                checked={localSettings.showProgress}
+                onCheckedChange={(checked) => 
+                  setLocalSettings(prev => ({ ...prev, showProgress: checked }))
+                }
+              />
+              <input 
+                type="hidden" 
+                name="showProgress" 
+                value={localSettings.showProgress.toString()} 
+              />
+              <Label>Show Progress Bar</Label>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Theme</Label>
+              <Select
+                name="theme"
+                value={localSettings.theme}
+                onValueChange={(value) => 
+                  setLocalSettings(prev => ({ ...prev, theme: value }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Submit Button Text</Label>
+              <Input
+                name="submitMessage"
+                value={localSettings.submitMessage}
+                onChange={(e) => 
+                  setLocalSettings(prev => ({ ...prev, submitMessage: e.target.value }))
+                }
+                placeholder="Submit"
+              />
+            </div>
+
+            <Button 
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
+              Save Changes
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </article>
   );
 }
